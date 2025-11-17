@@ -20,6 +20,7 @@ header {
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--border-color);
+  z-index: 1;
   .logo-link {
     display: block;
     width: 7rem;
