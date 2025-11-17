@@ -1,7 +1,7 @@
 <script setup lang="ts">
 export type BaseModalProps = {
   text: string;
-  type?: "main" | "secondary";
+  type?: "main" | "secondary" | "danger";
   leftIcon?: string;
 };
 const props = withDefaults(defineProps<BaseModalProps>(), {
@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<BaseModalProps>(), {
 });
 
 const buttonClass = computed(() => {
-  return props.type === "main" ? "base-button--main" : "base-button--secondary";
+  return `base-button--${props.type}`;
 });
 </script>
 
@@ -49,6 +49,13 @@ button {
   color: var(--text-color);
   &:hover {
     background: var(--hover-color);
+  }
+}
+.base-button--danger {
+  background: var(--error-color);
+  color: white;
+  &:hover {
+    background: var(--error-hover-color);
   }
 }
 </style>
