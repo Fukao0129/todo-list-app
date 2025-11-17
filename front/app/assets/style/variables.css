@@ -10,7 +10,7 @@
   --text-color: #333; /* 通常の本文 */
   --text-secondary: #666666; /* 補助テキスト */
   --border-color: #d0d0d0; /* 枠線や仕切り線 */
-  --background-color: #f5f5f5; /* ページ背景 */
+  --background-color: #f2f2f5; /* ページ背景 */
   --disabled-color: #bfbfbf; /* 無効状態 */
 
   /* ==============================
@@ -25,6 +25,7 @@
   // インタラクションカラー
   // ============================== */
   --hover-color: rgba(0, 126, 112, 0.08); /* 汎用ホバー背景 */
+  --error-hover-color: rgba(211, 47, 47, 0.08); /* エラーホバー背景 */
   --focus-color: #00bfa5; /* フォーカスリング */
   --active-color: rgba(0, 126, 112, 0.16); /* 押下時背景 */
   --overlay-color: rgba(0, 0, 0, 0.4); /* モーダルのオーバーレイ */
