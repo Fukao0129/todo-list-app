@@ -40,7 +40,7 @@ defineExpose({
   <div v-if="isShow" class="modal" @click="handleBackdropClick">
     <div class="modal__wrapper">
       <div class="modal__header">
-        <p>{{ title }}</p>
+        <BaseText size="large" bold>{{ title }}</BaseText>
         <BaseIcon
           icon="close"
           tabindex="0"
@@ -78,12 +78,11 @@ defineExpose({
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     .modal__header {
       padding: 1rem;
-      font-size: 1.5em;
-      font-weight: bold;
       border-bottom: 1px solid var(--border-color);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
     }
     .modal__content {
       padding: 1rem;
