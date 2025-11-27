@@ -19,4 +19,19 @@ export default defineNuxtConfig({
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
   imports: { dirs: ["@/constants/**"] },
+  modules: ["nuxt-auth-sanctum", "@pinia/nuxt"],
+
+  // 認証関連の設定 https://sanctum.manchenkoff.me/usage/configuration
+  sanctum: {
+    baseUrl: "http://localhost",
+    redirect: {
+      onLogout: "/login", // ログアウト後のリダイレクト先
+    },
+    endpoints: {
+      user: "/api/me",
+    },
+    globalMiddleware: {
+      enabled: true,
+    },
+  },
 });
