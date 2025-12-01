@@ -79,8 +79,8 @@ watch(isShow, (newVal) => {
       </form>
     </template>
     <template #footer>
-      <BaseButton text="キャンセル" type="secondary" @click="isShow = false" />
-      <BaseButton text="追加" @click="onClickSubmit" />
+      <BaseButton :text="CANCEL_BUTTON_TEXT" type="secondary" @click="isShow = false" />
+      <BaseButton :text="ADD_BUTTON_TEXT" @click="onClickSubmit" />
     </template>
   </BaseModal>
 </template>
