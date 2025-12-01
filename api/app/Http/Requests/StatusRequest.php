@@ -6,6 +6,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class StatusRequest extends FormRequest
 {
@@ -26,16 +28,21 @@ class StatusRequest extends FormRequest
      */
     public function rules()
     {
+        // ステータス名の重複チェックを、ユーザごとに行う
+        $uniqueRule = Rule::unique('statuses', 'name')->where(function ($query) {
+            return $query->where('user_id', Auth::id());
+        });
+
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name' => ['required', 'string', 'max:10', 'unique:statuses,name'],
+                    'name' => ['required', 'string', 'max:10', $uniqueRule],
                 ];
                 break;
             case 'PUT':
             case 'PATCH':
                 return [
-                    'name' => ['required', 'string', 'max:10', 'unique:statuses,name'],
+                    'name' => ['required', 'string', 'max:10', $uniqueRule],
                 ];
                 break;
             default:

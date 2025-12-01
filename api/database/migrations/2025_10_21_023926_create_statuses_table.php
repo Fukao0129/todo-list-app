@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->unsignedBigInteger('user_id')->comment('ユーザID')->nullable();
             $table->integer('order')->unique();
             $table->integer('is_updatable')->default(1);
