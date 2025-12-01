@@ -22,5 +22,8 @@
   margin-left: 10rem; /* Sidebarの分 */
   margin-top: 3.5rem; /* Headerの分 */
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 </style>
