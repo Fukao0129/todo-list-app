@@ -18,10 +18,10 @@ const text = defineModel<string>("text");
       :placeholder
       :class="{ 'input--error': errorMessage }"
     />
+    <BaseText v-if="errorMessage" size="small" color="error" bold>{{
+      errorMessage.join("/ ")
+    }}</BaseText>
   </div>
-  <BaseText v-if="errorMessage" size="small" color="error" bold>{{
-    errorMessage.join("/ ")
-  }}</BaseText>
 </template>
 
 <style scoped>
