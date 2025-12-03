@@ -9,6 +9,10 @@ class Todo extends Model
 {
     use SoftDeletes;
 
+    // 定数
+    const STATUS_NOT_STARTED = 1;
+    const STATUS_COMPLETED = 2;
+
     protected $fillable = [
         'title',
         'description',
