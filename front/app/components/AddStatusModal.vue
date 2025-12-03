@@ -28,7 +28,7 @@ watch(isShow, (newVal) => {
   formData.value.name = "";
   if (newVal) {
     nextTick(() => {
-      focusOnElement(".status-add__form input");
+      focusOnElement("#add-status-name__input input");
     });
   }
 });
@@ -37,11 +37,12 @@ watch(isShow, (newVal) => {
 <template>
   <BaseModal v-model:is-show="isShow" title="ステータスを追加する">
     <template #content>
-      <form class="status-add__form" @submit.prevent="onClickSubmit">
+      <form @submit.prevent="onClickSubmit">
         <FormItem label="ステータス名" :has-border="false">
           <BaseInput
             v-model:text="formData.name"
             placeholder="ステータス名を入力"
+            id="add-status-name__input"
             :error-message="validationErrors['add-status.name']"
           />
         </FormItem>

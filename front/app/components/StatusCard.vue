@@ -37,13 +37,11 @@ watch(isEditMode, (newVal) => {
   <BaseCard class="status-card">
     <p v-if="!isEditMode">{{ status.name }}</p>
     <div v-else class="status-edit__wrapper">
-      <div class="">
-        <BaseInput
-          v-model:text="status.name"
-          placeholder="ステータス名を入力"
-          :error-message="validationErrors['update-status.name']"
-        />
-      </div>
+      <BaseInput
+        v-model:text="status.name"
+        placeholder="ステータス名を入力"
+        :error-message="validationErrors['update-status.name']"
+      />
       <BaseButton
         :text="CANCEL_BUTTON_TEXT"
         type="secondary"

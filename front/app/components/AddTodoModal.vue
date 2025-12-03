@@ -31,7 +31,7 @@ watch(isShow, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     nextTick(() => {
-      focusOnElement(".add-todo__title-wrapper input");
+      focusOnElement("#add-todo-title__input input");
     });
   }
 });
@@ -42,12 +42,11 @@ watch(isShow, (newVal) => {
     <template #content>
       <form @submit.prevent="onClickSubmit">
         <FormItem label="タイトル">
-          <div class="add-todo__title-wrapper">
-            <BaseInput
-              v-model:text="formData.title"
-              :error-message="validationErrors['add-todo.title']"
-            />
-          </div>
+          <BaseInput
+            v-model:text="formData.title"
+            :error-message="validationErrors['add-todo.title']"
+            id="add-todo-title__input"
+          />
         </FormItem>
         <FormItem label="説明">
           <BaseTextarea v-model:text="formData.description" />
