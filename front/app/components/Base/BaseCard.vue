@@ -1,6 +1,6 @@
 <script setup lang="ts">
 export type BaseModalProps = {
-  backgroundColor?: "white" | "lightgray";
+  backgroundColor?: "white" | "disabled";
 };
 withDefaults(defineProps<BaseModalProps>(), {
   backgroundColor: "white",
@@ -25,7 +25,7 @@ withDefaults(defineProps<BaseModalProps>(), {
 .card--white {
   background: white;
 }
-.card--lightgray {
+.card--disabled {
   background: var(--disabled-color);
 }
 </style>

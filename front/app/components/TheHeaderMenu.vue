@@ -7,7 +7,7 @@ const { user } = useUserStore();
 
 <template>
   <div class="header-user__wrapper">
-    <BaseIcon icon="circle-user" color="success" />
+    <BaseIcon icon="circle-user" color="primary" />
     <BaseText>{{ user?.name }}</BaseText>
     <BaseText size="small" color="secondary">{{ user?.email }}</BaseText>
   </div>
@@ -17,7 +17,7 @@ const { user } = useUserStore();
     @click="logout()"
     @keydown.enter="logout()"
   >
-    <BaseIcon icon="arrow-right-from-bracket" color="lightgray" />
+    <BaseIcon icon="arrow-right-from-bracket" color="secondary" />
     <BaseText>設定</BaseText>
   </div>
   <div
@@ -26,7 +26,7 @@ const { user } = useUserStore();
     @click="logout()"
     @keydown.enter="logout()"
   >
-    <BaseIcon icon="arrow-right-from-bracket" color="lightgray" />
+    <BaseIcon icon="arrow-right-from-bracket" color="secondary" />
     <BaseText>ログアウト</BaseText>
   </div>
 </template>

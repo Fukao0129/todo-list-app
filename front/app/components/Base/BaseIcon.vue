@@ -2,13 +2,13 @@
 export type Props = {
   icon: string;
   color?:
-    | "error"
-    | "warning"
-    | "info"
-    | "success"
+    | "primary"
     | "default"
-    | "white"
-    | "lightgray";
+    | "secondary"
+    | "success"
+    | "warning"
+    | "error"
+    | "white";
   isClickable?: boolean;
 };
 
@@ -41,25 +41,25 @@ withDefaults(defineProps<Props>(), {
 }
 
 /** 種類によって色を変える */
-.icon--error {
-  color: var(--error-color);
-}
-.icon--warning {
-  color: var(--warning-color);
-}
-.icon--info {
-  color: var(--info-color);
-}
-.icon--success {
-  color: var(--success-color);
+.icon--primary {
+  color: var(--primary-color);
 }
 .icon--default {
   color: var(--text-color);
 }
+.icon--secondary {
+  color: var(--text-secondary-color);
+}
+.icon--success {
+  color: var(--success-color);
+}
+.icon--warning {
+  color: var(--warning-color);
+}
+.icon--error {
+  color: var(--error-color);
+}
 .icon--white {
   color: white;
-}
-.icon--lightgray {
-  color: var(--text-secondary);
 }
 </style>

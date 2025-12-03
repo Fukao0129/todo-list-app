@@ -1,13 +1,13 @@
 <script setup lang="ts">
 export type BaseModalProps = {
   text: string;
-  type?: "main" | "secondary" | "danger";
+  type?: "primary" | "secondary" | "danger";
   leftIcon?: string;
   isDisabled?: boolean;
 };
 const props = withDefaults(defineProps<BaseModalProps>(), {
   text: "Button",
-  type: "main",
+  type: "primary",
   isDisabled: false,
 });
 
@@ -21,7 +21,7 @@ const buttonClass = computed(() => {
     <BaseIcon
       v-if="leftIcon"
       :icon="leftIcon"
-      :color="type == 'main' ? 'white' : 'lightgray'"
+      :color="type == 'primary' ? 'white' : 'secondary'"
     />
     {{ text }}
   </button>
@@ -42,7 +42,7 @@ button:disabled {
 }
 
 /** 種類によって背景色を変える */
-.base-button--main {
+.base-button--primary {
   background: var(--primary-color);
   color: white;
   &:hover {

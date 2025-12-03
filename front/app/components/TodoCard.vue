@@ -41,7 +41,7 @@ watch(isEditMode, (newVal) => {
   <BaseCard
     class="todo-card"
     :background-color="
-      todo.status_id == DEFAULT_STATUSES.COMPLETED.value ? 'lightgray' : 'white'
+      todo.status_id == DEFAULT_STATUSES.COMPLETED.value ? 'disabled' : 'white'
     "
   >
     <!-- 優先度ラベル -->
@@ -70,7 +70,7 @@ watch(isEditMode, (newVal) => {
         <BaseText tag="span" color="primary" bold>{{ todo.title }}</BaseText>
 
         <div class="due-date__wrapper">
-          <BaseIcon icon="clock" color="lightgray" :is-clickable="false" />
+          <BaseIcon icon="clock" color="secondary" :is-clickable="false" />
           <BaseText size="small" color="secondary">{{
             todo.due_date ?? "未設定"
           }}</BaseText>
@@ -85,7 +85,7 @@ watch(isEditMode, (newVal) => {
       <div class="todo-edit__header">
         <template v-if="!isTrash">
           <BaseIcon
-            color="lightgray"
+            color="secondary"
             icon="pen"
             is-clickable
             @click="isEditMode = !isEditMode"
@@ -101,7 +101,7 @@ watch(isEditMode, (newVal) => {
         </template>
         <BaseIcon
           v-else
-          color="lightgray"
+          color="secondary"
           icon="rotate-left"
           is-clickable
           @click="emit('onRestore', todo)"
