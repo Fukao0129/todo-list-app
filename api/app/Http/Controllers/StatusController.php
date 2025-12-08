@@ -10,10 +10,7 @@ class StatusController extends Controller
 {
 
     // 依存性注入
-    public function __construct(private StatusService $statusService)
-    {
-        $statusService = $this->statusService;
-    }
+    public function __construct(private StatusService $statusService) {}
 
     /**
      * 全件取得
@@ -35,7 +32,8 @@ class StatusController extends Controller
      */
     function store(StatusRequest $request)
     {
-        list($result, $status) = $this->statusService->store($request->all());
+        $validated = $request->validated();
+        list($result, $status) = $this->statusService->store($validated);
         return response()->json($result, $status);
     }
 
@@ -48,7 +46,8 @@ class StatusController extends Controller
      */
     function update($status_id, StatusRequest $request)
     {
-        list($result, $status) = $this->statusService->update($status_id, $request->all());
+        $validated = $request->validated();
+        list($result, $status) = $this->statusService->update($status_id, $validated);
         return response()->json($result, $status);
     }
 

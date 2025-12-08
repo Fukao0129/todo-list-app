@@ -10,10 +10,7 @@ class TodoController extends Controller
 {
 
     // 依存性注入
-    public function __construct(private TodoService $todoService)
-    {
-        $todoService = $this->todoService;
-    }
+    public function __construct(private TodoService $todoService) {}
 
     /**
      * 全件取得
@@ -48,7 +45,8 @@ class TodoController extends Controller
      */
     function update(TodoRequest $request, $todo_id)
     {
-        list($result, $status) = $this->todoService->update($todo_id, $request->all());
+        $validated = $request->validated();
+        list($result, $status) = $this->todoService->update($todo_id, $validated);
         return response()->json($result, $status);
     }
 
@@ -60,7 +58,8 @@ class TodoController extends Controller
      */
     function store(TodoRequest $request)
     {
-        list($result, $status) = $this->todoService->store($request->all());
+        $validated = $request->validated();
+        list($result, $status) = $this->todoService->store($validated);
         return response()->json($result, $status);
     }
 
