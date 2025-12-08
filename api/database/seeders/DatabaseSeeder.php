@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // マスタデータ
         $this->call(StatusesTableSeeder::class);
+        $this->call(MailsTableSeeder::class);
 
         $this->call(UsersTableSeeder::class);
         $this->call(TodosTableSeeder::class);
