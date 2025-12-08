@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type Props = {
+export type BaseIconProps = {
   icon: string;
   color?:
     | "primary"
@@ -12,7 +12,7 @@ export type Props = {
   isClickable?: boolean;
 };
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<BaseIconProps>(), {
   color: "default",
   isClickable: false,
 });
