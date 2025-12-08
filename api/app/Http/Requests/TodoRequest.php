@@ -6,6 +6,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class TodoRequest extends FormRequest
 {
@@ -32,8 +34,10 @@ class TodoRequest extends FormRequest
                     'title' => ['required', 'string', 'max:10'],
                     'description' => ['nullable', 'string', 'max:255'],
                     'priority' => ['required', 'integer', 'between:1,3'],
+                    'status_id' => ['nullable', 'integer', 'exists:statuses,id'],
                     'reminder_at' => ['nullable', 'date', 'after:now'],
                     'due_date' => ['nullable', 'date', 'after:now'],
+                    'user_id' => ['required', 'integer', Rule::in([Auth::id()])],
                 ];
                 break;
             case 'PUT':
@@ -42,8 +46,10 @@ class TodoRequest extends FormRequest
                     'title' => ['required', 'string', 'max:10'],
                     'description' => ['nullable', 'string', 'max:255'],
                     'priority' => ['required', 'integer', 'between:1,3'],
+                    'status_id' => ['nullable', 'integer', 'exists:statuses,id'],
                     'reminder_at' => ['nullable', 'date'],
                     'due_date' => ['nullable', 'date'],
+                    'user_id' => ['required', 'integer', Rule::in([Auth::id()])],
                 ];
                 break;
             default:

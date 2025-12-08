@@ -37,12 +37,16 @@ class StatusRequest extends FormRequest
             case 'POST':
                 return [
                     'name' => ['required', 'string', 'max:10', $uniqueRule],
+                    'user_id' => ['required', 'integer', Rule::in([Auth::id()])],
+                    'order' => ['nullable', 'integer'],
                 ];
                 break;
             case 'PUT':
             case 'PATCH':
                 return [
                     'name' => ['required', 'string', 'max:10', $uniqueRule],
+                    'user_id' => ['required', 'integer', Rule::in([Auth::id()])],
+                    'order' => ['nullable', 'integer'],
                 ];
                 break;
             default:
