@@ -2,10 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
+// パスワードリセット
+Route::post('/forgot-password', 'App\Http\Controllers\PasswordController@sendPasswordResetMail');
+Route::post('/password/reset', 'App\Http\Controllers\PasswordController@reset')->name('password.reset');
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ユーザー情報
     Route::get('/me', 'App\Http\Controllers\UserController@me')->name('me');
+    Route::put('/users/{user_id}', 'App\Http\Controllers\UserController@update');
+
+    // パスワード変更
+    Route::post('/password/change', 'App\Http\Controllers\PasswordController@update')->name('password.change');
 
     // Todo
     Route::get('/todos', 'App\Http\Controllers\TodoController@index');
