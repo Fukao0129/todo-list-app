@@ -47,14 +47,7 @@ watch(isEditMode, (newVal) => {
     "
   >
     <!-- 優先度ラベル -->
-    <div
-      class="todo__priority-label"
-      :style="{
-        '--priority-color': `var(--${formatPriorityColor(
-          todo.priority
-        )}-color)`,
-      }"
-    ></div>
+    <TodoCardPriorityLabel :priority="todo.priority" />
 
     <!--上部-->
     <div
@@ -254,16 +247,5 @@ watch(isEditMode, (newVal) => {
     justify-content: center;
     gap: 0.5rem;
   }
-}
-
-.todo__priority-label {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 0;
-  left: 0;
-  border-right: 0.9rem solid transparent;
-  border-radius: 5px 0 0 0;
-  border-top: 0.9rem solid var(--priority-color);
 }
 </style>
