@@ -3,7 +3,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
 </script>
 
 <template>
-  <header>
+  <header class="header">
     <NuxtLink to="/" class="logo-link">
       <img src="/assets/img/logo.svg" alt="TODO"
     /></NuxtLink>
@@ -17,7 +17,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
           icon="circle-user"
           color="white"
           is-clickable
-          class="header-user__icon"
+          class="header__user-icon"
           @click="isShowDropdownMenu = !isShowDropdownMenu"
           @keydown.enter="isShowDropdownMenu = !isShowDropdownMenu"
         />
@@ -31,7 +31,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
 </template>
 
 <style scoped>
-header {
+.header {
   position: fixed;
   top: 0;
   width: 100%;
@@ -53,7 +53,7 @@ header {
       opacity: 0.5;
     }
   }
-  .header-user__icon {
+  .header__user-icon {
     font-size: 1.5rem;
   }
 }

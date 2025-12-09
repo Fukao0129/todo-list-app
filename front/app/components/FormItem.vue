@@ -15,7 +15,7 @@ withDefaults(
     class="form-item__wrapper"
     :class="{ 'form-item__wrapper--has-border': hasBorder }"
   >
-    <BaseText v-if="label" tag="label" bold class="form__label">{{
+    <BaseText v-if="label" tag="label" bold class="form-item__label">{{
       label
     }}</BaseText>
     <slot />
@@ -29,7 +29,7 @@ withDefaults(
   gap: 1rem;
   padding: 0.5rem 0;
   width: 100%;
-  .form__label {
+  .form-item__label {
     flex: 0 1 10%;
   }
 }

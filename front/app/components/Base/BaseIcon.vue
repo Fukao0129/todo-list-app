@@ -18,14 +18,14 @@ withDefaults(
   <font-awesome-icon
     :icon
     :color
-    class="font-awesome-icon"
-    :class="[`icon--${color}`, isClickable ? 'icon--clickable' : '']"
+    class="base-icon"
+    :class="[`base-icon--${color}`, isClickable ? 'base-icon--clickable' : '']"
     :tabindex="isClickable ? 0 : -1"
   />
 </template>
 
 <style scoped>
-.icon--clickable {
+.base-icon--clickable {
   cursor: pointer;
   transition: all 200ms 0s ease;
   &:hover {
@@ -37,25 +37,25 @@ withDefaults(
 }
 
 /** 種類によって色を変える */
-.icon--primary {
+.base-icon--primary {
   color: var(--primary-color);
 }
-.icon--default {
+.base-icon--default {
   color: var(--text-color);
 }
-.icon--secondary {
+.base-icon--secondary {
   color: var(--text-secondary-color);
 }
-.icon--success {
+.base-icon--success {
   color: var(--success-color);
 }
-.icon--warning {
+.base-icon--warning {
   color: var(--warning-color);
 }
-.icon--error {
+.base-icon--error {
   color: var(--error-color);
 }
-.icon--white {
+.base-icon--white {
   color: white;
 }
 </style>

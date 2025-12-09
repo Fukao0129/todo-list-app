@@ -7,11 +7,11 @@ const text = defineModel<string | null>("text");
 </script>
 
 <template>
-  <textarea v-model="text" :placeholder="placeholder" />
+  <textarea v-model="text" :placeholder="placeholder" class="base-textarea" />
 </template>
 
 <style scoped>
-textarea {
+.base-textarea {
   padding: 0.3rem 0.5rem;
   border-radius: 5px;
   border-width: 1px;

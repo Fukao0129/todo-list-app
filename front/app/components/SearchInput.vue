@@ -12,14 +12,14 @@ const searchText = defineModel<string>("searchText");
 <style scoped>
 .search-input__wrapper {
   position: relative;
-  .font-awesome-icon {
+  .base-icon {
     position: absolute;
     left: 5px;
     top: 50%;
     transform: translateY(-50%);
   }
 }
-:deep(input) {
+:deep(.base-input) {
   padding-left: 1.8rem;
 }
 </style>

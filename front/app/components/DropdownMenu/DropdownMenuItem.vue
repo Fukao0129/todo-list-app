@@ -11,7 +11,7 @@ defineProps<{
 
 <template>
   <div
-    class="dropdown-menu__item"
+    class="dropdown-menu-item"
     tabindex="0"
     @click="event"
     @keydown.enter="event"
@@ -22,7 +22,7 @@ defineProps<{
 </template>
 
 <style scoped>
-.dropdown-menu__item {
+.dropdown-menu-item {
   display: flex;
   align-items: center;
   gap: 0.3rem;

@@ -31,7 +31,7 @@ watch(isShow, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     nextTick(() => {
-      focusOnElement("#add-todo-title__input input");
+      focusOnElement("#add-todo-modal__input input");
     });
   }
 });
@@ -45,7 +45,7 @@ watch(isShow, (newVal) => {
           <BaseInput
             v-model:text="formData.title"
             :error-message="validationErrors['add-todo.title']"
-            id="add-todo-title__input"
+            id="add-todo-modal__input"
           />
         </FormItem>
         <FormItem label="説明">
@@ -88,9 +88,3 @@ watch(isShow, (newVal) => {
     </template>
   </BaseModal>
 </template>
-
-<style scoped>
-:deep(.modal__wrapper) {
-  width: 50%;
-}
-</style>

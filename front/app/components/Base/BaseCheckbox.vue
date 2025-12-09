@@ -10,6 +10,7 @@ const emit = defineEmits<{
   <input
     type="checkbox"
     :checked="isChecked"
+    class="base-checkbox"
     @click="emit('onCheck', ($event.target as HTMLInputElement)?.checked)"
     @keydown.enter="
       emit('onCheck', !($event.target as HTMLInputElement)?.checked)
@@ -18,7 +19,7 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-input {
+.base-checkbox {
   accent-color: var(--primary-color);
   cursor: pointer;
 }

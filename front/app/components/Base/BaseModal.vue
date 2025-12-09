@@ -37,9 +37,9 @@ defineExpose({
 </script>
 
 <template>
-  <div v-if="isShow" class="modal" @click="handleBackdropClick">
-    <div class="modal__wrapper">
-      <div class="modal__header">
+  <div v-if="isShow" class="base-modal__wrapper" @click="handleBackdropClick">
+    <div class="base-modal">
+      <div class="base-modal__header">
         <BaseText size="large" bold>{{ title }}</BaseText>
         <BaseIcon
           icon="close"
@@ -49,10 +49,10 @@ defineExpose({
           @keydown.enter="closeModal"
         />
       </div>
-      <div class="modal__content">
+      <div class="base-modal__content">
         <slot name="content" />
       </div>
-      <div class="modal__footer">
+      <div class="base-modal__footer">
         <slot name="footer" />
       </div>
     </div>
@@ -60,7 +60,7 @@ defineExpose({
 </template>
 
 <style scoped>
-.modal {
+.base-modal__wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -68,7 +68,7 @@ defineExpose({
   height: 100%;
   background-color: var(--overlay-color);
   z-index: 2;
-  .modal__wrapper {
+  .base-modal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -76,7 +76,7 @@ defineExpose({
     background-color: #fff;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    .modal__header {
+    .base-modal__header {
       padding: 1rem;
       border-bottom: 1px solid var(--border-color);
       display: flex;
@@ -84,10 +84,10 @@ defineExpose({
       align-items: center;
       gap: 1rem;
     }
-    .modal__content {
+    .base-modal__content {
       padding: 1rem;
     }
-    .modal__footer {
+    .base-modal__footer {
       padding: 1rem;
       border-top: 1px solid var(--border-color);
       text-align: right;

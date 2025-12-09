@@ -9,7 +9,7 @@ const selectedValue = defineModel<number>("selectedValue");
 </script>
 
 <template>
-  <select v-model="selectedValue">
+  <select v-model="selectedValue" class="base-select">
     <option v-for="item in options" :key="item.id" :value="item.id">
       {{ item.name }}
     </option>
@@ -17,7 +17,7 @@ const selectedValue = defineModel<number>("selectedValue");
 </template>
 
 <style scoped>
-select {
+.base-select {
   padding: 0.3rem 0.5rem;
   border-radius: 5px;
   border-color: var(--border-color);

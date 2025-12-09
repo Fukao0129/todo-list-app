@@ -8,7 +8,7 @@ const emit = defineEmits<{
   <BaseIcon
     icon="plus"
     color="white"
-    class="add-icon__button"
+    class="add-icon"
     is-clickable
     @click="emit('click')"
     @keydown.enter="emit('click')"
@@ -16,7 +16,7 @@ const emit = defineEmits<{
 </template>
 
 <style scoped>
-.add-icon__button {
+.add-icon {
   position: fixed;
   bottom: 2rem;
   right: 2rem;

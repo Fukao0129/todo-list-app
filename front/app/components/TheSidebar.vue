@@ -20,7 +20,7 @@ const navMenu = [
         </li>
       </ul>
     </nav>
-    <p class="copyright__text">&copy; {{ year }} F</p>
+    <BaseText size="small" class="copyright">&copy; {{ year }} F</BaseText>
   </aside>
 </template>
 
@@ -51,12 +51,11 @@ const navMenu = [
     }
   }
 
-  .copyright__text {
+  .copyright {
     position: absolute;
     bottom: 1rem;
     width: 100%;
     text-align: center;
-    font-size: 0.8rem;
   }
 }
 </style>

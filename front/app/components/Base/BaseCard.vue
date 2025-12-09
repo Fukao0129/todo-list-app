@@ -10,13 +10,13 @@ withDefaults(
 </script>
 
 <template>
-  <div class="card" :class="`card--${variant}`">
+  <div class="base-card" :class="`base-card--${variant}`">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.card {
+.base-card {
   border: 1px solid var(--border-color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
@@ -24,10 +24,10 @@ withDefaults(
 }
 
 /** 種類によって背景色を変える */
-.card--white {
+.base-card--white {
   background: white;
 }
-.card--disabled {
+.base-card--disabled {
   background: var(--disabled-color);
 }
 </style>

@@ -19,7 +19,7 @@ const buttonClass = computed(() => {
 </script>
 
 <template>
-  <button :class="buttonClass" :disabled="isDisabled">
+  <button class="base-button" :class="buttonClass" :disabled="isDisabled">
     <BaseIcon
       v-if="leftIcon"
       :icon="leftIcon"
@@ -30,7 +30,7 @@ const buttonClass = computed(() => {
 </template>
 
 <style scoped>
-button {
+.base-button {
   background: var(--primary-color);
   border: none;
   padding: 1px 0.4rem;
@@ -38,7 +38,7 @@ button {
   cursor: pointer;
   transition: background 0.3s ease;
 }
-button:disabled {
+.base-button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }

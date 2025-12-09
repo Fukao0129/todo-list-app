@@ -20,19 +20,19 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="dropdown__wrapper" ref="wrapper">
+  <div class="dropdown-menu__wrapper" ref="wrapper">
     <slot name="trigger" />
-    <div v-if="isShow" class="dropdown">
+    <div v-if="isShow" class="dropdown-menu">
       <slot name="contents" />
     </div>
   </div>
 </template>
 
 <style scoped>
-.dropdown__wrapper {
+.dropdown-menu__wrapper {
   position: relative;
 }
-.dropdown {
+.dropdown-menu {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   position: absolute;
   top: calc(100% + 0.1rem);

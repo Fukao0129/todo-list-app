@@ -4,7 +4,7 @@ const { user } = useUserStore();
 </script>
 
 <template>
-  <div class="header-user__wrapper">
+  <div class="header__user-wrapper">
     <BaseIcon icon="circle-user" color="primary" />
     <BaseText>{{ user?.name }}</BaseText>
     <BaseText size="small" color="secondary">{{ user?.email }}</BaseText>
@@ -32,7 +32,7 @@ const { user } = useUserStore();
 </template>
 
 <style scoped>
-.header-user__wrapper {
+.header__user-wrapper {
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
 }

@@ -9,13 +9,14 @@ const text = defineModel<string>("text");
 </script>
 
 <template>
-  <div class="input__wrapper">
+  <div class="base-input__wrapper">
     <BaseText v-if="label" size="small" color="secondary">{{ label }}</BaseText>
     <input
       v-model="text"
       type="text"
       :placeholder
-      :class="{ 'input--error': errorMessage }"
+      class="base-input"
+      :class="{ 'base-input--error': errorMessage }"
     />
     <BaseText v-if="errorMessage" size="small" color="error" bold>{{
       errorMessage.join("/ ")
@@ -24,13 +25,13 @@ const text = defineModel<string>("text");
 </template>
 
 <style scoped>
-.input__wrapper {
+.base-input__wrapper {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
   width: 100%;
 }
-input {
+.base-input {
   padding: 0.3rem 0.5rem;
   border-radius: 5px;
   border-width: 1px;
@@ -48,7 +49,7 @@ input {
 }
 
 /** エラー時 */
-.input--error {
+.base-input--error {
   border-color: var(--error-color);
 }
 </style>
