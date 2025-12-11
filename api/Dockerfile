@@ -13,7 +13,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # PHP拡張機能のインストール
 RUN docker-php-ext-install pdo_mysql 
 
-COPY ./api /var/www/html
+COPY / /var/www/html
 
 WORKDIR /var/www/html
 RUN chmod 777 -R /var/www/html/storage
