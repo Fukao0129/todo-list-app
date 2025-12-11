@@ -15,7 +15,7 @@ RUN composer install --no-dev --optimize-autoloader
 # PHP拡張機能のインストール
 RUN docker-php-ext-install pdo_mysql 
 
-COPY api/ .
+COPY / /var/www/html
 
 WORKDIR /var/www/html
 RUN chmod 777 -R /var/www/html/storage
