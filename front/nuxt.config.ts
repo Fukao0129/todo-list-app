@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   runtimeConfig: {
     public: {
-      apiUrl: "http://localhost/api",
+      apiUrl: "http://localhost/api", // 本番環境ではRailwayのNUXT_PUBLIC_API_URL変数で上書きされる
     },
   },
   app: {
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
 
   // 認証関連の設定 https://sanctum.manchenkoff.me/usage/configuration
   sanctum: {
-    baseUrl: "http://localhost",
+    baseUrl: "http://localhost", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_BASE_URL変数で上書きされる
     redirect: {
       onLogout: "/login", // ログアウト後のリダイレクト先
     },
@@ -36,6 +36,7 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+  // 本番環境ではフロントの/apiディレクトリにAPIコールするので、APIサーバにプロキシする
   nitro: {
     routeRules: {
       "/api/**": {
