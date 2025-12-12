@@ -36,12 +36,14 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
-  routeRules: {
-    "/api/**": {
-      proxy: "https://api-production-597b.up.railway.app/**",
-    },
-    "/sanctum/csrf-cookie": {
-      proxy: "https://api-production-597b.up.railway.app/sanctum/csrf-cookie",
+  nitro: {
+    routeRules: {
+      "/api/**": {
+        proxy: "https://api-production-597b.up.railway.app/api/**",
+      },
+      "/sanctum/csrf-cookie": {
+        proxy: "https://api-production-597b.up.railway.app/sanctum/csrf-cookie",
+      },
     },
   },
 });
