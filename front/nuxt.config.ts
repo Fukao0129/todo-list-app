@@ -23,7 +23,7 @@ export default defineNuxtConfig({
 
   // 認証関連の設定 https://sanctum.manchenkoff.me/usage/configuration
   sanctum: {
-    baseUrl: "http://localhost", // "https://api-production-597b.up.railway.app", // "http://localhost",
+    baseUrl: "https://api-production-597b.up.railway.app", // "http://localhost",
     redirect: {
       onLogout: "/login", // ログアウト後のリダイレクト先
     },
