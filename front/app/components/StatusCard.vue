@@ -34,7 +34,7 @@ watch(isEditMode, (newVal) => {
 
 <template>
   <BaseCard class="status-card">
-    <p v-if="!isEditMode">{{ status.name }}</p>
+    <BaseText v-if="!isEditMode">{{ status.name }}</BaseText>
     <div v-else class="status-edit__wrapper">
       <BaseInput
         v-model:text="status.name"
