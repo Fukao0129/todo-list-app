@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       onLogout: "/login", // ログアウト後のリダイレクト先
     },
     endpoints: {
-      csrf: "/api/sanctum/csrf-cookie",
+      // csrf: "/api/sanctum/csrf-cookie",
       user: "/api/me",
     },
     globalMiddleware: {
@@ -38,6 +38,9 @@ export default defineNuxtConfig({
   routeRules: {
     "/api/**": {
       proxy: "https://api-production-597b.up.railway.app/**",
+    },
+    "/sanctum/csrf-cookie": {
+      proxy: "https://api-production-597b.up.railway.app/sanctum/csrf-cookie",
     },
   },
 });
