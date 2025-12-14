@@ -50,59 +50,22 @@ watch(isEditMode, (newVal) => {
     <TodoCardPriorityLabel :priority="todo.priority" />
 
     <!--上部-->
-    <div
-      class="todo-card__header"
-      tabindex="0"
-      @click="isOpen = !isOpen"
-      @keydown.enter="isOpen = !isOpen"
-    >
-      <div>
-        <BaseCheckbox
-          v-if="!isTrash"
-          v-model:isChecked="isCompleted"
-          @on-check="emit('onCheck', $event, todo)"
-        />
-        <BaseText tag="span" color="primary" bold>{{ todo.title }}</BaseText>
-
-        <div class="due-date__wrapper">
-          <BaseIcon icon="clock" color="secondary" :is-clickable="false" />
-          <BaseText size="small" color="secondary">{{
-            todo.due_date ?? "未設定"
-          }}</BaseText>
-        </div>
-      </div>
-
-      <BaseIcon :icon="isOpen ? 'angle-up' : 'angle-down'" is-clickable />
-    </div>
+    <TodoCardHeader
+      v-model:is-open="isOpen"
+      :todo
+      :is-trash
+      :is-completed
+      @onCheck="emit('onCheck', $event, todo)"
+    />
 
     <!--詳細-->
     <div v-if="isOpen" class="todo-card__detail">
-      <div class="todo-edit__header">
-        <template v-if="!isTrash">
-          <BaseIcon
-            color="secondary"
-            icon="pen"
-            is-clickable
-            @click="isEditMode = !isEditMode"
-            @keydown.enter="isEditMode = !isEditMode"
-          />
-          <BaseIcon
-            color="error"
-            icon="trash"
-            is-clickable
-            @click="emit('onTrash', todo)"
-            @keydown.enter="emit('onTrash', todo)"
-          />
-        </template>
-        <BaseIcon
-          v-else
-          color="secondary"
-          icon="rotate-left"
-          is-clickable
-          @click="emit('onRestore', todo)"
-          @keydown.enter="emit('onRestore', todo)"
-        />
-      </div>
+      <TodoCardControls
+        v-model:is-edit-mode="isEditMode"
+        :is-trash
+        @onTrash="emit('onTrash', todo)"
+        @onRestore="emit('onRestore', todo)"
+      />
 
       <form
         class="todo-edit__content"
@@ -174,14 +137,7 @@ watch(isEditMode, (newVal) => {
         </div>
 
         <!--下部-->
-        <div v-if="isEditMode" class="todo-edit__footer">
-          <BaseButton
-            :text="CANCEL_BUTTON_TEXT"
-            type="secondary"
-            @click="isEditMode = false"
-          />
-          <BaseButton :text="UPDATE_BUTTON_TEXT" />
-        </div>
+        <TodoCardFooter v-if="isEditMode" v-model:is-edit-mode="isEditMode" />
       </form>
     </div>
   </BaseCard>
@@ -192,38 +148,10 @@ watch(isEditMode, (newVal) => {
   position: relative;
 }
 
-.todo-card__header {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 200ms 0s ease;
-  &:hover {
-    background-color: var(--hover-color);
-  }
-  .due-date__wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.1rem;
-    font-size: 0.8rem;
-    margin-top: 0.2rem;
-    margin-left: 0.2rem;
-  }
-}
-
 .todo-card__detail {
   border-top: 1px solid #ccc;
   padding: 1rem;
   position: relative;
-  .todo-edit__header {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    display: flex;
-    gap: 0.3rem;
-  }
-
   .todo-edit__content {
     display: flex;
     flex-direction: column;
@@ -241,11 +169,6 @@ watch(isEditMode, (newVal) => {
         width: 100%;
       }
     }
-  }
-  .todo-edit__footer {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
   }
 }
 </style>
