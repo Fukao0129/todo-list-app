@@ -196,9 +196,8 @@ watch(
       </div>
     </BaseCard>
 
-    <BaseText size="small" color="secondary" align="right"
-      >{{ filteredTodoList?.length }}件</BaseText
-    >
+    <!--件数表示-->
+    <DataCount :data-length="filteredTodoList?.length" />
 
     <!--Todo一覧-->
     <AsyncDataCard :data-length="filteredTodoList?.length || 0" :pending>
@@ -212,10 +211,10 @@ watch(
         @on-trash="onTrashTodo"
       />
     </AsyncDataCard>
-
-    <AddIcon @click="isShowAddTodoModal = true" />
-    <AddTodoModal v-model:is-show="isShowAddTodoModal" @submit="onAddTodo" />
   </NuxtLayout>
+
+  <AddIcon @click="isShowAddTodoModal = true" />
+  <AddTodoModal v-model:is-show="isShowAddTodoModal" @submit="onAddTodo" />
 </template>
 
 <style scoped>

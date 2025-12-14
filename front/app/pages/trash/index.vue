@@ -72,9 +72,8 @@ const onBulkDelete = () => {
       />
     </div>
 
-    <BaseText size="small" color="secondary" align="right"
-      >{{ todoListData?.length }}件</BaseText
-    >
+    <!--件数表示-->
+    <DataCount :data-length="todoListData?.length" />
 
     <!--ゴミ箱-->
     <AsyncDataCard
