@@ -29,6 +29,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Start Command
+# MPM競合を削除 https://qiita.com/pocket8137/items/6fd15e771ebe4a431f06
 CMD sh -c "\
     rm -f /etc/apache2/mods-enabled/mpm_event.load \
           /etc/apache2/mods-enabled/mpm_event.conf \
