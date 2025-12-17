@@ -174,32 +174,18 @@ watch(
           v-if="!isFilterCompleted"
           :text="`${DEFAULT_STATUSES.COMPLETED.label}をすべてゴミ箱に移動`"
           left-icon="trash"
-          class="trash-all__button"
           @click="onTrashCompletedTodos"
         />
       </template>
     </PageHeader>
 
     <!--検索条件-->
-    <BaseCard>
-      <div class="search-area__wrapper">
-        <SearchInput v-model:search-text="searchParams.q" />
-        <BaseSelect
-          v-model:selected-value="selectedSortIndex"
-          :options="
-            SORT_OPTIONS.map((option, index) => ({
-              id: index,
-              name: option.label,
-            }))
-          "
-          @change="onSortChange($event)"
-        />
-        <BaseToggle
-          v-model:is-on="isFilterCompleted"
-          :label="`${DEFAULT_STATUSES.COMPLETED.label}を除く`"
-        />
-      </div>
-    </BaseCard>
+    <SearchCard
+      v-model:q="searchParams.q"
+      v-model:selected-index="selectedSortIndex"
+      v-model:is-toggle-on="isFilterCompleted"
+      @on-select-change="onSortChange"
+    />
 
     <!--Todo一覧-->
     <AsyncDataCard :data-length="filteredTodoList?.length || 0" :pending>
@@ -219,12 +205,3 @@ watch(
   <AddIcon @click="isShowAddTodoModal = true" />
   <AddTodoModal v-model:is-show="isShowAddTodoModal" @submit="onAddTodo" />
 </template>
-
-<style scoped>
-.search-area__wrapper {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem;
-}
-</style>
