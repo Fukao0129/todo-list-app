@@ -81,7 +81,7 @@ watch(isShow, (newVal) => {
     <template #footer>
       <BaseButton
         :text="CANCEL_BUTTON_TEXT"
-        type="secondary"
+        color="secondary"
         @click="isShow = false"
       />
       <BaseButton :text="ADD_BUTTON_TEXT" @click="onClickSubmit" />

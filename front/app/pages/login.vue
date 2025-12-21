@@ -42,7 +42,9 @@ const onLogin = () => {
         />
       </FormItem>
 
-      <NuxtLink to="/forgot-password" class="password-reset__link"
+      <NuxtLink
+        to="/forgot-password"
+        class="block text-xs my-4 text-primary hover:underline"
         >パスワードを忘れた方はこちら</NuxtLink
       >
 
@@ -50,12 +52,3 @@ const onLogin = () => {
     </form>
   </NuxtLayout>
 </template>
-
-<style scoped>
-.password-reset__link {
-  font-size: 0.8rem;
-  color: var(--primary-color);
-  margin: 1rem 0 1.5rem;
-  display: block;
-}
-</style>

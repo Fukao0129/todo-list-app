@@ -34,7 +34,9 @@ const onSubmitPasswordReset = () => {
         />
       </FormItem>
 
-      <NuxtLink to="/login" class="back-login__link"
+      <NuxtLink
+        to="/login"
+        class="block text-xs my-4 text-primary hover:underline"
         >← ログイン画面に戻る</NuxtLink
       >
 
@@ -42,12 +44,3 @@ const onSubmitPasswordReset = () => {
     </form>
   </NuxtLayout>
 </template>
-
-<style scoped>
-.back-login__link {
-  font-size: 0.8rem;
-  color: var(--primary-color);
-  margin: 0.5rem 0 1rem;
-  display: block;
-}
-</style>

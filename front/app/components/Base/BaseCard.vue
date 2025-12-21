@@ -1,33 +1,31 @@
 <script setup lang="ts">
-withDefaults(
+import type { CardVariantTokens } from "@/types/design-token";
+
+const props = withDefaults(
   defineProps<{
-    variant?: "white" | "disabled";
+    variant?: CardVariantTokens;
+    hasShadow?: boolean;
   }>(),
   {
     variant: "white",
+    hasShadow: true,
   }
 );
+
+/** デザイントークンをTailwindのユーティリティクラスにマッピング */
+const variantClasses: Record<CardVariantTokens, string> = {
+  white: "bg-white",
+  disabled: "bg-neutral-subtle",
+};
+
+const classes = computed(() => [
+  variantClasses[props.variant],
+  props.hasShadow ? "shadow" : "",
+]);
 </script>
 
 <template>
-  <div class="base-card" :class="`base-card--${variant}`">
+  <div class="border border-neutral-subtle rounded" :class="classes">
     <slot />
   </div>
 </template>
-
-<style scoped>
-.base-card {
-  border: 1px solid var(--border-color);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  width: 100%;
-}
-
-/** 種類によって背景色を変える */
-.base-card--white {
-  background: white;
-}
-.base-card--disabled {
-  background: var(--disabled-color);
-}
-</style>

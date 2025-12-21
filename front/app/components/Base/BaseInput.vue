@@ -9,47 +9,21 @@ const text = defineModel<string>("text");
 </script>
 
 <template>
-  <div class="base-input__wrapper">
+  <div class="flex flex-col gap-1 w-full">
     <BaseText v-if="label" size="small" color="secondary">{{ label }}</BaseText>
     <input
       v-model="text"
       type="text"
       :placeholder
-      class="base-input"
-      :class="{ 'base-input--error': errorMessage }"
+      class="p-2 w-full rounded-md border hover:bg-primary-subtle focus:outline-none focus:border-transparent focus:bg-white focus:ring-2 transition-all base-input"
+      :class="[
+        errorMessage
+          ? 'border-error focus:ring-error'
+          : 'border-neutral-subtle focus:ring-primary',
+      ]"
     />
     <BaseText v-if="errorMessage" size="small" color="error" bold>{{
       errorMessage.join("/ ")
     }}</BaseText>
   </div>
 </template>
-
-<style scoped>
-.base-input__wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  width: 100%;
-}
-.base-input {
-  padding: 0.3rem 0.5rem;
-  border-radius: 5px;
-  border-width: 1px;
-  border-color: var(--border-color);
-  border-style: solid;
-  transition: all 200ms 0s ease;
-  &:hover {
-    background-color: var(--hover-color);
-  }
-  &:focus {
-    border-color: transparent;
-    outline: 2px solid var(--focus-color);
-    background-color: white;
-  }
-}
-
-/** エラー時 */
-.base-input--error {
-  border-color: var(--error-color);
-}
-</style>

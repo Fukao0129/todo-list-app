@@ -8,28 +8,9 @@ const emit = defineEmits<{
   <BaseIcon
     icon="plus"
     color="white"
-    class="add-icon"
+    class="fixed bottom-8 right-8 bg-primary hover:bg-primary-strong shadow-xl rounded-full p-4 !w-4"
     is-clickable
     @click="emit('click')"
     @keydown.enter="emit('click')"
   />
 </template>
-
-<style scoped>
-.add-icon {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--primary-color);
-  border-radius: 50%;
-  width: 1rem;
-  height: 1rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  padding: 1rem;
-  z-index: 1;
-  &:hover {
-    background: var(--focus-color);
-  }
-}
-</style>

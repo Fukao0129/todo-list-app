@@ -3,7 +3,7 @@ export const PRIORITY = {
   LOW: {
     value: 1,
     label: "低",
-    color: "success" as const,
+    color: "info" as const,
   },
   MEDIUM: {
     value: 2,

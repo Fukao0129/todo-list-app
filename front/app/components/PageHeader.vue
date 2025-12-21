@@ -16,8 +16,8 @@ withDefaults(
 <template>
   <BreadCrumb v-if="breadcrumb" :breadcrumb />
 
-  <div class="page-header">
-    <h1 class="page-header__h1">
+  <div class="flex justify-between items-center">
+    <h1 class="flex items-baseline gap-2 text-2xl font-bold">
       {{ title }}
       <BaseText v-if="hasDataLength" size="small" color="secondary" tag="span">
         ({{ dataLength }}件)
@@ -26,16 +26,3 @@ withDefaults(
     <slot name="tools" />
   </div>
 </template>
-
-<style scoped>
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .page-header__h1 {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-}
-</style>

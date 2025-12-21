@@ -1,4 +1,4 @@
-import type { ColorVariant } from "@/constants/colors";
+import type { ColorTokens } from "@/types/design-token";
 
 /** 優先度の数値をラベルに変換する */
 export const formatPriorityLabel = (priority: number) => {
@@ -8,9 +8,8 @@ export const formatPriorityLabel = (priority: number) => {
 };
 
 /** 優先度に対応する色を取得する */
-export const formatPriorityColor = (priority: number): ColorVariant => {
+export const formatPriorityColor = (priority: number): ColorTokens => {
   return (
-    Object.values(PRIORITY).find((p) => p.value === priority)?.color ??
-    "success"
+    Object.values(PRIORITY).find((p) => p.value === priority)?.color ?? "info"
   );
 };

@@ -33,7 +33,7 @@ watch(isEditMode, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     nextTick(() => {
-      focusOnElement(".todo-title__wrapper input");
+      focusOnElement(".todo-title input");
     });
   }
 });
@@ -41,7 +41,7 @@ watch(isEditMode, (newVal) => {
 
 <template>
   <BaseCard
-    class="todo-card"
+    class="relative"
     :variant="
       todo.status_id == DEFAULT_STATUSES.COMPLETED.value ? 'disabled' : 'white'
     "
@@ -59,7 +59,7 @@ watch(isEditMode, (newVal) => {
     />
 
     <!--詳細-->
-    <div v-if="isOpen" class="todo-card__detail">
+    <div v-if="isOpen" class="relative p-4 border-t border-neutral-subtle">
       <TodoCardControls
         v-model:is-edit-mode="isEditMode"
         :is-trash
@@ -68,20 +68,21 @@ watch(isEditMode, (newVal) => {
       />
 
       <form
-        class="todo-edit__content"
+        class="flex flex-col gap-4"
         @submit.prevent="emit('onClickSubmit', formData)"
       >
-        <div class="todo-title__wrapper">
+        <div class="mr-20">
           <BaseInput
             v-model:text="formData.title"
             v-if="isEditMode"
             placeholder="タイトルを入力"
+            class="todo-title"
             :error-message="validationErrors['update-todo.title']"
           />
           <BaseText v-else bold>{{ todo.title }}</BaseText>
         </div>
 
-        <div class="todo-description__wrapper">
+        <div class="p-4 whitespace-pre-wrap bg-slate-100">
           <BaseTextarea
             v-if="isEditMode"
             v-model:text="formData.description"
@@ -142,33 +143,3 @@ watch(isEditMode, (newVal) => {
     </div>
   </BaseCard>
 </template>
-
-<style scoped>
-.todo-card {
-  position: relative;
-}
-
-.todo-card__detail {
-  border-top: 1px solid #ccc;
-  padding: 1rem;
-  position: relative;
-  .todo-edit__content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    .todo-title__wrapper {
-      margin-right: 5rem;
-    }
-    .todo-description__wrapper {
-      background: var(--background-color);
-      white-space: pre-wrap;
-      padding: 1rem;
-      textarea {
-        display: block;
-        width: 100%;
-      }
-    }
-  }
-}
-</style>

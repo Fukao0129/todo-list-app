@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { ColorVariant } from "@/constants/colors";
+import type { ColorTokens, TextSizeTokens } from "@/types/design-token";
 
 const props = withDefaults(
   defineProps<{
     tag?: "p" | "span" | "label";
-    size?: "small" | "default" | "large";
-    color?: ColorVariant;
+    size?: TextSizeTokens;
+    color?: ColorTokens;
     align?: "left" | "center" | "right" | "justify";
     bold?: boolean;
   }>(),
@@ -18,11 +18,34 @@ const props = withDefaults(
   }
 );
 
+/** デザイントークンをTailwindのユーティリティクラスにマッピング */
+const sizeClasses: Record<TextSizeTokens, string> = {
+  xs: "text-xs", // 0.75rem (12px)
+  small: "text-sm", // 0.875rem (14px)
+  default: "text-base", // 1rem (16px)
+  large: "text-lg", // 1.125rem (18px)
+};
+const colorClasses: Record<ColorTokens, string> = {
+  primary: "text-primary",
+  default: "text-neutral",
+  secondary: "text-neutral-muted",
+  info: "text-info",
+  warning: "text-warning",
+  error: "text-error",
+  white: "text-white",
+};
+const alignClasses: Record<typeof props.align, string> = {
+  left: "text-left",
+  center: "text-center",
+  right: "text-right",
+  justify: "text-justify",
+};
+
 const classes = computed(() => [
-  `text--${props.color}`,
-  `text--align-${props.align}`,
-  `text--size-${props.size}`,
-  { "text--bold": props.bold },
+  sizeClasses[props.size],
+  alignClasses[props.align],
+  colorClasses[props.color],
+  props.bold ? "font-bold" : "",
 ]);
 </script>
 
@@ -31,58 +54,3 @@ const classes = computed(() => [
     <slot />
   </component>
 </template>
-
-<style scoped>
-/* 色 */
-.text--primary {
-  color: var(--primary-color);
-}
-.text--default {
-  color: var(--text-color);
-}
-.text--secondary {
-  color: var(--text-secondary-color);
-}
-.text--success {
-  color: var(--success-color);
-}
-.text--warning {
-  color: var(--warning-color);
-}
-.text--error {
-  color: var(--error-color);
-}
-.text--white {
-  color: #ffffff;
-}
-
-/* 配置 */
-.text--align-left {
-  text-align: left;
-}
-.text--align-center {
-  text-align: center;
-}
-.text--align-right {
-  text-align: right;
-}
-.text--align-justify {
-  text-align: justify;
-}
-
-/* 太さ */
-.text--bold {
-  font-weight: 700;
-}
-
-/* サイズ */
-.text--size-small {
-  font-size: 0.8rem;
-}
-.text--size-default {
-  font-size: 1rem;
-}
-.text--size-large {
-  font-size: 1.2rem;
-}
-</style>

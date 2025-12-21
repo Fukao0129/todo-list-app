@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <BaseCard class="async-data-card">
+  <BaseCard class="flex flex-col gap-4 p-4">
     <BaseText v-if="pending" size="small" color="secondary" align="center">{{
       LOADING_TEXT
     }}</BaseText>
@@ -22,12 +22,3 @@ defineProps<{
     </BaseText>
   </BaseCard>
 </template>
-
-<style scoped>
-.async-data-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-}
-</style>

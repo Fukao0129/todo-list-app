@@ -35,7 +35,7 @@ const onResetPassword = () => {
 </script>
 <template>
   <NuxtLayout name="login">
-    <form class="user-edit__wrapper" @submit.prevent="onResetPassword()">
+    <form @submit.prevent="onResetPassword()">
       <FormItem :has-border="false">
         <BaseInput
           v-model:text="passwordFormData.password"
@@ -54,16 +54,7 @@ const onResetPassword = () => {
           "
         />
       </FormItem>
-      <BaseButton
-        text="パスワードをリセットする"
-        class="password-reset__button"
-      />
+      <BaseButton text="パスワードをリセットする" class="mt-4" />
     </form>
   </NuxtLayout>
 </template>
-
-<style scoped>
-.password-reset__button {
-  margin-top: 1rem;
-}
-</style>

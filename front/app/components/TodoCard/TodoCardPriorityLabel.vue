@@ -2,26 +2,25 @@
 defineProps<{
   priority: number;
 }>();
+
+/** 優先度に応じて色を変える */
+const formatPriorityLabelColor = (priority: number): string => {
+  switch (priority) {
+    case PRIORITY.LOW.value:
+      return "border-t-info";
+    case PRIORITY.MEDIUM.value:
+      return "border-t-warning";
+    case PRIORITY.HIGH.value:
+      return "border-t-error";
+    default:
+      return "border-t-transparent";
+  }
+};
 </script>
 
 <template>
   <div
-    class="todo-card__priority-label"
-    :style="{
-      '--priority-color': `var(--${formatPriorityColor(priority)}-color)`,
-    }"
+    class="absolute w-0 h-0 top-0 left-0 border-r-[0.9rem] border-r-transparent rounded-[4px_0_0_0] border-t-[0.9rem]"
+    :class="formatPriorityLabelColor(priority)"
   ></div>
 </template>
-
-<style scoped>
-.todo-card__priority-label {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 0;
-  left: 0;
-  border-right: 0.9rem solid transparent;
-  border-radius: 5px 0 0 0;
-  border-top: 0.9rem solid var(--priority-color);
-}
-</style>

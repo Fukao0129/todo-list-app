@@ -12,28 +12,13 @@ withDefaults(
 
 <template>
   <div
-    class="form-item__wrapper"
-    :class="{ 'form-item__wrapper--has-border': hasBorder }"
+  display: flex;
+    class="flex items-center gap-4 py-2 w-full"
+    :class="{ 'border-b border-neutral-subtle': hasBorder }"
   >
-    <BaseText v-if="label" tag="label" bold class="form-item__label">{{
+    <BaseText v-if="label" tag="label" bold class="flex-[0_1_10%]">{{
       label
     }}</BaseText>
     <slot />
   </div>
 </template>
-
-<style scoped>
-.form-item__wrapper {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0;
-  width: 100%;
-  .form-item__label {
-    flex: 0 1 10%;
-  }
-}
-.form-item__wrapper--has-border {
-  border-bottom: 1px solid var(--border-color);
-}
-</style>

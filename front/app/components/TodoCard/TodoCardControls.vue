@@ -17,7 +17,7 @@ const isEditMode = defineModel<boolean>("isEditMode");
 </script>
 
 <template>
-  <div class="todo-card-controls">
+  <div class="absolute top-4 right-4 flex gap-2">
     <template v-if="!isTrash">
       <BaseIcon
         color="secondary"
@@ -44,13 +44,3 @@ const isEditMode = defineModel<boolean>("isEditMode");
     />
   </div>
 </template>
-
-<style scoped>
-.todo-card-controls {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 0.3rem;
-}
-</style>

@@ -3,27 +3,12 @@
 <template>
   <TheHeader />
 
-  <div class="main__wrapper">
+  <div class="flex min-h-screen">
     <TheSidebar />
-    <main class="main__content">
+    <main
+      class="w-full ml-sidebar-width mt-header-height bg-slate-100 p-8 flex flex-col gap-4"
+    >
       <slot />
     </main>
   </div>
 </template>
-
-<style scoped>
-.main__wrapper {
-  display: flex;
-  min-height: 100vh;
-}
-.main__content {
-  width: 100%;
-  background-color: var(--background-color);
-  margin-left: 10rem; /* Sidebarの分 */
-  margin-top: 3.5rem; /* Headerの分 */
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-</style>

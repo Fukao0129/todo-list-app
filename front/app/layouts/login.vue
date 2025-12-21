@@ -1,38 +1,12 @@
 <script setup lang="ts" />
 
 <template>
-  <div class="login-page__wrapper">
-    <BaseCard class="login-page__content">
-      <img
-        src="/assets/img/logo-color.svg"
-        alt="TODO"
-        class="login-page__logo"
-      />
+  <div class="flex justify-center h-screen bg-slate-100">
+    <BaseCard
+      class="m-auto w-11/12 max-w-md p-8 flex flex-col items-center gap-4 text-center"
+    >
+      <img src="/assets/img/logo-color.svg" alt="TODO" class="max-w-40" />
       <slot />
     </BaseCard>
   </div>
 </template>
-
-<style scoped>
-.login-page__wrapper {
-  height: 100vh;
-  background: var(--background-color);
-  display: flex;
-  justify-content: center;
-  .login-page__content {
-    max-width: 30rem;
-    margin: auto;
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    text-align: center;
-    .login-page__logo {
-      max-width: 10rem;
-      width: 100%;
-      height: auto;
-    }
-  }
-}
-</style>

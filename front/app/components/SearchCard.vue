@@ -12,8 +12,8 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <BaseCard class="search-card">
-    <SearchInput v-model:search-text="q" class="search-card__input" />
+  <BaseCard class="flex items-center gap-8 p-4">
+    <SearchInput v-model:search-text="q" class="flex-auto" />
     <BaseSelect
       v-model:selected-value="selectedIndex"
       :options="
@@ -30,15 +30,3 @@ const emit = defineEmits<{
     />
   </BaseCard>
 </template>
-
-<style scoped>
-.search-card {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1rem;
-  .search-card__input {
-    flex: auto;
-  }
-}
-</style>

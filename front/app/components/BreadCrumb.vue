@@ -7,14 +7,14 @@ const breadcrumbList = [{ label: "ホーム", link: "/" }, ...props.breadcrumb];
 
 <template>
   <nav>
-    <ul class="breadcrumb__list">
+    <ul class="flex items-center text-sm">
       <li
         v-for="(item, index) in breadcrumbList"
         :key="index"
-        class="breadcrumb__item"
+        class="mr-2 after:content-['/'] after:ml-2 last:after:content-['']"
       >
         <template v-if="item.link">
-          <NuxtLink :href="item.link" class="breadcrumb__link">{{
+          <NuxtLink :href="item.link" class="underline">{{
             item.label
           }}</NuxtLink>
         </template>
@@ -27,21 +27,3 @@ const breadcrumbList = [{ label: "ホーム", link: "/" }, ...props.breadcrumb];
     </ul>
   </nav>
 </template>
-
-<style scoped>
-.breadcrumb__list {
-  display: flex;
-  align-items: center;
-  font-size: 0.8rem;
-}
-.breadcrumb__item {
-  margin-right: 0.5rem;
-  &::after {
-    content: "/";
-    margin-left: 0.5rem;
-  }
-  &:last-child::after {
-    content: "";
-  }
-}
-</style>

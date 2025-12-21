@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ColorVariant } from "@/constants/colors";
+import type { ColorTokens } from "@/types/design-token";
 
 defineProps<{
   icon?: string;
-  iconColor?: ColorVariant;
+  iconColor?: ColorTokens;
   label: string;
   event: (e?: Event) => void;
 }>();
@@ -11,7 +11,7 @@ defineProps<{
 
 <template>
   <div
-    class="dropdown-menu-item"
+    class="flex items-center gap-1 py-2 px-4 cursor-pointer hover:bg-primary-subtle transition-all"
     tabindex="0"
     @click="event"
     @keydown.enter="event"
@@ -20,17 +20,3 @@ defineProps<{
     <BaseText>{{ label }}</BaseText>
   </div>
 </template>
-
-<style scoped>
-.dropdown-menu-item {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  transition: all 200ms 0s ease;
-  &:hover {
-    background: var(--hover-color);
-  }
-}
-</style>

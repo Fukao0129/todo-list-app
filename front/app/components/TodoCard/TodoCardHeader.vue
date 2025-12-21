@@ -22,7 +22,7 @@ const isOpen = defineModel<boolean>("isOpen");
 
 <template>
   <div
-    class="todo-card-header"
+    class="flex items-center justify-between cursor-pointer p-2 transition-all hover:bg-primary-subtle"
     tabindex="0"
     @click="isOpen = !isOpen"
     @keydown.enter="isOpen = !isOpen"
@@ -33,17 +33,13 @@ const isOpen = defineModel<boolean>("isOpen");
         :isChecked="isCompleted"
         @on-check="emit('onCheck', $event, todo)"
       />
-      <BaseText
-        tag="span"
-        color="primary"
-        bold
-        class="todo-card-header__title"
-        >{{ todo.title }}</BaseText
-      >
+      <BaseText tag="span" color="primary" bold class="ml-1">{{
+        todo.title
+      }}</BaseText>
 
-      <div class="todo-card-header__due-date">
+      <div class="flex items-center gap-0.5 text-xs mt-1 ml-1">
         <BaseIcon icon="clock" color="secondary" :is-clickable="false" />
-        <BaseText size="small" color="secondary">{{
+        <BaseText size="xs" color="secondary">{{
           todo.due_date ?? "未設定"
         }}</BaseText>
       </div>
@@ -52,28 +48,3 @@ const isOpen = defineModel<boolean>("isOpen");
     <BaseIcon :icon="isOpen ? 'angle-up' : 'angle-down'" is-clickable />
   </div>
 </template>
-
-<style scoped>
-.todo-card-header {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 200ms 0s ease;
-  &:hover {
-    background-color: var(--hover-color);
-  }
-  .todo-card-header__title {
-    margin-left: 0.2rem;
-  }
-  .todo-card-header__due-date {
-    display: flex;
-    align-items: center;
-    gap: 0.1rem;
-    font-size: 0.8rem;
-    margin-top: 0.2rem;
-    margin-left: 0.2rem;
-  }
-}
-</style>

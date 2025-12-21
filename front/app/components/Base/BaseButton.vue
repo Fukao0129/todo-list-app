@@ -1,69 +1,43 @@
 <script setup lang="ts">
+import type { ColorTokens, ButtonVariantTokens } from "@/types/design-token";
+
 const props = withDefaults(
   defineProps<{
     text: string;
-    type?: "primary" | "secondary" | "danger";
+    color?: ColorTokens;
+    type?: ButtonVariantTokens;
     leftIcon?: string;
     isDisabled?: boolean;
   }>(),
   {
+    color: "primary",
     text: "Button",
-    type: "primary",
+    type: "filled",
     isDisabled: false,
   }
 );
 
-const buttonClass = computed(() => {
-  return `base-button--${props.type}`;
-});
+/** デザイントークンをTailwindのユーティリティクラスにマッピング */
+const colorClasses: Record<ColorTokens, string> = {
+  primary: "bg-primary hover:bg-primary-strong text-white",
+  default: "bg-neutral hover:bg-neutral-strong text-white",
+  secondary: "bg-neutral-muted hover:bg-neutral text-white",
+  info: "bg-info hover:bg-info-strong text-white",
+  warning: "bg-warning hover:bg-warning-strong text-white",
+  error: "bg-error hover:bg-error-strong text-white",
+  white: "bg-white hover:bg-gray-100 text-black",
+};
+
+const classes = computed(() => colorClasses[props.color]);
 </script>
 
 <template>
-  <button class="base-button" :class="buttonClass" :disabled="isDisabled">
-    <BaseIcon
-      v-if="leftIcon"
-      :icon="leftIcon"
-      :color="type == 'primary' ? 'white' : 'secondary'"
-    />
+  <button
+    class="py-1 px-1.5 rounded-md transition-all"
+    :class="classes"
+    :disabled="isDisabled"
+  >
+    <BaseIcon v-if="leftIcon" :icon="leftIcon" color="white" />
     {{ text }}
   </button>
 </template>
-
-<style scoped>
-.base-button {
-  background: var(--primary-color);
-  border: none;
-  padding: 1px 0.4rem;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-.base-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/** 種類によって背景色を変える */
-.base-button--primary {
-  background: var(--primary-color);
-  color: white;
-  &:hover {
-    background: var(--focus-color);
-  }
-}
-.base-button--secondary {
-  border: 1px solid var(--border-color);
-  background: var(--border-color);
-  color: var(--text-color);
-  &:hover {
-    background: var(--hover-color);
-  }
-}
-.base-button--danger {
-  background: var(--error-color);
-  color: white;
-  &:hover {
-    background: var(--error-hover-color);
-  }
-}
-</style>

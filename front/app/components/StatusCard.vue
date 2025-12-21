@@ -23,7 +23,7 @@ watch(isEditMode, (newVal) => {
   if (newVal) {
     isShowDropdownMenu.value = false;
     nextTick(() => {
-      focusOnElement(".status-edit__wrapper input");
+      focusOnElement(".status-update input");
     });
   } else {
     /** 編集モード終了時に入力欄を初期値に戻す */
@@ -33,21 +33,24 @@ watch(isEditMode, (newVal) => {
 </script>
 
 <template>
-  <BaseCard class="status-card">
+  <BaseCard class="flex items-center justify-between p-4">
     <BaseText v-if="!isEditMode">{{ status.name }}</BaseText>
-    <div v-else class="status-edit__wrapper">
+    <div v-else class="flex items-center gap-2">
       <BaseInput
         v-model:text="status.name"
         placeholder="ステータス名を入力"
+        class="status-update"
         :error-message="validationErrors['update-status.name']"
       />
       <BaseButton
         :text="CANCEL_BUTTON_TEXT"
-        type="secondary"
+        color="secondary"
+        class="flex-shrink-0"
         @click="isEditMode = false"
       />
       <BaseButton
         :text="UPDATE_BUTTON_TEXT"
+        class="flex-shrink-0"
         @click="emit('onUpdate', status.id, status)"
       />
     </div>
@@ -89,18 +92,3 @@ watch(isEditMode, (newVal) => {
     </DropdownMenu>
   </BaseCard>
 </template>
-
-<style scoped>
-.status-card {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.status-edit__wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-</style>

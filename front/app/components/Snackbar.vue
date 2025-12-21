@@ -2,21 +2,33 @@
 import type { Snackbar } from "@/types/snackbar";
 
 const snackbar = useState<Snackbar>("snackbar");
+
+/** デザイントークンをTailwindのユーティリティクラスとアイコン種別にマッピング */
+const typeClasses: Record<
+  Snackbar["type"],
+  { backgroundColor: string; icon: string }
+> = {
+  success: {
+    backgroundColor: "bg-neutral",
+    icon: "circle-check",
+  },
+  error: {
+    backgroundColor: "bg-error",
+    icon: "triangle-exclamation",
+  },
+};
+
+const classes = computed(() => typeClasses[snackbar.value.type]);
 </script>
 
 <template>
   <Transition name="snackbar-slide">
     <div
       v-if="snackbar.isShow"
-      class="snackbar"
-      :class="[`snackbar--${snackbar.type}`]"
+      class="fixed left-4 bottom-4 text-white p-4 shadow-lg"
+      :class="classes.backgroundColor"
     >
-      <BaseIcon
-        :icon="
-          snackbar.type === 'success' ? 'circle-check' : 'triangle-exclamation'
-        "
-        color="white"
-      />
+      <BaseIcon :icon="classes.icon" color="white" />
       {{ snackbar.message }}
     </div>
   </Transition>
@@ -34,28 +46,10 @@ const snackbar = useState<Snackbar>("snackbar");
     opacity: 1;
   }
 }
-
-.snackbar {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  position: fixed;
-  left: 1rem;
-  bottom: 1rem;
-  padding: 1rem;
-  color: white;
-}
-
 .snackbar-slide-enter-active {
   animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .snackbar-slide-leave-active {
   animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) reverse forwards;
-}
-
-/** 種類によって背景色を変える */
-.snackbar--success {
-  background: var(--text-color);
-}
-.snackbar--error {
-  background: var(--error-color);
 }
 </style>

@@ -3,8 +3,10 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
 </script>
 
 <template>
-  <header class="header">
-    <NuxtLink to="/" class="logo-link">
+  <header
+    class="fixed top-0 w-full bg-primary text-white p-4 h-header-height flex justify-between items-center z-10 shadow-md"
+  >
+    <NuxtLink to="/" class="block w-28 hover:opacity-50 transition-all">
       <img src="/assets/img/logo.svg" alt="TODO"
     /></NuxtLink>
 
@@ -17,7 +19,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
           icon="circle-user"
           color="white"
           is-clickable
-          class="header__user-icon"
+          class="text-2xl"
           @click="isShowDropdownMenu = !isShowDropdownMenu"
           @keydown.enter="isShowDropdownMenu = !isShowDropdownMenu"
         />
@@ -29,32 +31,3 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
     </DropdownMenu>
   </header>
 </template>
-
-<style scoped>
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: var(--primary-color);
-  color: white;
-  padding: 1rem;
-  height: 3.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  z-index: 1;
-  .logo-link {
-    display: block;
-    width: 7rem;
-    height: auto;
-    transition: all 200ms 0s ease;
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-  .header__user-icon {
-    font-size: 1.5rem;
-  }
-}
-</style>

@@ -69,8 +69,8 @@ const onBulkDelete = () => {
     >
       <template #tools>
         <BaseButton
+          v-if="todoListData?.length > 0"
           text="ゴミ箱を空にする"
-          :is-disabled="todoListData?.length === 0"
           @click="onBulkDelete"
         />
       </template>
@@ -93,16 +93,9 @@ const onBulkDelete = () => {
         <img
           src="/assets/img/empty-trash.svg"
           alt="ゴミ箱は空っぽ"
-          class="trash-empty__image"
+          class="max-w-40 mx-auto my-4"
         />
       </div>
     </AsyncDataCard>
   </NuxtLayout>
 </template>
-
-<style scoped>
-.trash-empty__image {
-  max-width: 10rem;
-  margin: 1rem auto;
-}
-</style>
