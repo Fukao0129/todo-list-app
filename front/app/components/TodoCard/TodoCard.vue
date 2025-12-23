@@ -40,12 +40,7 @@ watch(isEditMode, (newVal) => {
 </script>
 
 <template>
-  <BaseCard
-    class="relative"
-    :variant="
-      todo.status_id == DEFAULT_STATUSES.COMPLETED.value ? 'disabled' : 'white'
-    "
-  >
+  <BaseCard class="relative" :variant="isCompleted ? 'disabled' : 'white'">
     <!-- 優先度ラベル -->
     <TodoCardPriorityLabel :priority="todo.priority" />
 
@@ -82,7 +77,10 @@ watch(isEditMode, (newVal) => {
           <BaseText v-else bold>{{ todo.title }}</BaseText>
         </div>
 
-        <div class="p-4 whitespace-pre-wrap bg-slate-100">
+        <div
+          class="p-4 whitespace-pre-wrap"
+          :class="{ 'bg-slate-100': !isCompleted }"
+        >
           <BaseTextarea
             v-if="isEditMode"
             v-model:text="formData.description"
