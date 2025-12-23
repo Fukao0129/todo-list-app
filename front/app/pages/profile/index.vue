@@ -5,7 +5,7 @@ const PAGE_TITLE = "ユーザー設定";
 useHead({ title: PAGE_TITLE });
 
 const { showSnackbar } = useSnackbar();
-const { useCustomFetch, callApi } = useApi();
+const { callApi } = useApi();
 const { validationErrors, setErrorMessages, clearErrorMessages } =
   useValidationErrors();
 const { user, updateUser } = useUserStore();
@@ -54,7 +54,7 @@ const onUpdatePassword = () => {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout :has-sidebar="false">
     <!--ページ上部-->
     <PageHeader
       :title="PAGE_TITLE"
@@ -74,10 +74,6 @@ const onUpdatePassword = () => {
         </FormItem>
         <FormItem label="メールアドレス" :has-border="false">
           <BaseText>{{ formData.email }}</BaseText>
-          <!-- <BaseInput
-            v-model:text="formData.email"
-            placeholder="メールアドレスを入力してください"
-          /> -->
         </FormItem>
         <BaseButton text="更新する" />
       </form>
