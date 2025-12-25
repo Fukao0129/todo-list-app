@@ -1,14 +1,10 @@
 <script setup lang="ts">
 const isShow = defineModel<boolean>("isShow");
 
-const emit = defineEmits<{
-  closeDropdown: [];
-}>();
-
 /* ドロップダウンメニューの外側がクリックされたら非表示にする */
 const wrapper = ref<HTMLElement | null>(null);
 const onClickOutside = (event: MouseEvent) => {
-  if (!wrapper.value?.contains(event.target as Node)) emit("closeDropdown");
+  if (!wrapper.value?.contains(event.target as Node)) isShow.value = false;
 };
 
 onMounted(() => {
@@ -22,11 +18,11 @@ onBeforeUnmount(() => {
 <template>
   <div class="relative" ref="wrapper">
     <slot name="trigger" />
-    <div
+    <BaseCard
       v-if="isShow"
-      class="absolute bg-white right-[calc(100%_+_0.1rem)] w-max z-10 shadow-xl"
+      class="absolute right-[calc(100%_+_0.1rem)] w-max z-10"
     >
       <slot name="contents" />
-    </div>
+    </BaseCard>
   </div>
 </template>

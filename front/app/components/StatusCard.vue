@@ -17,6 +17,25 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
 const isEditMode = ref(false); // 編集モードフラグ
 const statusInitName = cloneDeep(props.status.name); // 初期化用
 
+const statusControlMenus = [
+  {
+    icon: "pen",
+    iconColor: "secondary" as const,
+    label: "編集",
+    event: () => {
+      isEditMode.value = !isEditMode.value;
+    },
+  },
+  {
+    icon: "trash",
+    iconColor: "error" as const,
+    label: "削除",
+    event: () => {
+      emit("onDelete", props.status.id);
+    },
+  },
+];
+
 /** 編集モードになったらドロップダウンメニューを閉じて、ステータス名の入力欄にフォーカスする */
 watch(isEditMode, (newVal) => {
   clearErrorMessages();
@@ -54,10 +73,7 @@ watch(isEditMode, (newVal) => {
         @click="emit('onUpdate', status.id, status)"
       />
     </div>
-    <DropdownMenu
-      v-model:is-show="isShowDropdownMenu"
-      @close-dropdown="isShowDropdownMenu = false"
-    >
+    <DropdownMenu v-model:is-show="isShowDropdownMenu">
       <template #trigger>
         <BaseIcon
           v-if="status.is_updatable"
@@ -70,23 +86,12 @@ watch(isEditMode, (newVal) => {
 
       <template #contents>
         <DropdownMenuItem
-          icon="pen"
-          label="編集"
-          :event="
-            () => {
-              isEditMode = !isEditMode;
-            }
-          "
-        />
-        <DropdownMenuItem
-          icon="trash"
-          icon-color="error"
-          label="削除"
-          :event="
-            () => {
-              emit('onDelete', status.id);
-            }
-          "
+          v-for="menu in statusControlMenus"
+          :key="menu.label"
+          :icon="menu.icon"
+          :icon-color="menu.iconColor"
+          :label="menu.label"
+          :event="menu.event"
         />
       </template>
     </DropdownMenu>

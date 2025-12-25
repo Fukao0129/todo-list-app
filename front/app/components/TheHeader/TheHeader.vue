@@ -10,10 +10,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
       <img src="/assets/img/logo.svg" alt="TODO"
     /></NuxtLink>
 
-    <DropdownMenu
-      v-model:is-show="isShowDropdownMenu"
-      @close-dropdown="isShowDropdownMenu = false"
-    >
+    <DropdownMenu v-model:is-show="isShowDropdownMenu">
       <template #trigger>
         <BaseIcon
           icon="circle-user"
