@@ -39,7 +39,7 @@ defineExpose({
 <template>
   <div
     v-if="isShow"
-    class="fixed inset-0 bg-black bg-opacity-50 z-10"
+    class="fixed inset-0 bg-neutral bg-opacity-50 z-20"
     @click="handleBackdropClick"
   >
     <div

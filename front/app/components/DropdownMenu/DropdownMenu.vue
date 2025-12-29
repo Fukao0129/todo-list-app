@@ -18,10 +18,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="relative" ref="wrapper">
     <slot name="trigger" />
-    <BaseCard
-      v-if="isShow"
-      class="absolute right-[calc(100%_+_0.1rem)] w-max z-10"
-    >
+    <BaseCard v-if="isShow" class="absolute right-[calc(100%_+_0.1rem)] w-max">
       <slot name="contents" />
     </BaseCard>
   </div>
