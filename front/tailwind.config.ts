@@ -40,6 +40,17 @@ export default {
         "header-height": "3.5rem",
         "sidebar-width": "10rem",
       },
+      keyframes: {
+        slideInUp: {
+          from: { transform: "translateY(100%)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+      animation: {
+        "slide-in-up": "slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        "slide-out-down":
+          "slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) reverse forwards",
+      },
     },
   },
   plugins: [],

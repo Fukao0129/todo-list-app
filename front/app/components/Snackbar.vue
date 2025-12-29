@@ -22,10 +22,13 @@ const classes = computed(() => typeClasses[snackbar.value.type]);
 </script>
 
 <template>
-  <Transition name="snackbar-slide">
+  <Transition
+    enter-active-class="animate-slide-in-up"
+    leave-active-class="animate-slide-out-down"
+  >
     <div
       v-if="snackbar.isShow"
-      class="fixed left-4 bottom-4 text-white p-4 shadow-lg"
+      class="fixed left-4 bottom-4 text-white p-4 shadow-lg z-30"
       :class="classes.backgroundColor"
     >
       <BaseIcon :icon="classes.icon" color="white" />
@@ -33,23 +36,3 @@ const classes = computed(() => typeClasses[snackbar.value.type]);
     </div>
   </Transition>
 </template>
-
-<style scoped>
-/* アニメーション設定 */
-@keyframes slideInUp {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-.snackbar-slide-enter-active {
-  animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.snackbar-slide-leave-active {
-  animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) reverse forwards;
-}
-</style>
