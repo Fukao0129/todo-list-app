@@ -193,8 +193,8 @@ watch(
         :todo
         :statuses="statusData"
         @on-click-submit="onUpdateTodo"
-        @on-check="onSwitchTodoComplete"
-        @on-trash="onTrashTodo"
+        @on-check="onSwitchTodoComplete($event, todo)"
+        @on-trash="onTrashTodo(todo)"
       />
     </AsyncDataCard>
   </NuxtLayout>

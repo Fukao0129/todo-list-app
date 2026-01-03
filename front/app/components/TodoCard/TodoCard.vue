@@ -16,9 +16,9 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   onClickSubmit: [UpdateTodoRequest]; // 編集
-  onCheck: [boolean, UpdateTodoRequest]; // 完了/未完了切替
-  onTrash: [UpdateTodoRequest]; // ゴミ箱へ移動
-  onRestore: [UpdateTodoRequest]; // ゴミ箱から戻す
+  onCheck: [boolean]; // 完了/未完了切替
+  onTrash: []; // ゴミ箱へ移動
+  onRestore: []; // ゴミ箱から戻す
 }>();
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
@@ -50,7 +50,7 @@ watch(isEditMode, (newVal) => {
       :todo
       :is-trash
       :is-completed
-      @onCheck="emit('onCheck', $event, todo)"
+      @onCheck="emit('onCheck', $event)"
     />
 
     <!--詳細-->
@@ -58,8 +58,8 @@ watch(isEditMode, (newVal) => {
       <TodoCardControls
         v-model="isEditMode"
         :is-trash
-        @onTrash="emit('onTrash', todo)"
-        @onRestore="emit('onRestore', todo)"
+        @onTrash="emit('onTrash')"
+        @onRestore="emit('onRestore')"
       />
 
       <form
