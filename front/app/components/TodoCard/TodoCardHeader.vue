@@ -14,7 +14,7 @@ withDefaults(
 );
 
 const emit = defineEmits<{
-  onCheck: [boolean, UpdateTodoRequest];
+  onCheck: [boolean];
 }>();
 
 const isOpen = defineModel<boolean>();
@@ -30,8 +30,9 @@ const isOpen = defineModel<boolean>();
     <div>
       <BaseCheckbox
         v-if="!isTrash"
-        :isChecked="isCompleted"
-        @on-check="emit('onCheck', $event, todo)"
+        :model-value="isCompleted"
+        @click.stop
+        @update:model-value="emit('onCheck', $event)"
       />
       <BaseText tag="span" color="primary" bold class="ml-1">{{
         todo.title
