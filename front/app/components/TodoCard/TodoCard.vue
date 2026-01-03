@@ -46,7 +46,7 @@ watch(isEditMode, (newVal) => {
 
     <!--上部-->
     <TodoCardHeader
-      v-model:is-open="isOpen"
+      v-model="isOpen"
       :todo
       :is-trash
       :is-completed
@@ -56,7 +56,7 @@ watch(isEditMode, (newVal) => {
     <!--詳細-->
     <div v-if="isOpen" class="relative p-4 border-t border-neutral-subtle">
       <TodoCardControls
-        v-model:is-edit-mode="isEditMode"
+        v-model="isEditMode"
         :is-trash
         @onTrash="emit('onTrash', todo)"
         @onRestore="emit('onRestore', todo)"
@@ -68,7 +68,7 @@ watch(isEditMode, (newVal) => {
       >
         <div class="mr-20">
           <BaseInput
-            v-model:text="formData.title"
+            v-model="formData.title"
             v-if="isEditMode"
             placeholder="タイトルを入力"
             class="todo-title"
@@ -83,7 +83,7 @@ watch(isEditMode, (newVal) => {
         >
           <BaseTextarea
             v-if="isEditMode"
-            v-model:text="formData.description"
+            v-model="formData.description"
             placeholder="説明文を入力"
           />
           <BaseText v-else size="small" color="secondary">
@@ -95,7 +95,7 @@ watch(isEditMode, (newVal) => {
           <FormItem label="ステータス">
             <BaseSelect
               v-if="isEditMode"
-              v-model:selected-value="formData.status_id"
+              v-model="formData.status_id"
               :options="statuses as SelectOption[]"
             />
             <BaseText v-else>{{ todo.status.name }}</BaseText>
@@ -103,7 +103,7 @@ watch(isEditMode, (newVal) => {
           <FormItem label="優先度">
             <BaseSelect
               v-if="isEditMode"
-              v-model:selected-value="formData.priority"
+              v-model="formData.priority"
               :options="
                 Object.values(PRIORITY).map((priority) => ({
                   id: priority.value,
@@ -136,7 +136,7 @@ watch(isEditMode, (newVal) => {
         </div>
 
         <!--下部-->
-        <TodoCardFooter v-if="isEditMode" v-model:is-edit-mode="isEditMode" />
+        <TodoCardFooter v-if="isEditMode" v-model="isEditMode" />
       </form>
     </div>
   </BaseCard>

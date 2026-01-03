@@ -4,7 +4,7 @@ defineProps<{
 }>();
 
 /** ON/OFF切り替え */
-const isOn = defineModel<boolean>("isOn");
+const isOn = defineModel<boolean>();
 const onToggle = () => {
   isOn.value = !isOn.value;
 };

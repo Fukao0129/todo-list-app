@@ -201,5 +201,5 @@ watch(
 
   <!--Todo追加-->
   <AddIcon @click="isShowAddTodoModal = true" />
-  <AddTodoModal v-model:is-show="isShowAddTodoModal" @submit="onAddTodo" />
+  <AddTodoModal v-model="isShowAddTodoModal" @submit="onAddTodo" />
 </template>

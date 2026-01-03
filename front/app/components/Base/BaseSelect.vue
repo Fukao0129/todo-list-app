@@ -5,7 +5,7 @@ defineProps<{
   options: SelectOption[];
 }>();
 
-const selectedValue = defineModel<number>("selectedValue");
+const selectedValue = defineModel<number>();
 </script>
 
 <template>

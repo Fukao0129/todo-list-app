@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CreateStatusRequest } from "@/types/status";
 
-const isShow = defineModel<boolean>("isShow");
+const isShow = defineModel<boolean>();
 
 const emit = defineEmits<{
   submit: [typeof formData.value];
@@ -35,12 +35,12 @@ watch(isShow, (newVal) => {
 </script>
 
 <template>
-  <BaseModal v-model:is-show="isShow" title="ステータスを追加する">
+  <BaseModal v-model="isShow" title="ステータスを追加する">
     <template #content>
       <form @submit.prevent="onClickSubmit">
         <FormItem label="ステータス名" :has-border="false">
           <BaseInput
-            v-model:text="formData.name"
+            v-model="formData.name"
             placeholder="ステータス名を入力"
             id="add-status-modal__input"
             :error-message="validationErrors['add-status.name']"

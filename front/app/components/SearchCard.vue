@@ -9,9 +9,9 @@ const isToggleOn = defineModel<boolean>("isToggleOn"); // トグルのON/OFF
 
 <template>
   <BaseCard class="flex items-center gap-8 p-4">
-    <SearchInput v-model:search-text="q" class="flex-auto" />
+    <SearchInput v-model="q" class="flex-auto" />
     <BaseSelect
-      v-model:selected-value="selectedIndex"
+      v-model="selectedIndex"
       :options="
         SORT_OPTIONS.map((option, index) => ({
           id: index,
@@ -20,7 +20,7 @@ const isToggleOn = defineModel<boolean>("isToggleOn"); // トグルのON/OFF
       "
     />
     <BaseToggle
-      v-model:is-on="isToggleOn"
+      v-model="isToggleOn"
       :label="`${DEFAULT_STATUSES.COMPLETED.label}を除く`"
     />
   </BaseCard>

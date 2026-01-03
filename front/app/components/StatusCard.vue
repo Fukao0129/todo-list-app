@@ -56,7 +56,7 @@ watch(isEditMode, (newVal) => {
     <BaseText v-if="!isEditMode">{{ status.name }}</BaseText>
     <div v-else class="flex items-center gap-2">
       <BaseInput
-        v-model:text="status.name"
+        v-model="status.name"
         placeholder="ステータス名を入力"
         class="status-update"
         :error-message="validationErrors['update-status.name']"

@@ -98,8 +98,5 @@ const onDeleteStatus = (statusId: number) => {
 
   <!--ステータス追加-->
   <AddIcon @click="isShowAddStatusModal = true" />
-  <AddStatusModal
-    v-model:is-show="isShowAddStatusModal"
-    @submit="onAddStatus"
-  />
+  <AddStatusModal v-model="isShowAddStatusModal" @submit="onAddStatus" />
 </template>

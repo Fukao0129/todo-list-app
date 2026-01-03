@@ -17,7 +17,7 @@ const emit = defineEmits<{
   onCheck: [boolean, UpdateTodoRequest];
 }>();
 
-const isOpen = defineModel<boolean>("isOpen");
+const isOpen = defineModel<boolean>();
 </script>
 
 <template>

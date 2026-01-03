@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const searchText = defineModel<string>("searchText");
+const searchText = defineModel<string>();
 </script>
 
 <template>
@@ -9,7 +9,7 @@ const searchText = defineModel<string>("searchText");
       color="secondary"
       class="absolute left-2 top-1/2 transform -translate-y-1/2"
     />
-    <BaseInput v-model:text="searchText" placeholder="キーワードで検索" />
+    <BaseInput v-model="searchText" placeholder="キーワードで検索" />
   </div>
 </template>
 

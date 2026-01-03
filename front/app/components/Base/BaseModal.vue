@@ -4,7 +4,7 @@ export type BaseModalProps = {
 };
 defineProps<BaseModalProps>();
 
-const isShow = defineModel<boolean>("isShow");
+const isShow = defineModel<boolean>();
 
 /** モーダルを閉じる */
 const closeModal = () => {

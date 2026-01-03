@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const isEditMode = defineModel<boolean>("isEditMode");
+const isEditMode = defineModel<boolean>();
 </script>
 
 <template>

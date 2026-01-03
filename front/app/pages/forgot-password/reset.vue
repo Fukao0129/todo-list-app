@@ -38,7 +38,7 @@ const onResetPassword = () => {
     <form @submit.prevent="onResetPassword()">
       <FormItem :has-border="false">
         <BaseInput
-          v-model:text="passwordFormData.password"
+          v-model="passwordFormData.password"
           placeholder="パスワードを入力してください"
           label="パスワード"
           :error-message="validationErrors['reset-password.password']"
@@ -46,7 +46,7 @@ const onResetPassword = () => {
       </FormItem>
       <FormItem :has-border="false">
         <BaseInput
-          v-model:text="passwordFormData.password_confirmation"
+          v-model="passwordFormData.password_confirmation"
           placeholder="パスワードを入力してください"
           label="パスワード(確認)"
           :error-message="

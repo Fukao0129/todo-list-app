@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CreateTodoRequest } from "@/types/todo";
 
-const isShow = defineModel<boolean>("isShow");
+const isShow = defineModel<boolean>();
 
 const emit = defineEmits<{
   submit: [typeof formData.value];
@@ -38,22 +38,22 @@ watch(isShow, (newVal) => {
 </script>
 
 <template>
-  <BaseModal v-model:is-show="isShow" title="Todoを追加する">
+  <BaseModal v-model="isShow" title="Todoを追加する">
     <template #content>
       <form @submit.prevent="onClickSubmit">
         <FormItem label="タイトル">
           <BaseInput
-            v-model:text="formData.title"
+            v-model="formData.title"
             :error-message="validationErrors['add-todo.title']"
             id="add-todo-modal__input"
           />
         </FormItem>
         <FormItem label="説明">
-          <BaseTextarea v-model:text="formData.description" />
+          <BaseTextarea v-model="formData.description" />
         </FormItem>
         <FormItem label="優先度">
           <BaseSelect
-            v-model:selected-value="formData.priority"
+            v-model="formData.priority"
             :options="
               Object.values(PRIORITY).map((priority) => ({
                 id: priority.value,

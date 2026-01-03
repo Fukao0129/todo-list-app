@@ -5,7 +5,7 @@ defineProps<{
   label?: string;
 }>();
 
-const text = defineModel<string>("text");
+const text = defineModel<string>();
 </script>
 
 <template>
