@@ -28,7 +28,7 @@ watch(isShow, (newVal) => {
   formData.value.name = "";
   if (newVal) {
     nextTick(() => {
-      focusOnElement("#add-status-modal__input input");
+      focusOnElement("#add-status-modal__input");
     });
   }
 });

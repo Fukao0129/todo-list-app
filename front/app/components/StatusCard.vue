@@ -42,7 +42,7 @@ watch(isEditMode, (newVal) => {
   if (newVal) {
     isShowDropdownMenu.value = false;
     nextTick(() => {
-      focusOnElement(".status-update input");
+      focusOnElement(".status-update");
     });
   } else {
     /** 編集モード終了時に入力欄を初期値に戻す */

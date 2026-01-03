@@ -33,7 +33,7 @@ watch(isEditMode, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     nextTick(() => {
-      focusOnElement(".todo-title input");
+      focusOnElement(".todo-title");
     });
   }
 });

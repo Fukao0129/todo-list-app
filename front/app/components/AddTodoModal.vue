@@ -31,7 +31,7 @@ watch(isShow, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     nextTick(() => {
-      focusOnElement("#add-todo-modal__input input");
+      focusOnElement("#add-todo-modal__input");
     });
   }
 });

@@ -32,6 +32,7 @@ const onLogin = () => {
           v-model="loginForm.email"
           label="メールアドレス"
           placeholder="メールアドレス"
+          type="email"
         />
       </FormItem>
       <FormItem :has-border="false">
@@ -39,6 +40,7 @@ const onLogin = () => {
           v-model="loginForm.password"
           label="パスワード"
           placeholder="パスワード"
+          type="password"
         />
       </FormItem>
 
