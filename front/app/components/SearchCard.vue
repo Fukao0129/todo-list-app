@@ -8,7 +8,7 @@ const isToggleOn = defineModel<boolean>("isToggleOn"); // トグルのON/OFF
 </script>
 
 <template>
-  <BaseCard class="flex items-center gap-8 p-4">
+  <BaseCard class="grid md:flex items-center gap-4 md:gap-8 p-4">
     <SearchInput v-model="q" class="flex-auto" />
     <BaseSelect
       v-model="selectedIndex"
@@ -22,6 +22,7 @@ const isToggleOn = defineModel<boolean>("isToggleOn"); // トグルのON/OFF
     <BaseToggle
       v-model="isToggleOn"
       :label="`${DEFAULT_STATUSES.COMPLETED.label}を除く`"
+      class="flex-shrink-0"
     />
   </BaseCard>
 </template>

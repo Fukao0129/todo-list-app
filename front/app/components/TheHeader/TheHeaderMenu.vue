@@ -21,7 +21,7 @@ const userMenus = [
 </script>
 
 <template>
-  <div class="p-4 border-b border-neutral-subtle">
+  <div class="p-4 border-b border-neutral-subtle text-center">
     <BaseIcon icon="circle-user" color="primary" />
     <BaseText>{{ user?.name }}</BaseText>
     <BaseText size="small" color="secondary">{{ user?.email }}</BaseText>

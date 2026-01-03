@@ -54,24 +54,29 @@ watch(isEditMode, (newVal) => {
 <template>
   <BaseCard class="flex items-center justify-between p-4">
     <BaseText v-if="!isEditMode">{{ status.name }}</BaseText>
-    <div v-else class="flex items-center gap-2">
+    <div
+      v-else
+      class="flex items-start gap-2 flex-col sm:flex-row sm:items-center"
+    >
       <BaseInput
         v-model="status.name"
         placeholder="ステータス名を入力"
         class="status-update"
         :error-message="validationErrors['update-status.name']"
       />
-      <BaseButton
-        :text="CANCEL_BUTTON_TEXT"
-        color="secondary"
-        class="flex-shrink-0"
-        @click="isEditMode = false"
-      />
-      <BaseButton
-        :text="UPDATE_BUTTON_TEXT"
-        class="flex-shrink-0"
-        @click="emit('onUpdate', status.id, status)"
-      />
+      <div class="flex gap-2">
+        <BaseButton
+          :text="CANCEL_BUTTON_TEXT"
+          color="secondary"
+          class="flex-shrink-0"
+          @click="isEditMode = false"
+        />
+        <BaseButton
+          :text="UPDATE_BUTTON_TEXT"
+          class="flex-shrink-0"
+          @click="emit('onUpdate', status.id, status)"
+        />
+      </div>
     </div>
     <DropdownMenu v-model="isShowDropdownMenu">
       <template #trigger>
