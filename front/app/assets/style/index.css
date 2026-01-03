@@ -2,15 +2,18 @@
 
 @layer base {
   /* フォントサイズ調整 */
+  /** ～639px **/
   html {
     font-size: 12px;
   }
-  @media (min-width: 640px) {
+  /** 640px～767px **/
+  @media (min-width: theme("screens.sm")) {
     html {
       font-size: 14px;
     }
   }
-  @media (min-width: 768px) {
+  /** 768px～ **/
+  @media (min-width: theme("screens.md")) {
     html {
       font-size: 16px;
     }
