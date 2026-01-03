@@ -40,7 +40,7 @@ watch(isEditMode, (newVal) => {
 </script>
 
 <template>
-  <BaseCard class="relative" :variant="isCompleted ? 'disabled' : 'white'">
+  <BaseCard class="relative" :variant="isCompleted ? 'disabled' : 'default'">
     <!-- 優先度ラベル -->
     <TodoCardPriorityLabel :priority="todo.priority" />
 

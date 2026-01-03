@@ -7,14 +7,14 @@ const props = withDefaults(
     hasShadow?: boolean;
   }>(),
   {
-    variant: "white",
+    variant: "default",
     hasShadow: true,
   }
 );
 
 /** デザイントークンをTailwindのユーティリティクラスにマッピング */
 const variantClasses: Record<CardVariantTokens, string> = {
-  white: "bg-white",
+  default: "bg-white",
   disabled: "bg-neutral-subtle",
 };
 
