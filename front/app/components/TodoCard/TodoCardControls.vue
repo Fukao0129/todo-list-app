@@ -13,7 +13,7 @@ const emit = defineEmits<{
   onRestore: []; // ゴミ箱から戻す
 }>();
 
-const isEditMode = defineModel<boolean>("isEditMode");
+const isEditMode = defineModel<boolean>();
 </script>
 
 <template>

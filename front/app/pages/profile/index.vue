@@ -5,7 +5,7 @@ const PAGE_TITLE = "ユーザー設定";
 useHead({ title: PAGE_TITLE });
 
 const { showSnackbar } = useSnackbar();
-const { useCustomFetch, callApi } = useApi();
+const { callApi } = useApi();
 const { validationErrors, setErrorMessages, clearErrorMessages } =
   useValidationErrors();
 const { user, updateUser } = useUserStore();
@@ -54,7 +54,7 @@ const onUpdatePassword = () => {
 </script>
 
 <template>
-  <NuxtLayout>
+  <NuxtLayout :has-sidebar="false">
     <!--ページ上部-->
     <PageHeader
       :title="PAGE_TITLE"
@@ -67,17 +67,13 @@ const onUpdatePassword = () => {
       <form @submit.prevent="onUpdateUser">
         <FormItem label="名前">
           <BaseInput
-            v-model:text="formData.name"
+            v-model="formData.name"
             placeholder="名前を入力してください"
             :error-message="validationErrors['update-user.name']"
           />
         </FormItem>
         <FormItem label="メールアドレス" :has-border="false">
           <BaseText>{{ formData.email }}</BaseText>
-          <!-- <BaseInput
-            v-model:text="formData.email"
-            placeholder="メールアドレスを入力してください"
-          /> -->
         </FormItem>
         <BaseButton text="更新する" />
       </form>
@@ -88,7 +84,7 @@ const onUpdatePassword = () => {
       <form @submit.prevent="onUpdatePassword()">
         <FormItem label="現在のパスワード">
           <BaseInput
-            v-model:text="passwordFormData.current_password"
+            v-model="passwordFormData.current_password"
             type="password"
             placeholder="現在のパスワードを入力してください"
             :error-message="
@@ -98,7 +94,7 @@ const onUpdatePassword = () => {
         </FormItem>
         <FormItem label="新しいパスワード">
           <BaseInput
-            v-model:text="passwordFormData.new_password"
+            v-model="passwordFormData.new_password"
             type="password"
             placeholder="新しいパスワードを入力してください"
             :error-message="validationErrors['update-password.new_password']"
@@ -106,7 +102,7 @@ const onUpdatePassword = () => {
         </FormItem>
         <FormItem label="新しいパスワード（確認）" :has-border="false">
           <BaseInput
-            v-model:text="passwordFormData.new_password_confirmation"
+            v-model="passwordFormData.new_password_confirmation"
             type="password"
             placeholder="新しいパスワードを再度入力してください"
           />

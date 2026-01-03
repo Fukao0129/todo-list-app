@@ -1,7 +1,12 @@
 import type { Snackbar } from "@/types/snackbar";
 
 export const useSnackbar = () => {
-  const snackbar = useState<Snackbar>("snackbar");
+  // 表示フラグ
+  const snackbar = useState<Snackbar>("snackbar", () => ({
+    isShow: false,
+    message: "",
+    type: "success",
+  }));
 
   /** スナックバーを表示する */
   const showSnackbar = (
@@ -24,6 +29,7 @@ export const useSnackbar = () => {
   );
 
   return {
+    snackbar,
     showSnackbar,
   };
 };

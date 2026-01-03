@@ -87,7 +87,7 @@ const onBulkDelete = () => {
         :key="todo.id"
         :todo="todo"
         is-trash
-        @on-restore="onRestoreTodo"
+        @on-restore="onRestoreTodo(todo)"
       />
       <div v-if="todoListData?.length === 0 && !pending">
         <img

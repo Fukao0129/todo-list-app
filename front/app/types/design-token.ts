@@ -21,7 +21,7 @@ const BUTTON_VARIANT_TOKENS = ["filled", "outlined"] as const;
 export type ButtonVariantTokens = (typeof BUTTON_VARIANT_TOKENS)[number];
 
 // カードの種類
-const CARD_VARIANT_TOKENS = ["white", "disabled"] as const;
+const CARD_VARIANT_TOKENS = ["default", "disabled"] as const;
 export type CardVariantTokens = (typeof CARD_VARIANT_TOKENS)[number];
 
 // スナックバーの種類

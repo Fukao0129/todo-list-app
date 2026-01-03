@@ -3,7 +3,7 @@ defineProps<{
   placeholder?: string;
 }>();
 
-const text = defineModel<string | null>("text");
+const text = defineModel<string | null>();
 </script>
 
 <template>

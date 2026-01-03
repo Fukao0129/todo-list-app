@@ -7,12 +7,17 @@ const navMenu = [
   { icon: "trash", label: "ゴミ箱", to: "/trash/" },
   { icon: "gear", label: "ステータス", to: "/status" },
 ];
+
+/** ページ遷移時にサイドバーを非表示にする */
+const { hideSidebar } = useSidebar();
+const router = useRouter();
+router.afterEach(() => {
+  hideSidebar();
+});
 </script>
 
 <template>
-  <aside
-    class="fixed top-header-height w-sidebar-width h-[calc(100vh-3.5rem)] shadow-xl"
-  >
+  <aside class="bg-white shadow-xl">
     <nav>
       <ul>
         <li v-for="menu in navMenu" :key="menu.to">

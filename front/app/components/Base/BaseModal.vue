@@ -4,7 +4,7 @@ export type BaseModalProps = {
 };
 defineProps<BaseModalProps>();
 
-const isShow = defineModel<boolean>("isShow");
+const isShow = defineModel<boolean>();
 
 /** モーダルを閉じる */
 const closeModal = () => {
@@ -31,36 +31,43 @@ onUnmounted(() => {
   document.removeEventListener("keydown", handleKeydown);
 });
 
+/** モーダル表示中の背景スクロールを防止 */
+watch(isShow, (newVal) => {
+  document.body.style.overflow = newVal ? "hidden" : "";
+});
+
 defineExpose({
   closeModal,
 });
 </script>
 
 <template>
-  <div
-    v-if="isShow"
-    class="fixed inset-0 bg-black bg-opacity-50 z-10"
-    @click="handleBackdropClick"
-  >
+  <Teleport to="body">
     <div
-      class="absolute inset-0 bg-white rounded-md shadow-lg max-w-max max-h-max m-auto"
+      v-if="isShow"
+      class="fixed inset-0 bg-neutral bg-opacity-50 z-20 flex justify-center items-center p-4"
+      role="dialog"
+      aria-modal="true"
+      @click="handleBackdropClick"
     >
-      <div class="flex justify-between items-center p-4 border-b">
-        <BaseText size="large" bold>{{ title }}</BaseText>
-        <BaseIcon
-          icon="close"
-          tabindex="0"
-          is-clickable
-          @click="closeModal"
-          @keydown.enter="closeModal"
-        />
-      </div>
-      <div class="p-4">
-        <slot name="content" />
-      </div>
-      <div class="p-4 border-t flex justify-end gap-4">
-        <slot name="footer" />
+      <div class="bg-white rounded-md shadow-lg m-auto max-w-screen-lg w-full">
+        <div class="flex justify-between items-center p-4 border-b">
+          <BaseText size="large" bold>{{ title }}</BaseText>
+          <BaseIcon
+            icon="close"
+            tabindex="0"
+            is-clickable
+            @click="closeModal"
+            @keydown.enter="closeModal"
+          />
+        </div>
+        <div class="p-4">
+          <slot name="content" />
+        </div>
+        <div class="p-4 border-t flex justify-end gap-4">
+          <slot name="footer" />
+        </div>
       </div>
     </div>
-  </div>
+  </Teleport>
 </template>

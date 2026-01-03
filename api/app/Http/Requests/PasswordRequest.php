@@ -47,6 +47,7 @@ class PasswordRequest extends FormRequest
     {
         return [
             'new_password' => '新しいパスワード',
+            'current_password' => '現在のパスワード',
             'password' => 'パスワード',
             'password_confirmation' => '確認用のパスワード',
         ];

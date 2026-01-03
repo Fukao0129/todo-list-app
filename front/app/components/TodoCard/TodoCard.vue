@@ -16,9 +16,9 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   onClickSubmit: [UpdateTodoRequest]; // 編集
-  onCheck: [boolean, UpdateTodoRequest]; // 完了/未完了切替
-  onTrash: [UpdateTodoRequest]; // ゴミ箱へ移動
-  onRestore: [UpdateTodoRequest]; // ゴミ箱から戻す
+  onCheck: [boolean]; // 完了/未完了切替
+  onTrash: []; // ゴミ箱へ移動
+  onRestore: []; // ゴミ箱から戻す
 }>();
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
@@ -33,38 +33,33 @@ watch(isEditMode, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     nextTick(() => {
-      focusOnElement(".todo-title input");
+      focusOnElement(".todo-title");
     });
   }
 });
 </script>
 
 <template>
-  <BaseCard
-    class="relative"
-    :variant="
-      todo.status_id == DEFAULT_STATUSES.COMPLETED.value ? 'disabled' : 'white'
-    "
-  >
+  <BaseCard class="relative" :variant="isCompleted ? 'disabled' : 'default'">
     <!-- 優先度ラベル -->
     <TodoCardPriorityLabel :priority="todo.priority" />
 
     <!--上部-->
     <TodoCardHeader
-      v-model:is-open="isOpen"
+      v-model="isOpen"
       :todo
       :is-trash
       :is-completed
-      @onCheck="emit('onCheck', $event, todo)"
+      @onCheck="emit('onCheck', $event)"
     />
 
     <!--詳細-->
     <div v-if="isOpen" class="relative p-4 border-t border-neutral-subtle">
       <TodoCardControls
-        v-model:is-edit-mode="isEditMode"
+        v-model="isEditMode"
         :is-trash
-        @onTrash="emit('onTrash', todo)"
-        @onRestore="emit('onRestore', todo)"
+        @onTrash="emit('onTrash')"
+        @onRestore="emit('onRestore')"
       />
 
       <form
@@ -73,7 +68,7 @@ watch(isEditMode, (newVal) => {
       >
         <div class="mr-20">
           <BaseInput
-            v-model:text="formData.title"
+            v-model="formData.title"
             v-if="isEditMode"
             placeholder="タイトルを入力"
             class="todo-title"
@@ -82,10 +77,13 @@ watch(isEditMode, (newVal) => {
           <BaseText v-else bold>{{ todo.title }}</BaseText>
         </div>
 
-        <div class="p-4 whitespace-pre-wrap bg-slate-100">
+        <div
+          class="p-4 whitespace-pre-wrap"
+          :class="{ 'bg-slate-100': !isCompleted }"
+        >
           <BaseTextarea
             v-if="isEditMode"
-            v-model:text="formData.description"
+            v-model="formData.description"
             placeholder="説明文を入力"
           />
           <BaseText v-else size="small" color="secondary">
@@ -97,7 +95,7 @@ watch(isEditMode, (newVal) => {
           <FormItem label="ステータス">
             <BaseSelect
               v-if="isEditMode"
-              v-model:selected-value="formData.status_id"
+              v-model="formData.status_id"
               :options="statuses as SelectOption[]"
             />
             <BaseText v-else>{{ todo.status.name }}</BaseText>
@@ -105,7 +103,7 @@ watch(isEditMode, (newVal) => {
           <FormItem label="優先度">
             <BaseSelect
               v-if="isEditMode"
-              v-model:selected-value="formData.priority"
+              v-model="formData.priority"
               :options="
                 Object.values(PRIORITY).map((priority) => ({
                   id: priority.value,
@@ -138,7 +136,7 @@ watch(isEditMode, (newVal) => {
         </div>
 
         <!--下部-->
-        <TodoCardFooter v-if="isEditMode" v-model:is-edit-mode="isEditMode" />
+        <TodoCardFooter v-if="isEditMode" v-model="isEditMode" />
       </form>
     </div>
   </BaseCard>

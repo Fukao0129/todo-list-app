@@ -28,7 +28,7 @@ const onSubmitPasswordReset = () => {
     <form @submit.prevent="onSubmitPasswordReset()">
       <FormItem :has-border="false">
         <BaseInput
-          v-model:text="email"
+          v-model="email"
           label="メールアドレス"
           placeholder="メールアドレスを入力してください"
         />

@@ -29,16 +29,18 @@ const onLogin = () => {
     <form @submit.prevent="onLogin">
       <FormItem :has-border="false">
         <BaseInput
-          v-model:text="loginForm.email"
+          v-model="loginForm.email"
           label="メールアドレス"
           placeholder="メールアドレス"
+          type="email"
         />
       </FormItem>
       <FormItem :has-border="false">
         <BaseInput
-          v-model:text="loginForm.password"
+          v-model="loginForm.password"
           label="パスワード"
           placeholder="パスワード"
+          type="password"
         />
       </FormItem>
 

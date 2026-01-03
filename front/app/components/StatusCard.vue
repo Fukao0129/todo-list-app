@@ -17,13 +17,32 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
 const isEditMode = ref(false); // 編集モードフラグ
 const statusInitName = cloneDeep(props.status.name); // 初期化用
 
+const statusControlMenus = [
+  {
+    icon: "pen",
+    iconColor: "secondary" as const,
+    label: "編集",
+    event: () => {
+      isEditMode.value = !isEditMode.value;
+    },
+  },
+  {
+    icon: "trash",
+    iconColor: "error" as const,
+    label: "削除",
+    event: () => {
+      emit("onDelete", props.status.id);
+    },
+  },
+];
+
 /** 編集モードになったらドロップダウンメニューを閉じて、ステータス名の入力欄にフォーカスする */
 watch(isEditMode, (newVal) => {
   clearErrorMessages();
   if (newVal) {
     isShowDropdownMenu.value = false;
     nextTick(() => {
-      focusOnElement(".status-update input");
+      focusOnElement(".status-update");
     });
   } else {
     /** 編集モード終了時に入力欄を初期値に戻す */
@@ -35,29 +54,31 @@ watch(isEditMode, (newVal) => {
 <template>
   <BaseCard class="flex items-center justify-between p-4">
     <BaseText v-if="!isEditMode">{{ status.name }}</BaseText>
-    <div v-else class="flex items-center gap-2">
+    <div
+      v-else
+      class="flex items-start gap-2 flex-col sm:flex-row sm:items-center"
+    >
       <BaseInput
-        v-model:text="status.name"
+        v-model="status.name"
         placeholder="ステータス名を入力"
         class="status-update"
         :error-message="validationErrors['update-status.name']"
       />
-      <BaseButton
-        :text="CANCEL_BUTTON_TEXT"
-        color="secondary"
-        class="flex-shrink-0"
-        @click="isEditMode = false"
-      />
-      <BaseButton
-        :text="UPDATE_BUTTON_TEXT"
-        class="flex-shrink-0"
-        @click="emit('onUpdate', status.id, status)"
-      />
+      <div class="flex gap-2">
+        <BaseButton
+          :text="CANCEL_BUTTON_TEXT"
+          color="secondary"
+          class="flex-shrink-0"
+          @click="isEditMode = false"
+        />
+        <BaseButton
+          :text="UPDATE_BUTTON_TEXT"
+          class="flex-shrink-0"
+          @click="emit('onUpdate', status.id, status)"
+        />
+      </div>
     </div>
-    <DropdownMenu
-      v-model:is-show="isShowDropdownMenu"
-      @close-dropdown="isShowDropdownMenu = false"
-    >
+    <DropdownMenu v-model="isShowDropdownMenu">
       <template #trigger>
         <BaseIcon
           v-if="status.is_updatable"
@@ -70,23 +91,12 @@ watch(isEditMode, (newVal) => {
 
       <template #contents>
         <DropdownMenuItem
-          icon="pen"
-          label="編集"
-          :event="
-            () => {
-              isEditMode = !isEditMode;
-            }
-          "
-        />
-        <DropdownMenuItem
-          icon="trash"
-          icon-color="error"
-          label="削除"
-          :event="
-            () => {
-              emit('onDelete', status.id);
-            }
-          "
+          v-for="menu in statusControlMenus"
+          :key="menu.label"
+          :icon="menu.icon"
+          :icon-color="menu.iconColor"
+          :label="menu.label"
+          :event="menu.event"
         />
       </template>
     </DropdownMenu>

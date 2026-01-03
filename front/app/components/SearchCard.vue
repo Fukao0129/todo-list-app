@@ -5,28 +5,24 @@
 const q = defineModel<string>("q"); // 検索キーワード
 const selectedIndex = defineModel<number>("selectedIndex"); // 選択中のセレクトボックス
 const isToggleOn = defineModel<boolean>("isToggleOn"); // トグルのON/OFF
-
-const emit = defineEmits<{
-  onSelectChange: [Event];
-}>();
 </script>
 
 <template>
-  <BaseCard class="flex items-center gap-8 p-4">
-    <SearchInput v-model:search-text="q" class="flex-auto" />
+  <BaseCard class="grid md:flex items-center gap-4 md:gap-8 p-4">
+    <SearchInput v-model="q" class="flex-auto" />
     <BaseSelect
-      v-model:selected-value="selectedIndex"
+      v-model="selectedIndex"
       :options="
         SORT_OPTIONS.map((option, index) => ({
           id: index,
           name: option.label,
         }))
       "
-      @change="emit('onSelectChange', $event)"
     />
     <BaseToggle
-      v-model:is-on="isToggleOn"
+      v-model="isToggleOn"
       :label="`${DEFAULT_STATUSES.COMPLETED.label}を除く`"
+      class="flex-shrink-0"
     />
   </BaseCard>
 </template>
