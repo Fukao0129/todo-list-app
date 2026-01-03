@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Snackbar } from "@/types/snackbar";
 
-const snackbar = useState<Snackbar>("snackbar");
+const { snackbar } = useSnackbar();
 
 /** デザイントークンをTailwindのユーティリティクラスとアイコン種別にマッピング */
 const typeClasses: Record<
