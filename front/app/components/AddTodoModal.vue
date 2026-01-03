@@ -29,6 +29,7 @@ const onClickSubmit = () => {
 /** タイトルの入力欄にフォーカスする */
 watch(isShow, (newVal) => {
   clearErrorMessages();
+  formData.value.title = "";
   if (newVal) {
     nextTick(() => {
       focusOnElement("#add-todo-modal__input");
