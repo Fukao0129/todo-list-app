@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const isShow = defineModel<boolean>("isShow");
+const isShow = defineModel<boolean>();
 
 /* ドロップダウンメニューの外側がクリックされたら非表示にする */
 const wrapper = ref<HTMLElement | null>(null);

@@ -73,7 +73,7 @@ watch(isEditMode, (newVal) => {
         @click="emit('onUpdate', status.id, status)"
       />
     </div>
-    <DropdownMenu v-model:is-show="isShowDropdownMenu">
+    <DropdownMenu v-model="isShowDropdownMenu">
       <template #trigger>
         <BaseIcon
           v-if="status.is_updatable"
