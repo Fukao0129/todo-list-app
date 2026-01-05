@@ -4,7 +4,7 @@ defineProps<{
 }>();
 
 /** ON/OFF切り替え */
-const isOn = defineModel<boolean>();
+const isOn = defineModel<boolean>({ default: false });
 const onToggle = () => {
   isOn.value = !isOn.value;
 };
@@ -19,6 +19,8 @@ const onToggle = () => {
       class="cursor-pointer relative rounded-2xl bg-neutral-subtle w-9 h-5 transition-colors"
       :class="{ 'bg-primary is-on': isOn }"
       tabindex="0"
+      role="switch"
+      :aria-checked="isOn"
       @click="onToggle"
       @keydown.enter="onToggle"
     >
