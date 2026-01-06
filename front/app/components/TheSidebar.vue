@@ -14,6 +14,14 @@ const router = useRouter();
 router.afterEach(() => {
   hideSidebar();
 });
+
+/** Escキーでサイドバーを非表示にする */
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Escape") {
+    hideSidebar();
+  }
+};
+useEventListener("keydown", handleKeydown);
 </script>
 
 <template>
