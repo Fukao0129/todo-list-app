@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { PriorityValues } from "@/types/priority";
+
 defineProps<{
-  priority: number;
+  priority: PriorityValues;
 }>();
 
 /** 優先度に応じて色を変える */
-const formatPriorityLabelColor = (priority: number): string => {
+const formatPriorityLabelColor = (priority: PriorityValues): string => {
   switch (priority) {
     case PRIORITY.LOW.value:
       return "border-t-info";

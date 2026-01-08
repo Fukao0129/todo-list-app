@@ -1,18 +1,18 @@
-// 優先度
+/** Todoの優先度 */
 export const PRIORITY = {
   LOW: {
     value: 1,
     label: "低",
-    color: "info" as const,
+    color: "info",
   },
   MEDIUM: {
     value: 2,
     label: "中",
-    color: "warning" as const,
+    color: "warning",
   },
   HIGH: {
     value: 3,
     label: "高",
-    color: "error" as const,
+    color: "error",
   },
-};
+} as const;
