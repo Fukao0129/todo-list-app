@@ -6,13 +6,7 @@ const wrapper = ref<HTMLElement | null>(null);
 const onClickOutside = (event: MouseEvent) => {
   if (!wrapper.value?.contains(event.target as Node)) isShow.value = false;
 };
-
-onMounted(() => {
-  document.addEventListener("click", onClickOutside);
-});
-onBeforeUnmount(() => {
-  document.removeEventListener("click", onClickOutside);
-});
+useEventListener("click", onClickOutside);
 </script>
 
 <template>

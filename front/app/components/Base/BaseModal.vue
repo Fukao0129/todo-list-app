@@ -24,12 +24,7 @@ const handleKeydown = (event: KeyboardEvent) => {
     closeModal();
   }
 };
-onMounted(() => {
-  document.addEventListener("keydown", handleKeydown);
-});
-onUnmounted(() => {
-  document.removeEventListener("keydown", handleKeydown);
-});
+useEventListener("keydown", handleKeydown);
 
 /** モーダル表示中の背景スクロールを防止 */
 watch(isShow, (newVal) => {

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Markdown;
+use Resend\Laravel\Facades\Resend;
 
 class MailService
 {
@@ -45,15 +46,27 @@ class MailService
         $body = Markdown::parse($body)->toHtml();
 
         // メールを送信する
-        Mail::html($body, function ($mail) use ($title, $email_address, $cc_address, $bcc_address) {
-            $mail->to($email_address);
-            if (!empty($cc_address)) {
-                $mail->cc($cc_address);
-            }
-            if (!empty($bcc_address)) {
-                $mail->bcc($bcc_address);
-            }
-            $mail->subject($title);
-        });
+        if (env('APP_ENV') === 'production') {
+            Resend::emails()->send([
+                'from' => config('mail.from.address'),
+                'to' => is_array($email_address) ? $email_address : [$email_address],
+                'cc' => $cc_address,
+                'bcc' => $bcc_address,
+                'subject' => $title,
+                'html' => $body,
+            ]);
+            return;
+        } else {
+            Mail::html($body, function ($mail) use ($title, $email_address, $cc_address, $bcc_address) {
+                $mail->to($email_address);
+                if (!empty($cc_address)) {
+                    $mail->cc($cc_address);
+                }
+                if (!empty($bcc_address)) {
+                    $mail->bcc($bcc_address);
+                }
+                $mail->subject($title);
+            });
+        }
     }
 }

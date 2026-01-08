@@ -15,6 +15,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
         is-clickable
         class="text-xl md:!hidden"
         @click="showSidebar()"
+        @keydown.enter="showSidebar()"
       />
 
       <NuxtLink to="/" class="w-28 hover:opacity-50 transition-all">
