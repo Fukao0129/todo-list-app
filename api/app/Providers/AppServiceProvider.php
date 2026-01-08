@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // パスワードリセット画面のURLを生成
         $createUrl = function ($notifiable, $token) {
-            return config("app.url") . "/forgot-password/reset?token={$token}&email={$notifiable->getEmailForPasswordReset()}";
+            return config("app.frontend_url") . "/forgot-password/reset?token={$token}&email={$notifiable->getEmailForPasswordReset()}";
         };
 
         // メール本文
