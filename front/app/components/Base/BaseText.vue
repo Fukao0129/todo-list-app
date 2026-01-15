@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import type { ColorTokens, TextSizeTokens } from "@/types/design-token";
+import type {
+  ColorTokens,
+  TextSizeTokens,
+  TextAlignTokens,
+} from "@/types/design-token";
 
 const props = withDefaults(
   defineProps<{
     tag?: "p" | "span" | "label";
     size?: TextSizeTokens;
     color?: ColorTokens;
-    align?: "left" | "center" | "right" | "justify";
+    align?: TextAlignTokens;
     bold?: boolean;
   }>(),
   {
