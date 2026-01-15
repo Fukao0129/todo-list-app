@@ -2,11 +2,12 @@ export const useSidebar = () => {
   // 表示フラグ
   const isSidebarVisible = useState<boolean>("isSidebarVisible", () => true);
 
-  /** サイドバーの表示/非表示を切り替える */
+  /** サイドバーを表示する */
   const showSidebar = () => {
     isSidebarVisible.value = true;
   };
 
+  /** サイドバーを非表示にする */
   const hideSidebar = () => {
     isSidebarVisible.value = false;
   };

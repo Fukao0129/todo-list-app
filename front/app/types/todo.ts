@@ -1,3 +1,5 @@
+import type { PriorityValues } from "@/types/priority";
+
 // 共通構造
 type BaseTodo = {
   title: string;
@@ -5,7 +7,7 @@ type BaseTodo = {
   user_id: number;
   status_id: number;
   due_date: string | null;
-  priority: number;
+  priority: PriorityValues;
   reminder_at: string | null;
 };
 

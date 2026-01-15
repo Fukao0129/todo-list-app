@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Todo, UpdateTodoRequest } from "@/types/todo";
+import type { Todo } from "@/types/todo";
 
 withDefaults(
   defineProps<{

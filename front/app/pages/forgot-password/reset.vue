@@ -41,6 +41,7 @@ const onResetPassword = () => {
           v-model="passwordFormData.password"
           placeholder="パスワードを入力してください"
           label="パスワード"
+          type="password"
           :error-message="validationErrors['reset-password.password']"
         />
       </FormItem>
@@ -49,6 +50,7 @@ const onResetPassword = () => {
           v-model="passwordFormData.password_confirmation"
           placeholder="パスワードを入力してください"
           label="パスワード(確認)"
+          type="password"
           :error-message="
             validationErrors['reset-password.password_confirmation']
           "
