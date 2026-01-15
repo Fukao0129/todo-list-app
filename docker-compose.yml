@@ -1,7 +1,7 @@
 name: todo_list_app
 
 services:
-  front:
+  front: &front
     container_name: front
     build:
       context: . # https://qiita.com/sam8helloworld/items/e7fffa9afc82aea68a7a
@@ -13,6 +13,13 @@ services:
       - "3000:3000"
       - "24678:24678" # ホットリロード用
     command: [npm, run, dev]
+
+  storybook:
+    <<: *front
+    container_name: storybook
+    ports:
+      - "6006:6006"
+    command: npm run storybook
 
   api:
     container_name: api

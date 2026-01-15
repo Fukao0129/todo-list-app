@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "storybook": "storybook dev --ci --port 6006"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -22,6 +23,20 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.14.0",
-    "@types/lodash": "^4.17.20"
+    "@types/lodash": "^4.17.20",
+    "storybook": "^9.0.5",
+    "@storybook/addon-a11y": "^9.0.5",
+    "@storybook/addon-docs": "^9.0.5",
+    "@nuxtjs/storybook": "^9.0.1"
+  },
+  "overrides": {
+    "@nuxtjs/storybook": {
+      "storybook": "^9.1.0",
+      "nuxt": "^4.0.0"
+    },
+    "@storybook-vue/nuxt": {
+      "storybook": "^9.1.0",
+      "nuxt": "^4.0.0"
+    }
   }
 }

@@ -1,7 +1,7 @@
 /** 各種デザイントークンにenum型を定義する */
 
 // カラー
-const COLOR_TOKENS = [
+export const COLOR_TOKENS = [
   "primary", // メインカラー
   "default", // テキストカラー
   "secondary", // 補助テキストカラー
@@ -13,8 +13,17 @@ const COLOR_TOKENS = [
 export type ColorTokens = (typeof COLOR_TOKENS)[number];
 
 // テキストサイズ
-const TEXT_SIZE_TOKENS = ["xs", "small", "default", "large"] as const;
+export const TEXT_SIZE_TOKENS = ["xs", "small", "default", "large"] as const;
 export type TextSizeTokens = (typeof TEXT_SIZE_TOKENS)[number];
+
+// テキストの配置
+export const TEXT_ALIGN_TOKENS = [
+  "left",
+  "center",
+  "right",
+  "justify",
+] as const;
+export type TextAlignTokens = (typeof TEXT_ALIGN_TOKENS)[number];
 
 // ボタンの種類
 const BUTTON_VARIANT_TOKENS = ["filled", "outlined"] as const;
