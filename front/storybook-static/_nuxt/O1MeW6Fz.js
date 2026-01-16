@@ -1,0 +1,1 @@
+import{G as c,H as o}from"./BhoS_8da.js";const r={TRUE:1,FALSE:0},u=3e3,S=()=>{const s=c("snackbar",()=>({isShow:!1,message:"",type:"success"})),e=(a,t="success")=>{s.value={message:a,type:t,isShow:!0}};return o(()=>s.value.isShow,a=>{a&&setTimeout(()=>{s.value.isShow=!1},u)}),{snackbar:s,showSnackbar:e}};export{r as B,S as u};
