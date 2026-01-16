@@ -19,7 +19,7 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
       />
 
       <NuxtLink to="/" class="w-28 hover:opacity-50 transition-all">
-        <img src="/assets/img/logo.svg" alt="TODO"
+        <img src="@/assets/img/logo.svg" alt="TODO"
       /></NuxtLink>
     </div>
 
