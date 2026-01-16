@@ -91,7 +91,7 @@ const onBulkDelete = () => {
       />
       <div v-if="todoListData?.length === 0 && !pending">
         <img
-          src="/assets/img/empty-trash.svg"
+          src="@/assets/img/empty-trash.svg"
           alt="ゴミ箱は空っぽ"
           class="max-w-40 mx-auto my-4"
         />
