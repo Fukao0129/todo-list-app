@@ -53,7 +53,6 @@ defineExpose({
             tabindex="0"
             is-clickable
             @click="closeModal"
-            @keydown.enter="closeModal"
           />
         </div>
         <div class="p-4">

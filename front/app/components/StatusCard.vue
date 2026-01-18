@@ -85,7 +85,6 @@ watch(isEditMode, (newVal) => {
           icon="ellipsis"
           is-clickable
           @click="isShowDropdownMenu = !isShowDropdownMenu"
-          @keydown.enter="isShowDropdownMenu = !isShowDropdownMenu"
         />
       </template>
 

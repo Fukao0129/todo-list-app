@@ -5,7 +5,7 @@ withDefaults(
   }>(),
   {
     isTrash: false,
-  }
+  },
 );
 
 const emit = defineEmits<{
@@ -24,14 +24,12 @@ const isEditMode = defineModel<boolean>();
         icon="pen"
         is-clickable
         @click="isEditMode = !isEditMode"
-        @keydown.enter="isEditMode = !isEditMode"
       />
       <BaseIcon
         color="error"
         icon="trash"
         is-clickable
         @click="emit('onTrash')"
-        @keydown.enter="emit('onTrash')"
       />
     </template>
     <BaseIcon
@@ -40,7 +38,6 @@ const isEditMode = defineModel<boolean>();
       icon="rotate-left"
       is-clickable
       @click="emit('onRestore')"
-      @keydown.enter="emit('onRestore')"
     />
   </div>
 </template>
