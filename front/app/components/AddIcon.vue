@@ -11,6 +11,5 @@ const emit = defineEmits<{
     class="fixed bottom-8 right-8 bg-primary hover:bg-primary-strong shadow-xl rounded-full p-4 !w-4"
     is-clickable
     @click="emit('click')"
-    @keydown.enter="emit('click')"
   />
 </template>
