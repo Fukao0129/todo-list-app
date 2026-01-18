@@ -34,7 +34,7 @@ const filteredTodoList = computed(() => {
   if (isFilterCompleted.value) {
     return (
       todoListData.value?.filter(
-        (todo) => todo.status_id !== DEFAULT_STATUSES.COMPLETED.value
+        (todo) => todo.status_id !== DEFAULT_STATUSES.COMPLETED.value,
       ) || []
     );
   }
@@ -108,7 +108,7 @@ const onSwitchTodoComplete = (checked: boolean, todo: UpdateTodoRequest) => {
       showSnackbar(
         checked
           ? `Todoを${DEFAULT_STATUSES.COMPLETED.label}にしました`
-          : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`
+          : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`,
       );
     })
     .catch((error) => {
@@ -123,7 +123,7 @@ const onTrashCompletedTodos = () => {
   })
     .then(() => {
       showSnackbar(
-        `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`
+        `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`,
       );
       refresh();
     })
@@ -156,7 +156,7 @@ watch(
     }
     useHead({ title: pageTitle.value });
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
