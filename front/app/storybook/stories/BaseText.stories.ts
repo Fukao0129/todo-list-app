@@ -15,31 +15,25 @@ const meta: Meta<typeof BaseText> = {
   tags: ["autodocs"],
   argTypes: {
     tag: {
-      control: "select",
       options: ["p", "span", "label"],
       description: "HTMLタグ",
     },
     size: {
-      control: "select",
       options: TEXT_SIZE_TOKENS,
       description: "テキストサイズ",
     },
     color: {
-      control: "select",
       options: COLOR_TOKENS,
       description: "テキストカラー",
     },
     align: {
-      control: "select",
       options: TEXT_ALIGN_TOKENS,
       description: "テキスト配置",
     },
     bold: {
-      control: "boolean",
       description: "太字にするかどうか",
     },
     default: {
-      control: "text",
       description: "テキストの内容（Slot）",
     },
   },

@@ -13,16 +13,13 @@ const meta: Meta<typeof BaseIcon> = {
   tags: ["autodocs"],
   argTypes: {
     icon: {
-      control: "text",
       description: "FontAwesomeのアイコン名",
     },
     color: {
-      control: "select",
       options: COLOR_TOKENS,
       description: "アイコンカラー",
     },
     isClickable: {
-      control: "boolean",
       description: "クリック可能かどうか",
     },
     // @ts-expect-error
