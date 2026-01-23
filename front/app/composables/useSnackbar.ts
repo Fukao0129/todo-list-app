@@ -3,7 +3,7 @@ import type { Snackbar } from "@/types/snackbar";
 export const useSnackbar = () => {
   // 表示フラグ
   const snackbar = useState<Snackbar>("snackbar", () => ({
-    isShow: false,
+    isVisible: false,
     message: "",
     type: "success",
   }));
@@ -11,21 +11,21 @@ export const useSnackbar = () => {
   /** スナックバーを表示する */
   const showSnackbar = (
     message: string,
-    type: Snackbar["type"] = "success"
+    type: Snackbar["type"] = "success",
   ) => {
-    snackbar.value = { message, type, isShow: true };
+    snackbar.value = { message, type, isVisible: true };
   };
 
   /** 一定時間で非表示にする */
   watch(
-    () => snackbar.value.isShow,
+    () => snackbar.value.isVisible,
     (newVal) => {
       if (newVal) {
         setTimeout(() => {
-          snackbar.value.isShow = false;
+          snackbar.value.isVisible = false;
         }, SHOW_SNACKBAR_TIME);
       }
-    }
+    },
   );
 
   return {

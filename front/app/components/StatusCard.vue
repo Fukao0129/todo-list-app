@@ -13,7 +13,7 @@ const emit = defineEmits<{
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
 
-const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表示フラグ
+const isDropdownMenuVisible = ref(false); // ドロップダウンメニュー表示フラグ
 const isEditMode = ref(false); // 編集モードフラグ
 const statusInitName = cloneDeep(props.status.name); // 初期化用
 
@@ -40,7 +40,7 @@ const statusControlMenus = [
 watch(isEditMode, (newVal) => {
   clearErrorMessages();
   if (newVal) {
-    isShowDropdownMenu.value = false;
+    isDropdownMenuVisible.value = false;
     nextTick(() => {
       focusOnElement(".status-update");
     });
@@ -78,13 +78,13 @@ watch(isEditMode, (newVal) => {
         />
       </div>
     </div>
-    <DropdownMenu v-model="isShowDropdownMenu">
+    <DropdownMenu v-model="isDropdownMenuVisible">
       <template #trigger>
         <BaseIcon
           v-if="status.is_updatable"
           icon="ellipsis"
           is-clickable
-          @click="isShowDropdownMenu = !isShowDropdownMenu"
+          @click="isDropdownMenuVisible = !isDropdownMenuVisible"
         />
       </template>
 

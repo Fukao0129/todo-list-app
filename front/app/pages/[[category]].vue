@@ -8,7 +8,7 @@ const { useCustomFetch, callApi } = useApi();
 const { setErrorMessages } = useValidationErrors();
 
 const category = route.params.category as string | undefined;
-const isShowAddTodoModal = ref(false); // Todo追加モーダル表示フラグ
+const isAddTodoModalVisible = ref(false); // Todo追加モーダル表示フラグ
 
 // リクエストパラメータ
 const searchParams = ref({
@@ -51,7 +51,7 @@ const onAddTodo = (formData: CreateTodoRequest) => {
     body: formData,
   })
     .then(() => {
-      isShowAddTodoModal.value = false;
+      isAddTodoModalVisible.value = false;
       showSnackbar("Todoを追加しました");
       refresh();
     })
@@ -200,6 +200,6 @@ watch(
   </NuxtLayout>
 
   <!--Todo追加-->
-  <AddIcon @click="isShowAddTodoModal = true" />
-  <AddTodoModal v-model="isShowAddTodoModal" @submit="onAddTodo" />
+  <AddIcon @click="isAddTodoModalVisible = true" />
+  <AddTodoModal v-model="isAddTodoModalVisible" @submit="onAddTodo" />
 </template>
