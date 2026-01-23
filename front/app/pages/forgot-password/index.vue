@@ -31,6 +31,7 @@ const onSubmitPasswordReset = () => {
           v-model="email"
           label="メールアドレス"
           placeholder="メールアドレスを入力してください"
+          type="email"
         />
       </FormItem>
 

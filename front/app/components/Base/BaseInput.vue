@@ -1,15 +1,8 @@
 <script setup lang="ts">
-withDefaults(
-  defineProps<{
-    placeholder?: string;
-    errorMessage?: string[];
-    label?: string;
-    type?: string;
-  }>(),
-  {
-    type: "text",
-  }
-);
+defineProps<{
+  label?: string;
+  errorMessage?: string[];
+}>();
 
 defineOptions({ inheritAttrs: false });
 
@@ -24,8 +17,6 @@ const text = defineModel<string>();
     <input
       v-model="text"
       v-bind="$attrs"
-      :type
-      :placeholder
       class="p-2 w-full rounded-md border hover:bg-primary-subtle focus:outline-none focus:border-transparent focus:bg-white focus:ring-2 transition-all base-input"
       :class="[
         errorMessage
