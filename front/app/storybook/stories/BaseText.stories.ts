@@ -98,7 +98,7 @@ export const Alignments: Story = {
       return { DUMMY_TEXT, tokens: TEXT_ALIGN_TOKENS };
     },
     template: `
-      <div class="w-full max-w-xs border border-dashed p-4 flex flex-col gap-2">
+      <div class="w-full border border-dashed p-4 flex flex-col gap-2">
         <BaseText v-for="token in tokens" :key="token" :align="token">{{ DUMMY_TEXT }} ( {{ token }} )</BaseText>
       </div>
     `,
