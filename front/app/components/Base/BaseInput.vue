@@ -8,7 +8,12 @@ defineOptions({ inheritAttrs: false });
 
 const text = defineModel<string>();
 
-const id = useId(); // ラベル用のID
+/** label用のidを生成する */
+const attrs = useAttrs();
+const generatedId = useId();
+const inputId = computed(
+  () => (attrs.id ? String(attrs.id) : generatedId), // 継承されたid属性があればそれを使う
+);
 </script>
 
 <template>
@@ -18,13 +23,13 @@ const id = useId(); // ラベル用のID
       size="small"
       color="secondary"
       tag="label"
-      :for="id"
+      :for="inputId"
       >{{ label }}</BaseText
     >
     <input
       v-model="text"
+      :id="inputId"
       v-bind="$attrs"
-      :id="id"
       class="p-2 w-full rounded-md border hover:bg-primary-subtle focus:outline-none focus:border-transparent focus:bg-white focus:ring-2 transition-all base-input"
       :class="[
         errorMessage
