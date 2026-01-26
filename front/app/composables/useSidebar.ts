@@ -1,6 +1,6 @@
 export const useSidebar = () => {
   // 表示フラグ
-  const isSidebarVisible = useState<boolean>("isSidebarVisible", () => true);
+  const isSidebarVisible = useState<boolean>("isSidebarVisible", () => false);
 
   /** サイドバーを表示する */
   const showSidebar = () => {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { cloneDeep } from "lodash";
-
 const PAGE_TITLE = "ユーザー設定";
 useHead({ title: PAGE_TITLE });
 
@@ -11,7 +9,7 @@ const { validationErrors, setErrorMessages, clearErrorMessages } =
 const { user, updateUser } = useUserStore();
 
 /** ユーザー情報更新 */
-const formData = cloneDeep(user);
+const formData = reactive(structuredClone(toRaw(user)));
 const onUpdateUser = () => {
   clearErrorMessages();
   callApi(`/users/${formData.id}`, {

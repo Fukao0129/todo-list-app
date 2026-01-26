@@ -1,8 +1,7 @@
 <script setup lang="ts">
-export type BaseModalProps = {
+defineProps<{
   title: string;
-};
-defineProps<BaseModalProps>();
+}>();
 
 const isVisible = defineModel<boolean>();
 

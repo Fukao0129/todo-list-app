@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Status, UpdateStatusRequest } from "@/types/status";
-import { cloneDeep } from "lodash";
 
 const props = defineProps<{
   status: Status;
@@ -15,7 +14,7 @@ const { validationErrors, clearErrorMessages } = useValidationErrors();
 
 const isDropdownMenuVisible = ref(false); // ドロップダウンメニュー表示フラグ
 const isEditMode = ref(false); // 編集モードフラグ
-const statusInitName = cloneDeep(props.status.name); // 初期化用
+const statusInitName = props.status.name; // 初期化用
 
 const statusControlMenus = [
   {
