@@ -12,9 +12,14 @@ const onToggle = () => {
 
 <template>
   <div class="flex items-center gap-1">
-    <BaseText v-if="label" size="small" color="secondary" tag="label">{{
-      label
-    }}</BaseText>
+    <BaseText
+      v-if="label"
+      size="small"
+      color="secondary"
+      tag="label"
+      @click="onToggle"
+      >{{ label }}</BaseText
+    >
     <div
       class="cursor-pointer relative rounded-2xl bg-neutral-subtle w-9 h-5 transition-colors"
       :class="{ 'bg-primary is-on': isOn }"

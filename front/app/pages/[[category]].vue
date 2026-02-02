@@ -8,7 +8,7 @@ const { useCustomFetch, callApi } = useApi();
 const { setErrorMessages } = useValidationErrors();
 
 const category = route.params.category as string | undefined;
-const isShowAddTodoModal = ref(false); // Todo追加モーダル表示フラグ
+const isAddTodoModalVisible = ref(false); // Todo追加モーダル表示フラグ
 
 // リクエストパラメータ
 const searchParams = ref({
@@ -34,7 +34,7 @@ const filteredTodoList = computed(() => {
   if (isFilterCompleted.value) {
     return (
       todoListData.value?.filter(
-        (todo) => todo.status_id !== DEFAULT_STATUSES.COMPLETED.value
+        (todo) => todo.status_id !== DEFAULT_STATUSES.COMPLETED.value,
       ) || []
     );
   }
@@ -51,7 +51,7 @@ const onAddTodo = (formData: CreateTodoRequest) => {
     body: formData,
   })
     .then(() => {
-      isShowAddTodoModal.value = false;
+      isAddTodoModalVisible.value = false;
       showSnackbar("Todoを追加しました");
       refresh();
     })
@@ -108,7 +108,7 @@ const onSwitchTodoComplete = (checked: boolean, todo: UpdateTodoRequest) => {
       showSnackbar(
         checked
           ? `Todoを${DEFAULT_STATUSES.COMPLETED.label}にしました`
-          : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`
+          : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`,
       );
     })
     .catch((error) => {
@@ -123,7 +123,7 @@ const onTrashCompletedTodos = () => {
   })
     .then(() => {
       showSnackbar(
-        `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`
+        `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`,
       );
       refresh();
     })
@@ -156,7 +156,7 @@ watch(
     }
     useHead({ title: pageTitle.value });
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
@@ -200,6 +200,6 @@ watch(
   </NuxtLayout>
 
   <!--Todo追加-->
-  <AddIcon @click="isShowAddTodoModal = true" />
-  <AddTodoModal v-model="isShowAddTodoModal" @submit="onAddTodo" />
+  <AddIcon @click="isAddTodoModalVisible = true" />
+  <AddTodoModal v-model="isAddTodoModalVisible" @submit="onAddTodo" />
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { showSidebar } = useSidebar();
 
-const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表示フラグ
+const isDropdownMenuVisible = ref(false); // ドロップダウンメニュー表示フラグ
 </script>
 
 <template>
@@ -15,7 +15,6 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
         is-clickable
         class="text-xl md:!hidden"
         @click="showSidebar()"
-        @keydown.enter="showSidebar()"
       />
 
       <NuxtLink to="/" class="w-28 hover:opacity-50 transition-all">
@@ -23,15 +22,14 @@ const isShowDropdownMenu = ref(false); // ドロップダウンメニュー表�
       /></NuxtLink>
     </div>
 
-    <DropdownMenu v-model="isShowDropdownMenu">
+    <DropdownMenu v-model="isDropdownMenuVisible">
       <template #trigger>
         <BaseIcon
           icon="circle-user"
           color="white"
           is-clickable
           class="text-2xl"
-          @click="isShowDropdownMenu = !isShowDropdownMenu"
-          @keydown.enter="isShowDropdownMenu = !isShowDropdownMenu"
+          @click="isDropdownMenuVisible = !isDropdownMenuVisible"
         />
       </template>
 

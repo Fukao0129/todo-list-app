@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CreateStatusRequest } from "@/types/status";
 
-const isShow = defineModel<boolean>();
+const isVisible = defineModel<boolean>();
 
 const emit = defineEmits<{
   submit: [typeof formData.value];
@@ -23,7 +23,7 @@ const onClickSubmit = () => {
 };
 
 /** ステータス名の入力欄にフォーカスする */
-watch(isShow, (newVal) => {
+watch(isVisible, (newVal) => {
   clearErrorMessages();
   formData.value.name = "";
   if (newVal) {
@@ -35,7 +35,7 @@ watch(isShow, (newVal) => {
 </script>
 
 <template>
-  <BaseModal v-model="isShow" title="ステータスを追加する">
+  <BaseModal v-model="isVisible" title="ステータスを追加する">
     <template #content>
       <form @submit.prevent="onClickSubmit">
         <FormItem label="ステータス名" :has-border="false">
@@ -52,7 +52,7 @@ watch(isShow, (newVal) => {
       <BaseButton
         :text="CANCEL_BUTTON_TEXT"
         color="secondary"
-        @click="isShow = false"
+        @click="isVisible = false"
       />
       <BaseButton :text="ADD_BUTTON_TEXT" @click="onClickSubmit" />
     </template>

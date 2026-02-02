@@ -10,7 +10,7 @@ withDefaults(
   {
     isTrash: false,
     isCompleted: false,
-  }
+  },
 );
 
 const emit = defineEmits<{
@@ -32,14 +32,15 @@ const isOpen = defineModel<boolean>();
         v-if="!isTrash"
         :model-value="isCompleted"
         @click.stop
-        @update:model-value="emit('onCheck', $event)"
+        @keydown.enter.stop="emit('onCheck', !isCompleted)"
+        @update:model-value="emit('onCheck', !isCompleted)"
       />
       <BaseText tag="span" color="primary" bold class="ml-1">{{
         todo.title
       }}</BaseText>
 
       <div class="flex items-center gap-0.5 text-xs mt-1 ml-1">
-        <BaseIcon icon="clock" color="secondary" :is-clickable="false" />
+        <BaseIcon icon="clock" color="secondary" />
         <BaseText size="xs" color="secondary">{{
           todo.due_date ?? "未設定"
         }}</BaseText>

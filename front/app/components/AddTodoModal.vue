@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CreateTodoRequest } from "@/types/todo";
 
-const isShow = defineModel<boolean>();
+const isVisible = defineModel<boolean>();
 
 const emit = defineEmits<{
   submit: [typeof formData.value];
@@ -27,7 +27,7 @@ const onClickSubmit = () => {
 };
 
 /** タイトルの入力欄にフォーカスする */
-watch(isShow, (newVal) => {
+watch(isVisible, (newVal) => {
   clearErrorMessages();
   formData.value.title = "";
   if (newVal) {
@@ -39,7 +39,7 @@ watch(isShow, (newVal) => {
 </script>
 
 <template>
-  <BaseModal v-model="isShow" title="Todoを追加する">
+  <BaseModal v-model="isVisible" title="Todoを追加する">
     <template #content>
       <form @submit.prevent="onClickSubmit">
         <FormItem label="タイトル">
@@ -83,7 +83,7 @@ watch(isShow, (newVal) => {
       <BaseButton
         :text="CANCEL_BUTTON_TEXT"
         color="secondary"
-        @click="isShow = false"
+        @click="isVisible = false"
       />
       <BaseButton :text="ADD_BUTTON_TEXT" @click="onClickSubmit" />
     </template>

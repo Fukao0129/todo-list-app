@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const isShow = defineModel<boolean>();
+const isVisible = defineModel<boolean>();
 
 /* ドロップダウンメニューの外側がクリックされたら非表示にする */
 const wrapper = ref<HTMLElement | null>(null);
 const onClickOutside = (event: MouseEvent) => {
-  if (!wrapper.value?.contains(event.target as Node)) isShow.value = false;
+  if (!wrapper.value?.contains(event.target as Node)) isVisible.value = false;
 };
 useEventListener("click", onClickOutside);
 </script>
@@ -12,7 +12,10 @@ useEventListener("click", onClickOutside);
 <template>
   <div class="relative" ref="wrapper">
     <slot name="trigger" />
-    <BaseCard v-if="isShow" class="absolute right-[calc(100%_+_0.1rem)] w-max">
+    <BaseCard
+      v-if="isVisible"
+      class="absolute right-[calc(100%_+_0.1rem)] w-max"
+    >
       <slot name="contents" />
     </BaseCard>
   </div>

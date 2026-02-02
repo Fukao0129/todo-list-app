@@ -27,7 +27,7 @@ const classes = computed(() => typeClasses[snackbar.value.type]);
     leave-active-class="animate-slide-out-down"
   >
     <div
-      v-if="snackbar.isShow"
+      v-if="snackbar.isVisible"
       class="fixed left-4 bottom-4 text-white p-4 shadow-lg z-30"
       :class="classes.backgroundColor"
     >

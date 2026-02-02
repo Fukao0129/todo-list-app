@@ -12,7 +12,7 @@ const { showSnackbar } = useSnackbar();
 const { useCustomFetch, callApi } = useApi();
 const { setErrorMessages } = useValidationErrors();
 
-const isShowAddStatusModal = ref(false); // ステータス追加モーダル表示フラグ
+const isAddStatusModalVisible = ref(false); // ステータス追加モーダル表示フラグ
 
 /** ステータス一覧取得 */
 const {
@@ -28,7 +28,7 @@ const onAddStatus = (formData: CreateStatusRequest) => {
     body: formData,
   })
     .then(() => {
-      isShowAddStatusModal.value = false;
+      isAddStatusModalVisible.value = false;
       showSnackbar("ステータスを追加しました");
       refresh();
     })
@@ -97,6 +97,6 @@ const onDeleteStatus = (statusId: number) => {
   </NuxtLayout>
 
   <!--ステータス追加-->
-  <AddIcon @click="isShowAddStatusModal = true" />
-  <AddStatusModal v-model="isShowAddStatusModal" @submit="onAddStatus" />
+  <AddIcon @click="isAddStatusModalVisible = true" />
+  <AddStatusModal v-model="isAddStatusModalVisible" @submit="onAddStatus" />
 </template>

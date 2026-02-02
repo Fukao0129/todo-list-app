@@ -10,8 +10,12 @@ const props = withDefaults(
   {
     color: "default",
     isClickable: false,
-  }
+  },
 );
+
+const emit = defineEmits<{
+  click: [];
+}>();
 
 /** デザイントークンをTailwindのユーティリティクラスにマッピング */
 const colorClasses: Record<ColorTokens, string> = {
@@ -21,7 +25,7 @@ const colorClasses: Record<ColorTokens, string> = {
   info: "text-info hover:text-info-strong",
   warning: "text-warning hover:text-warning-strong",
   error: "text-error hover:text-error-strong",
-  white: "text-white",
+  white: "text-white hover:text-neutral-subtle",
 };
 const classes = computed(() => [
   colorClasses[props.color],
@@ -36,5 +40,9 @@ const classes = computed(() => [
     class="base-icon"
     :class="classes"
     :tabindex="isClickable ? 0 : -1"
+    :aria-hidden="isClickable ? 'false' : 'true'"
+    :role="isClickable ? 'button' : undefined"
+    @click="emit('click')"
+    @keydown.enter="emit('click')"
   />
 </template>

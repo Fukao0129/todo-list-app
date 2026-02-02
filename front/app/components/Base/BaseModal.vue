@@ -1,14 +1,13 @@
 <script setup lang="ts">
-export type BaseModalProps = {
+defineProps<{
   title: string;
-};
-defineProps<BaseModalProps>();
+}>();
 
-const isShow = defineModel<boolean>();
+const isVisible = defineModel<boolean>();
 
 /** モーダルを閉じる */
 const closeModal = () => {
-  isShow.value = false;
+  isVisible.value = false;
 };
 
 /** 背景をクリックしたらモーダルを閉じる */
@@ -20,14 +19,14 @@ const handleBackdropClick = (event: MouseEvent) => {
 
 /** Escキーでモーダルを閉じる */
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === "Escape" && isShow.value) {
+  if (event.key === "Escape" && isVisible.value) {
     closeModal();
   }
 };
 useEventListener("keydown", handleKeydown);
 
 /** モーダル表示中の背景スクロールを防止 */
-watch(isShow, (newVal) => {
+watch(isVisible, (newVal) => {
   document.body.style.overflow = newVal ? "hidden" : "";
 });
 
@@ -39,7 +38,7 @@ defineExpose({
 <template>
   <Teleport to="body">
     <div
-      v-if="isShow"
+      v-if="isVisible"
       class="fixed inset-0 bg-neutral bg-opacity-50 z-20 flex justify-center items-center p-4"
       role="dialog"
       aria-modal="true"
@@ -53,7 +52,6 @@ defineExpose({
             tabindex="0"
             is-clickable
             @click="closeModal"
-            @keydown.enter="closeModal"
           />
         </div>
         <div class="p-4">

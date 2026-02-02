@@ -2,7 +2,7 @@
 import type { SnackbarVariantTokens } from "@/types/design-token";
 
 export type Snackbar = {
-  isShow: boolean;
+  isVisible: boolean;
   message: string;
   type: SnackbarVariantTokens;
 };

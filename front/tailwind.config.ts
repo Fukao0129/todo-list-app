@@ -2,6 +2,7 @@
 import colors from "tailwindcss/colors";
 
 export default {
+  content: ["./app/**/*.{js,vue,ts}"],
   theme: {
     extend: {
       colors: {
