@@ -69,7 +69,7 @@ const onBulkDelete = () => {
     >
       <template #tools>
         <BaseButton
-          v-if="todoListData?.length > 0"
+          v-if="(todoListData?.length ?? 0) > 0"
           text="ゴミ箱を空にする"
           @click="onBulkDelete"
         />

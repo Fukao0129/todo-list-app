@@ -8,9 +8,7 @@ defineProps<{
 
 <template>
   <BaseCard class="flex flex-col gap-4 p-4">
-    <BaseText v-if="pending" size="small" color="secondary" align="center">{{
-      LOADING_TEXT
-    }}</BaseText>
+    <LoadingSpinner v-if="pending" class="d-block m-auto" />
     <slot v-else />
     <BaseText
       v-if="dataLength === 0 && !pending"

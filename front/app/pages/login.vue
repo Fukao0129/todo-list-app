@@ -18,7 +18,7 @@ const onLogin = () => {
   }).catch(() => {
     showSnackbar(
       "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
-      "error"
+      "error",
     );
   });
 };
