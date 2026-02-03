@@ -38,6 +38,8 @@ export default defineNuxtConfig({
   },
   // 本番環境ではフロントの/apiディレクトリにAPIコールするので、APIサーバにプロキシする
   nitro: {
+    preset: "node-server",
+    serveStatic: true,
     routeRules: {
       "/api/**": {
         proxy: "https://api-production-597b.up.railway.app/api/**",
