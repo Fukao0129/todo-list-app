@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   nitro: {
     preset: "node-server",
     serveStatic: true,
+    inlineDynamicImports: true,
     routeRules: {
       "/api/**": {
         proxy: "https://api-production-597b.up.railway.app/api/**",
