@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: true,
+  ssr: false,
   devtools: { enabled: false },
   runtimeConfig: {
     public: {
@@ -37,14 +37,14 @@ export default defineNuxtConfig({
     },
   },
   // 本番環境ではフロントの/apiディレクトリにAPIコールするので、APIサーバにプロキシする
-  nitro: {
-    routeRules: {
-      "/api/**": {
-        proxy: "https://api-production-597b.up.railway.app/api/**",
-      },
-      "/sanctum/csrf-cookie": {
-        proxy: "https://api-production-597b.up.railway.app/sanctum/csrf-cookie",
-      },
-    },
-  },
+  // nitro: {
+  //   routeRules: {
+  //     "/api/**": {
+  //       proxy: "https://api-production-597b.up.railway.app/api/**",
+  //     },
+  //     "/sanctum/csrf-cookie": {
+  //       proxy: "https://api-production-597b.up.railway.app/sanctum/csrf-cookie",
+  //     },
+  //   },
+  // },
 });
