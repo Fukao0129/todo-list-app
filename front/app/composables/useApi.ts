@@ -1,46 +1,39 @@
-import type { FetchOptions, FetchError } from "ofetch";
-import type { AsyncData } from "nuxt/app";
+import type { UseFetchOptions } from "#app";
+import type { FetchOptions } from "ofetch";
+import { defu } from "defu";
 
 export const useApi = () => {
   const runtimeConfig = useRuntimeConfig();
-  const csrfToken = useCookie("XSRF-TOKEN").value || "";
+  const xsrfToken = useCookie("XSRF-TOKEN");
 
-  const commonOptions = {
+  /** 共通ヘッダー作成 (毎回最新のCSRFトークンを取得する) */
+  const createCommonOptions = () => ({
     baseURL: runtimeConfig.public.apiUrl,
     credentials: "include" as const,
     headers: {
-      "Content-Type": "application/json",
-      "X-XSRF-TOKEN": decodeURIComponent(csrfToken),
+      "X-XSRF-TOKEN": xsrfToken.value
+        ? decodeURIComponent(xsrfToken.value)
+        : "",
     },
-  };
+  });
 
-  // ofetchのmethodはstring型、useFetchや$fetchの引数のmethodはenum型なので仕方なく
+  // ofetchのmethodはstring型、$fetchの引数のmethodはenum型なので仕方なく
   type NormalizedFetchOptions = Omit<FetchOptions, "method"> & {
     method?: "GET" | "POST" | "PUT" | "DELETE";
   };
 
   /** useFetchのラッパー */
-  const useCustomFetch = <T>(uri: string, option?: FetchOptions) => {
-    const options = {
-      ...commonOptions,
-      ...option,
-    } as NormalizedFetchOptions;
-
-    return useFetch(uri, {
-      ...options,
-    }) as AsyncData<T, FetchError>;
+  const useCustomFetch = <T>(uri: string, option?: UseFetchOptions<T>) => {
+    const commonOptions = createCommonOptions();
+    const params = defu(option, commonOptions);
+    return useFetch(uri, params);
   };
 
   /** $fetchのラッパー */
-  const callApi = (uri: string, option: FetchOptions) => {
-    const options = {
-      ...commonOptions,
-      ...option,
-    } as NormalizedFetchOptions;
-
-    return $fetch(uri, {
-      ...options,
-    });
+  const callApi = (uri: string, option: NormalizedFetchOptions = {}) => {
+    const commonOptions = createCommonOptions();
+    const params = defu(option, commonOptions);
+    return $fetch(uri, params);
   };
 
   return { useCustomFetch, callApi };

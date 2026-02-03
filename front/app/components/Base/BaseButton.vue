@@ -8,14 +8,21 @@ const props = withDefaults(
     type?: ButtonVariantTokens;
     leftIcon?: string;
     isDisabled?: boolean;
+    isLoading?: boolean;
   }>(),
   {
     color: "primary",
     text: "Button",
     type: "filled",
-    isDisabled: false,
-  }
+    isLoading: false,
+  },
 );
+
+/** ハイドレーション待機 */
+const isMounted = ref(false);
+onMounted(() => {
+  isMounted.value = true;
+});
 
 /** デザイントークンをTailwindのユーティリティクラスにマッピング */
 const colorClasses: Record<ColorTokens, string> = {
@@ -33,11 +40,18 @@ const classes = computed(() => colorClasses[props.color]);
 
 <template>
   <button
-    class="py-1 px-1.5 rounded-md transition-all"
+    class="py-1 px-1.5 rounded-md transition-all relative"
     :class="classes"
-    :disabled="isDisabled"
+    :disabled="isDisabled || isLoading || !isMounted"
   >
     <BaseIcon v-if="leftIcon" :icon="leftIcon" color="white" />
-    {{ text }}
+    <LoadingSpinner
+      v-if="isLoading || !isMounted"
+      color="white"
+      class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    />
+    <span :class="{ 'opacity-0': isLoading || !isMounted }">
+      {{ text }}
+    </span>
   </button>
 </template>
