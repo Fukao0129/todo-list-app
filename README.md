@@ -46,14 +46,14 @@ Nuxt.js と Laravel で構築した、Todo リストアプリケーションで�
   - **[vue-fontawesome](https://github.com/FortAwesome/vue-fontawesome)**  
     Vue3 対応の Font Awesome パッケージ
 - **[Tailwind CSS](https://tailwindcss.com/)**
-- **[Storybook](https://storybook.js.org/)**（※今後導入予定）
+- **[Storybook](https://storybook.js.org/)**
 
 #### 🖥 バックエンド
 
 - **[Laravel](https://laravel.com/)**（v12.34.0）
-  - **[laravel-csv-seeder](https://github.com/Flynsarmy/laravel-csv-seeder)**
+  - **[laravel-csv-seeder](https://github.com/Flynsarmy/laravel-csv-seeder)**  
     Seeder に CSV ファイルを使用できるようにするパッケージ
-  - **[resend-laravel](https://github.com/resend/resend-laravel)**
+  - **[resend-laravel](https://github.com/resend/resend-laravel)**  
     Resend 公式の Laravel 用パッケージ
 
 #### 🔐 認証機能
@@ -62,14 +62,15 @@ Nuxt.js と Laravel で構築した、Todo リストアプリケーションで�
 
 #### 📩 メール送信
 
-- **[Resend](https://resend.com/)**（無料プラン）
+- **[Resend](https://resend.com/)**（無料プラン）  
   開発環境では **[MailHog](https://github.com/mailhog/MailHog)** を使用
 
 #### 🌎 デプロイ
 
-- **[Railway](https://railway.com/)**（無料プラン）
+- **[Railway](https://railway.com/)**（無料プラン）  
   [こちら](https://web-production-066eed.up.railway.app/login)から本番環境にアクセスできます。
-  ※無料プランを使っているので、アプリは常時起動しておらず、アクセス時に立ち上がります。その際、数十秒の待ち時間が発生します。([Serverless](https://docs.railway.com/reference/app-sleeping)機能)
+  ※無料プランを使っているので、アプリは常時起動しておらず、アクセス時に立ち上がります。その際、数十秒の待ち時間が発生します。([Serverless](https://docs.railway.com/reference/app-sleeping)機能)  
+  また無料プランのためAPIサーバのCPUが弱く、レスポンスが遅いです。
 
 #### 📜 ソース管理
 
