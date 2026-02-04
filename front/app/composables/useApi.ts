@@ -5,16 +5,24 @@ import { defu } from "defu";
 export const useApi = () => {
   const runtimeConfig = useRuntimeConfig();
   const xsrfToken = useCookie("XSRF-TOKEN");
+  const route = useRoute();
+  const reqHeaders = useRequestHeaders(); // SSR用ヘッダー
 
   /** 共通ヘッダー作成 (毎回最新のCSRFトークンを取得する) */
   const createCommonOptions = () => ({
-    baseURL: runtimeConfig.public.apiUrl,
+    baseURL:
+      import.meta.server && runtimeConfig.serverApiUrl // SSR時はDocker内部ネットワークのURLを使用する
+        ? runtimeConfig.serverApiUrl
+        : runtimeConfig.public.apiUrl,
     credentials: "include" as const,
     headers: {
+      ...(import.meta.server ? reqHeaders : {}),
       "X-XSRF-TOKEN": xsrfToken.value
         ? decodeURIComponent(xsrfToken.value)
         : "",
+      Accept: "application/json",
     },
+    key: route.fullPath,
   });
 
   // ofetchのmethodはstring型、$fetchの引数のmethodはenum型なので仕方なく

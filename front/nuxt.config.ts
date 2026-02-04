@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: false },
   runtimeConfig: {
+    serverApiUrl: "http://nginx/api", // Dockerコンテナ内からAPIサーバへアクセスするための内部URL
     public: {
       apiUrl: "http://localhost/api", // 本番環境ではRailwayのNUXT_PUBLIC_API_URL変数で上書きされる
     },
