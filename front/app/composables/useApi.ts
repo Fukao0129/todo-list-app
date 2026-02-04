@@ -22,7 +22,6 @@ export const useApi = () => {
         : "",
       Accept: "application/json",
     },
-    key: route.fullPath,
   });
 
   // ofetchのmethodはstring型、$fetchの引数のmethodはenum型なので仕方なく
