@@ -30,7 +30,7 @@ Nuxt.js と Laravel で構築した、Todo リストアプリケーションで�
 - 新規作成
 - 編集
 - 削除
-- 並び順の変更
+- 並び順の変更 (今度実装予定)
 
 ---
 
@@ -70,7 +70,8 @@ Nuxt.js と Laravel で構築した、Todo リストアプリケーションで�
 - **[Railway](https://railway.com/)**（無料プラン）  
   [こちら](https://web-production-066eed.up.railway.app/login)から本番環境にアクセスできます。
   ※無料プランを使っているので、アプリは常時起動しておらず、アクセス時に立ち上がります。その際、数十秒の待ち時間が発生します。([Serverless](https://docs.railway.com/reference/app-sleeping)機能)  
-  また無料プランのためAPIサーバのCPUが弱く、レスポンスが遅いです。
+  また無料プランのためAPIサーバのCPUが弱く、レスポンスが遅いです。  
+  同様にWEBサーバのCPUも弱く、SSRにしているので画面の表示も遅いです。
 
 #### 📜 ソース管理
 
