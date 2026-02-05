@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 // テストユーザー作成
-Route::get('/temporary/create-test-user', 'App\Http\Controllers\TemporaryController@createTestUser');
+// Route::get('/temporary/create-test-user', 'App\Http\Controllers\TemporaryController@createTestUser');
 
 // パスワードリセット
 Route::post('/forgot-password', 'App\Http\Controllers\PasswordController@sendPasswordResetMail');
