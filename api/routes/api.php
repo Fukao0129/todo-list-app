@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+// テストユーザー作成
+Route::get('/temporary/create-test-user', 'App\Http\Controllers\TemporaryController@createTestUser');
+
 // パスワードリセット
 Route::post('/forgot-password', 'App\Http\Controllers\PasswordController@sendPasswordResetMail');
 Route::post('/password/reset', 'App\Http\Controllers\PasswordController@reset')->name('password.reset');

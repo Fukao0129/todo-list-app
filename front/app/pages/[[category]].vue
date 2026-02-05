@@ -158,10 +158,25 @@ watch(
   },
   { immediate: true },
 );
+
+const createTestUser = () => {
+  callApi(`/temporary/create-test-user`, {
+    method: "GET",
+  })
+    .then(() => {
+      showSnackbar(`テストユーザーを作成しました`);
+      refresh();
+    })
+    .catch((error) => {
+      showSnackbar(error.message, "error");
+    });
+};
 </script>
 
 <template>
   <NuxtLayout>
+    <button @click="createTestUser">test</button>
+
     <!--ページ上部-->
     <PageHeader
       :title="pageTitle"
