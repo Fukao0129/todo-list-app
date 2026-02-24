@@ -45,8 +45,8 @@ const filteredTodoList = computed(() => {
 const { data: statusData } = useCustomFetch<Status[]>(`/statuses`);
 
 /** Todo追加 */
-const onAddTodo = (formData: CreateTodoRequest) => {
-  callApi(`/todos`, {
+const onAddTodo = async (formData: CreateTodoRequest) => {
+  return callApi(`/todos`, {
     method: "POST",
     body: formData,
   })
@@ -117,8 +117,8 @@ const onSwitchTodoComplete = (checked: boolean, todo: UpdateTodoRequest) => {
 };
 
 /** 完了をすべてゴミ箱に移動する */
-const onTrashCompletedTodos = () => {
-  callApi(`/todos/trash-completed`, {
+const onTrashCompletedTodos = async () => {
+  return callApi(`/todos/trash-completed`, {
     method: "PUT",
   })
     .then(() => {
@@ -173,7 +173,7 @@ watch(
           v-if="!isFilterCompleted"
           :text="`${DEFAULT_STATUSES.COMPLETED.label}をすべてゴミ箱に移動`"
           left-icon="trash"
-          @click="onTrashCompletedTodos"
+          :on-click="onTrashCompletedTodos"
         />
       </template>
     </PageHeader>
@@ -201,5 +201,5 @@ watch(
 
   <!--Todo追加-->
   <AddIcon @click="isAddTodoModalVisible = true" />
-  <AddTodoModal v-model="isAddTodoModalVisible" @submit="onAddTodo" />
+  <AddTodoModal v-model="isAddTodoModalVisible" :on-submit="onAddTodo" />
 </template>

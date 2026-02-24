@@ -5,16 +5,18 @@ const props = withDefaults(
   defineProps<{
     text: string;
     color?: ColorTokens;
-    type?: ButtonVariantTokens;
+    variant?: ButtonVariantTokens;
     leftIcon?: string;
     isDisabled?: boolean;
     isLoading?: boolean;
+    onClick?: (e: MouseEvent) => Promise<void | unknown> | void;
   }>(),
   {
     color: "primary",
     text: "Button",
-    type: "filled",
+    variant: "filled",
     isLoading: false,
+    onClick: undefined,
   },
 );
 
@@ -23,6 +25,20 @@ const isMounted = ref(false);
 onMounted(() => {
   isMounted.value = true;
 });
+
+/** 内部的なローディング状態 */
+const islLoading = ref(false);
+
+const handleClick = async (event: MouseEvent) => {
+  if (props.onClick) {
+    try {
+      islLoading.value = true;
+      await props.onClick(event);
+    } finally {
+      islLoading.value = false;
+    }
+  }
+};
 
 /** デザイントークンをTailwindのユーティリティクラスにマッピング */
 const colorClasses: Record<ColorTokens, string> = {
@@ -42,15 +58,16 @@ const classes = computed(() => colorClasses[props.color]);
   <button
     class="py-1 px-1.5 rounded-md transition-all relative"
     :class="classes"
-    :disabled="isDisabled || isLoading || !isMounted"
+    :disabled="isDisabled || islLoading || !isMounted"
+    @click="handleClick"
   >
     <BaseIcon v-if="leftIcon" :icon="leftIcon" color="white" />
     <LoadingSpinner
-      v-if="isLoading || !isMounted"
+      v-if="islLoading || !isMounted"
       color="white"
       class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
     />
-    <span :class="{ 'opacity-0': isLoading || !isMounted }">
+    <span :class="{ 'opacity-0': islLoading || !isMounted }">
       {{ text }}
     </span>
   </button>
