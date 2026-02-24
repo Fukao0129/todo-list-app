@@ -41,9 +41,9 @@ const onRestoreTodo = (todo: UpdateTodoRequest) => {
 };
 
 /** ゴミ箱を空にする */
-const onBulkDelete = () => {
+const onBulkDelete = async () => {
   const todo_ids = todoListData.value?.map((todo) => todo.id) || [];
-  callApi(`/todos`, {
+  return callApi(`/todos`, {
     method: "DELETE",
     body: {
       todo_ids,
@@ -71,7 +71,7 @@ const onBulkDelete = () => {
         <BaseButton
           v-if="(todoListData?.length ?? 0) > 0"
           text="ゴミ箱を空にする"
-          @click="onBulkDelete"
+          :on-click="onBulkDelete"
         />
       </template>
     </PageHeader>

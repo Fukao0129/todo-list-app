@@ -11,8 +11,8 @@ const loginForm = ref({
 });
 
 /** ログイン */
-const onLogin = () => {
-  login({
+const onLogin = async () => {
+  return login({
     email: loginForm.value.email,
     password: loginForm.value.password,
   }).catch(() => {
@@ -26,7 +26,7 @@ const onLogin = () => {
 
 <template>
   <NuxtLayout name="login">
-    <form @submit.prevent="onLogin">
+    <form @submit.prevent>
       <FormItem :has-border="false">
         <BaseInput
           v-model="loginForm.email"
@@ -50,7 +50,7 @@ const onLogin = () => {
         >パスワードを忘れた方はこちら</NuxtLink
       >
 
-      <BaseButton text="ログイン" />
+      <BaseButton text="ログイン" :on-click="onLogin" type="submit" />
     </form>
   </NuxtLayout>
 </template>

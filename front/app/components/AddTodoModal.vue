@@ -3,14 +3,14 @@ import type { CreateTodoRequest } from "@/types/todo";
 
 const isVisible = defineModel<boolean>();
 
-const emit = defineEmits<{
-  submit: [typeof formData.value];
+const props = defineProps<{
+  onSubmit: (data: CreateTodoRequest) => Promise<void>;
 }>();
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
 const { user } = useUserStore();
 
-// フォーム
+// Todo追加フォーム
 const formData = ref<CreateTodoRequest>({
   title: "",
   description: "",
@@ -22,8 +22,8 @@ const formData = ref<CreateTodoRequest>({
 });
 
 /** 追加ボタン押下 */
-const onClickSubmit = () => {
-  emit("submit", formData.value);
+const onClickSubmit = async () => {
+  return props.onSubmit(formData.value);
 };
 
 /** タイトルの入力欄にフォーカスする */
@@ -41,7 +41,7 @@ watch(isVisible, (newVal) => {
 <template>
   <BaseModal v-model="isVisible" title="Todoを追加する">
     <template #content>
-      <form @submit.prevent="onClickSubmit">
+      <form id="add-todo-form" @submit.prevent>
         <FormItem label="タイトル">
           <BaseInput
             v-model="formData.title"
@@ -85,7 +85,12 @@ watch(isVisible, (newVal) => {
         color="secondary"
         @click="isVisible = false"
       />
-      <BaseButton :text="ADD_BUTTON_TEXT" @click="onClickSubmit" />
+      <BaseButton
+        :text="ADD_BUTTON_TEXT"
+        type="submit"
+        form="add-todo-form"
+        :on-click="onClickSubmit"
+      />
     </template>
   </BaseModal>
 </template>

@@ -22,8 +22,8 @@ const {
 } = useCustomFetch<Status[]>(`/statuses`);
 
 /** ステータス追加 */
-const onAddStatus = (formData: CreateStatusRequest) => {
-  callApi(`/statuses`, {
+const onAddStatus = async (formData: CreateStatusRequest) => {
+  return callApi(`/statuses`, {
     method: "POST",
     body: formData,
   })
@@ -98,5 +98,5 @@ const onDeleteStatus = (statusId: number) => {
 
   <!--ステータス追加-->
   <AddIcon @click="isAddStatusModalVisible = true" />
-  <AddStatusModal v-model="isAddStatusModalVisible" @submit="onAddStatus" />
+  <AddStatusModal v-model="isAddStatusModalVisible" :on-submit="onAddStatus" />
 </template>
