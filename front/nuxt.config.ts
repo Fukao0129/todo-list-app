@@ -3,19 +3,18 @@ export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: false },
   runtimeConfig: {
-    serverApiUrl: "http://nginx/api", // Dockerコンテナ内からAPIサーバへアクセスするための内部URL
     public: {
       apiUrl: "http://localhost/api", // 本番環境ではRailwayのNUXT_PUBLIC_API_URL変数で上書きされる
       // CSR時の認証用
       sanctum: {
         baseUrl: "http://localhost", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_BASE_URL変数で上書きされる
-        origin: "http://localhost:3000",
+        origin: "http://localhost:3000", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_ORIGIN変数で上書きされる
       },
     },
     // SSR時の認証用
     sanctum: {
-      baseUrl: "http://nginx",
-      origin: "http://localhost:3000",
+      baseUrl: "http://nginx", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_BASE_URL変数で上書きされる
+      origin: "http://localhost:3000", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_ORIGIN変数で上書きされる
     },
   },
   app: {
