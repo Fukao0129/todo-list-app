@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('APP_URL', 'http://localhost:3000'), 'https://web-production-066eed.up.railway.app', 'https://api-production-597b.up.railway.app'],
+    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3000'), 'https://web-production-066eed.up.railway.app', 'https://api-production-597b.up.railway.app'],
 
     'allowed_origins_patterns' => [],
 
