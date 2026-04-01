@@ -6,6 +6,16 @@ export default defineNuxtConfig({
     serverApiUrl: "http://nginx/api", // Dockerコンテナ内からAPIサーバへアクセスするための内部URL
     public: {
       apiUrl: "http://localhost/api", // 本番環境ではRailwayのNUXT_PUBLIC_API_URL変数で上書きされる
+      // CSR時の認証用
+      sanctum: {
+        baseUrl: "http://localhost", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_BASE_URL変数で上書きされる
+        origin: "http://localhost:3000",
+      },
+    },
+    // SSR時の認証用
+    sanctum: {
+      baseUrl: "http://nginx",
+      origin: "http://localhost:3000",
     },
   },
   app: {
@@ -24,7 +34,7 @@ export default defineNuxtConfig({
 
   // 認証関連の設定 https://sanctum.manchenkoff.me/usage/configuration
   sanctum: {
-    baseUrl: "http://localhost", // 本番環境ではRailwayのNUXT_PUBLIC_SANCTUM_BASE_URL変数で上書きされる
+    logLevel: 5,
     redirect: {
       onLogout: "/login", // ログアウト後のリダイレクト先
     },
