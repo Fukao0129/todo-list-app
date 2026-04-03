@@ -9,12 +9,12 @@ const { validationErrors, setErrorMessages, clearErrorMessages } =
 const { user, updateUser } = useUserStore();
 
 /** ユーザー情報更新 */
-const formData = reactive(structuredClone(toRaw(user)));
+const userFormData = reactive(structuredClone(toRaw(user)));
 const onUpdateUser = () => {
   clearErrorMessages();
-  callApi(`/users/${formData.id}`, {
+  callApi(`/users/${userFormData.id}`, {
     method: "PUT",
-    body: formData,
+    body: userFormData,
   })
     .then(async () => {
       await updateUser();
@@ -60,53 +60,63 @@ const onUpdatePassword = () => {
       :has-data-length="false"
     />
 
-    <h2>ユーザー情報</h2>
-    <BaseCard>
-      <form @submit.prevent="onUpdateUser">
-        <FormItem label="名前">
+    <!--ユーザー情報-->
+    <BaseCard title="ユーザー情報">
+      <form @submit.prevent="onUpdateUser" class="p-4 sm:px-6">
+        <FormItem label="名前" label-width="20%">
           <BaseInput
-            v-model="formData.name"
+            v-model="userFormData.name"
             placeholder="名前を入力してください"
             :error-message="validationErrors['update-user.name']"
           />
         </FormItem>
-        <FormItem label="メールアドレス" :has-border="false">
-          <BaseText>{{ formData.email }}</BaseText>
+        <FormItem label="メールアドレス" label-width="20%" :has-border="false">
+          <BaseText>{{ userFormData.email }}</BaseText>
         </FormItem>
-        <BaseButton text="更新する" />
+        <BaseButton text="更新する" class="mt-4" />
       </form>
     </BaseCard>
 
-    <h2>パスワード変更</h2>
-    <BaseCard>
-      <form @submit.prevent="onUpdatePassword()">
-        <FormItem label="現在のパスワード">
+    <!--パスワード変更-->
+    <BaseCard title="パスワード変更">
+      <form @submit.prevent="onUpdatePassword()" class="p-4 sm:px-6">
+        <FormItem label="現在のパスワード " label-width="20%">
           <BaseInput
             v-model="passwordFormData.current_password"
             type="password"
+            autocomplete="off"
             placeholder="現在のパスワードを入力してください"
             :error-message="
               validationErrors['update-password.current_password']
             "
           />
         </FormItem>
-        <FormItem label="新しいパスワード">
+        <FormItem label="新しいパスワード" label-width="20%">
           <BaseInput
             v-model="passwordFormData.new_password"
             type="password"
+            autocomplete="off"
             placeholder="新しいパスワードを入力してください"
             :error-message="validationErrors['update-password.new_password']"
           />
         </FormItem>
-        <FormItem label="新しいパスワード（確認）" :has-border="false">
+        <FormItem
+          label="新しいパスワード（確認）"
+          :has-border="false"
+          label-width="20%"
+        >
           <BaseInput
             v-model="passwordFormData.new_password_confirmation"
             type="password"
+            autocomplete="off"
             placeholder="新しいパスワードを再度入力してください"
           />
         </FormItem>
-        <BaseButton text="パスワードを変更する" />
+        <BaseButton text="パスワードを変更する" class="mt-4" />
       </form>
     </BaseCard>
+
+    <!--ユーザー削除-->
+    <BaseCard title="ユーザー削除"> </BaseCard>
   </NuxtLayout>
 </template>
