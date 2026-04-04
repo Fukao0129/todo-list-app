@@ -10,3 +10,26 @@ id,to,cc,bcc,title,body
 {{password_reset_url}}
 
 今度とも{{service_name}}をよろしくお願いいたします"
+2,,,,【{{service_name}}】リマインド: {{title}},"{{user_name}}　様
+いつも{{service_name}}をご利用いただき、誠にありがとうございます。
+
+以下のTODOのリマインド日時になりましたのでお知らせいたします。
+
+**■ タイトル**
+{{title}}
+
+**■ 説明**
+{{description}}
+
+**■ 優先度**
+{{priority}}
+
+**■ ステータス**
+{{status}}
+
+**■ 期日**
+{{due_date}}
+
+{{todo_url}}
+
+今度とも{{service_name}}をよろしくお願いいたします。"
