@@ -23,6 +23,7 @@ class Todo extends Model
         'is_trashed',
         'completed_at',
         'reminder_at',
+        'reminder_sent_at',
     ];
 
     public function status()
