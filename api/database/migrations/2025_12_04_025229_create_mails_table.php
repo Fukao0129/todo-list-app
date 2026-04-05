@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('cc')->nullable()->comment('cc');
             $table->string('bcc')->nullable()->comment('bcc');
             $table->string('title')->comment('タイトル');
-            $table->string('body')->comment('本文');
+            $table->text('body')->comment('本文');
         });
     }
 

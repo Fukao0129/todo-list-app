@@ -2,6 +2,7 @@
 return [
     'mail_id' => [
         'password_changed_mail'   => 1, // パスワード変更通知
+        'reminder_mail'           => 2, // リマインド通知
     ],
     'contact_url' => "https://example.com/contact",
     'contact_phone' => "03-0000-0000",

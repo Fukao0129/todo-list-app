@@ -144,4 +144,17 @@ class TodoRepository
             ->where('status_id', Todo::STATUS_COMPLETED)
             ->update(['is_trashed' => 1]);
     }
+
+    /**
+     * リマインド対象のTODOを取得
+     */
+    public function getRemindableTodos()
+    {
+        return Todo::where('reminder_at', '<=', now())
+            ->whereNull('reminder_sent_at')
+            ->where('status_id', '!=', Todo::STATUS_COMPLETED)
+            ->where('is_trashed', 0)
+            ->with(['user', 'status:id,name'])
+            ->get();
+    }
 }

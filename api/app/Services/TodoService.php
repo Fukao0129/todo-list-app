@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\TodoRepository;
+use App\Jobs\SendReminderMailJob;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -144,5 +145,19 @@ class TodoService
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
         return [$res, $status];
+    }
+
+    /**
+     * リマインドメール送信
+     *
+     * @return void
+     */
+    public function sendReminders()
+    {
+        $todos = $this->todoRepository->getRemindableTodos();
+
+        foreach ($todos as $todo) {
+            SendReminderMailJob::dispatch($todo);
+        }
     }
 }

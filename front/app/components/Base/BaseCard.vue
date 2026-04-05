@@ -5,11 +5,13 @@ const props = withDefaults(
   defineProps<{
     variant?: CardVariantTokens;
     hasShadow?: boolean;
+    title?: string;
   }>(),
   {
     variant: "default",
     hasShadow: true,
-  }
+    title: "",
+  },
 );
 
 /** デザイントークンをTailwindのユーティリティクラスにマッピング */
@@ -26,6 +28,11 @@ const classes = computed(() => [
 
 <template>
   <div class="border border-neutral-subtle rounded" :class="classes">
+    <BaseText
+      v-if="title"
+      class="border-b border-neutral-subtle p-4 font-bold"
+      >{{ title }}</BaseText
+    >
     <slot />
   </div>
 </template>
