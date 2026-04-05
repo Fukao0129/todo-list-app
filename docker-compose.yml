@@ -21,7 +21,7 @@ services:
       - "6006:6006"
     command: npm run storybook
 
-  api:
+  api: &api
     container_name: api
     build:
       context: .
@@ -30,6 +30,20 @@ services:
       - ./api:/var/www/html
     expose:
       - 8000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  queue-worker:
+    <<: *api
+    container_name: queue-worker
+    entrypoint: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3"]
+
+  scheduler:
+    <<: *api
+    container_name: scheduler
+    entrypoint: ["php", "artisan", "schedule:work"] # 1分ごとにschedule:runコマンドを実行する常駐コマンド。本番環境のRailway CronJobsの代わり
+    restart: unless-stopped
 
   nginx:
     image: nginx
@@ -56,6 +70,21 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - todo_list_app:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-ppassword",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   phpmyadmin:
     image: phpmyadmin
