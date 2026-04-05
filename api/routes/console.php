@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // リマインドメール送信のタスクスケジューラ
-Schedule::command('todo:send-reminders')->everyMinute();
+Schedule::command('todo:send-reminders')->everyFiveMinutes();
