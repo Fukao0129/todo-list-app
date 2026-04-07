@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: false },
   runtimeConfig: {
+    serverApiUrl: "http://nginx/api", // 本番環境ではRailwayのNUXT_SERVER_API_URL変数で上書きされる
     public: {
       apiUrl: "http://localhost/api", // 本番環境ではRailwayのNUXT_PUBLIC_API_URL変数で上書きされる
       // CSR時の認証用

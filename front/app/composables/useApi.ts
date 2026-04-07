@@ -9,7 +9,10 @@ export const useApi = () => {
 
   /** 共通ヘッダー作成 (毎回最新のCSRFトークンを取得する) */
   const createCommonOptions = () => ({
-    baseURL: runtimeConfig.public.apiUrl,
+    baseURL:
+      import.meta.server && runtimeConfig.serverApiUrl // SSR時はDocker内部ネットワークのURLを使用する
+        ? runtimeConfig.serverApiUrl
+        : runtimeConfig.public.apiUrl,
     credentials: "include" as const,
     headers: {
       ...(import.meta.server ? reqHeaders : {}),
