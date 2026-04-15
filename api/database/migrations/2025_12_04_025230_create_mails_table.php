@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mails', function (Blueprint $table) {
-            $table->id();
-            $table->string('to')->nullable()->comment('宛先');
-            $table->string('cc')->nullable()->comment('cc');
-            $table->string('bcc')->nullable()->comment('bcc');
-            $table->string('title')->comment('タイトル');
-            $table->text('body')->comment('本文');
-        });
+        if (!Schema::hasTable('mails')) {
+            Schema::create('mails', function (Blueprint $table) {
+                $table->id();
+                $table->string('to')->nullable()->comment('宛先');
+                $table->string('cc')->nullable()->comment('cc');
+                $table->string('bcc')->nullable()->comment('bcc');
+                $table->string('title')->comment('タイトル');
+                $table->text('body')->comment('本文');
+            });
+        }
     }
 
     /**
