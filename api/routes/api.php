@@ -13,7 +13,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ユーザー情報
     Route::get('/me', 'App\Http\Controllers\UserController@me')->name('me');
-    Route::put('/users/{user_id}', 'App\Http\Controllers\UserController@update');
+    Route::put('/users', 'App\Http\Controllers\UserController@update');
 
     // パスワード変更
     Route::post('/password/change', 'App\Http\Controllers\PasswordController@update')->name('password.change');
