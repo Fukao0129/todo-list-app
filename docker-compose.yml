@@ -8,6 +8,7 @@ services:
       dockerfile: ./docker/front/Dockerfile
     volumes:
       - ./front:/var/www/html
+      - ./api:/var/www/api # OpenAPIのファイルをフロントから参照できるようにする
     working_dir: /var/www/html
     ports:
       - "3000:3000"
