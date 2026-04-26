@@ -18,12 +18,11 @@ class StatusService
     /**
      * 全件取得
      *
-     * @param mixed $request
      * @return array
      */
-    public function index($request)
+    public function index()
     {
-        return $this->statusRepository->index($request);
+        return $this->statusRepository->index();
     }
 
     /**
@@ -36,8 +35,7 @@ class StatusService
     {
         DB::beginTransaction();
         try {
-            $this->statusRepository->store($data);
-            $res = true;
+            $res = $this->statusRepository->store($data);
             $status = Response::HTTP_OK;
             DB::commit();
         } catch (\Exception $e) {
