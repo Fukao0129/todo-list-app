@@ -1,20 +1,15 @@
-import type { paths } from "./schema";
+import type { components } from "./schema";
 
-export type Todo =
-  paths["/todos/{todo_id}"]["get"]["responses"]["200"]["content"]["application/json"];
-export type CreateTodoRequest =
-  paths["/todos"]["post"]["requestBody"]["content"]["application/json"];
-export type UpdateTodoRequest =
-  paths["/todos/{todo_id}"]["put"]["requestBody"]["content"]["application/json"];
+// Scrambleが生成する再利用可能な型 // https://scramble.dedoc.co/packages/laravel-data
+type Schemas = components["schemas"];
 
-export type Status =
-  paths["/statuses"]["get"]["responses"]["200"]["content"]["application/json"][0];
-export type CreateStatusRequest =
-  paths["/statuses"]["post"]["requestBody"]["content"]["application/json"];
-export type UpdateStatusRequest =
-  paths["/statuses/{status_id}"]["put"]["requestBody"]["content"]["application/json"];
+export type Todo = Schemas["TodoResource"];
+export type CreateTodoRequest = Schemas["TodoRequest"];
+export type UpdateTodoRequest = Schemas["TodoRequest"];
 
-export type User =
-  paths["/me"]["get"]["responses"]["200"]["content"]["application/json"];
-export type UpdateUserRequest =
-  paths["/users"]["put"]["requestBody"]["content"]["application/json"];
+export type Status = Schemas["StatusResource"];
+export type CreateStatusRequest = Schemas["StatusRequest"];
+export type UpdateStatusRequest = Schemas["StatusRequest"];
+
+export type User = Schemas["UserResource"];
+export type UpdateUserRequest = Schemas["UserRequest"];
