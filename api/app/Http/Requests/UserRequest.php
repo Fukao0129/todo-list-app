@@ -32,16 +32,14 @@ class UserRequest extends FormRequest
                     'name' => ['required', 'string', 'max:10'],
                     'email' => ['required', 'string', 'max:255'],
                 ];
-                break;
             case 'PUT':
             case 'PATCH':
                 return [
                     'name' => ['required', 'string', 'max:10'],
                     'email' => ['required', 'string', 'max:255'],
                 ];
-                break;
             default:
-                break;
+                return [];
         }
     }
 

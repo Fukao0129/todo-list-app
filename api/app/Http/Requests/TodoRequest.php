@@ -7,7 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 
 class TodoRequest extends FormRequest
 {
@@ -26,35 +25,31 @@ class TodoRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules() 
     {
         switch ($this->method()) {
             case 'POST':
                 return [
                     'title' => ['required', 'string', 'max:10'],
                     'description' => ['nullable', 'string', 'max:255'],
-                    'priority' => ['required', 'integer', 'between:1,3'],
-                    'status_id' => ['nullable', 'integer', 'exists:statuses,id'],
+                    'priority' => ['required', Rule::enum(\App\Enums\Priority::class)],
+                    'status_id' => ['required', 'integer', 'exists:statuses,id'],
                     'reminder_at' => ['nullable', 'date', 'after:now'],
                     'due_date' => ['nullable', 'date', 'after:now'],
-                    'user_id' => ['required', 'integer', Rule::in([Auth::id()])],
                 ];
-                break;
             case 'PUT':
             case 'PATCH':
                 return [
                     'title' => ['required', 'string', 'max:10'],
                     'description' => ['nullable', 'string', 'max:255'],
-                    'priority' => ['required', 'integer', 'between:1,3'],
-                    'status_id' => ['nullable', 'integer', 'exists:statuses,id'],
+                    'priority' => ['required', Rule::enum(\App\Enums\Priority::class)],
+                    'status_id' => ['required', 'integer', 'exists:statuses,id'],
                     'reminder_at' => ['nullable', 'date'],
                     'due_date' => ['nullable', 'date'],
-                    'user_id' => ['required', 'integer', Rule::in([Auth::id()])],
                     'is_trashed' => ['required', 'integer'],
                 ];
-                break;
             default:
-                break;
+                return [];
         }
     }
 
