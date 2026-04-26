@@ -13,6 +13,11 @@ class Todo extends Model
     const STATUS_NOT_STARTED = 1;
     const STATUS_COMPLETED = 2;
 
+    // 優先度の型をEnumに変換 https://kazutameblog.com/programming/laravel/model-casts/
+    protected $casts = [
+        'priority' => \App\Enums\Priority::class,
+    ];
+
     protected $fillable = [
         'title',
         'description',
