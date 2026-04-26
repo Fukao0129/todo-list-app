@@ -12,7 +12,7 @@ const { user, updateUser } = useUserStore();
 const userFormData = reactive(structuredClone(toRaw(user)));
 const onUpdateUser = () => {
   clearErrorMessages();
-  callApi(`/users/${userFormData.id}`, {
+  return callApi(`/users`, {
     method: "PUT",
     body: userFormData,
   })
@@ -33,7 +33,7 @@ const passwordFormData = ref({
 });
 const onUpdatePassword = () => {
   clearErrorMessages();
-  callApi(`/password/change`, {
+  return callApi(`/password/change`, {
     method: "POST",
     body: passwordFormData.value,
   })
@@ -62,7 +62,7 @@ const onUpdatePassword = () => {
 
     <!--ユーザー情報-->
     <BaseCard title="ユーザー情報">
-      <form @submit.prevent="onUpdateUser" class="p-4 sm:px-6">
+      <form @submit.prevent class="p-4 sm:px-6">
         <FormItem label="名前" label-width="20%">
           <BaseInput
             v-model="userFormData.name"
@@ -73,13 +73,13 @@ const onUpdatePassword = () => {
         <FormItem label="メールアドレス" label-width="20%" :has-border="false">
           <BaseText>{{ userFormData.email }}</BaseText>
         </FormItem>
-        <BaseButton text="更新する" class="mt-4" />
+        <BaseButton text="更新する" :on-click="onUpdateUser" class="mt-4" />
       </form>
     </BaseCard>
 
     <!--パスワード変更-->
     <BaseCard title="パスワード変更">
-      <form @submit.prevent="onUpdatePassword()" class="p-4 sm:px-6">
+      <form @submit.prevent class="p-4 sm:px-6">
         <FormItem label="現在のパスワード " label-width="20%">
           <BaseInput
             v-model="passwordFormData.current_password"
@@ -112,7 +112,11 @@ const onUpdatePassword = () => {
             placeholder="新しいパスワードを再度入力してください"
           />
         </FormItem>
-        <BaseButton text="パスワードを変更する" class="mt-4" />
+        <BaseButton
+          text="パスワードを変更する"
+          :on-click="onUpdatePassword"
+          class="mt-4"
+        />
       </form>
     </BaseCard>
 

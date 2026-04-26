@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CreateStatusRequest } from "@/types/status";
+import type { CreateStatusRequest } from "@/types/api";
 
 const isVisible = defineModel<boolean>();
 
@@ -8,13 +8,11 @@ const props = defineProps<{
 }>();
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
-const { user } = useUserStore();
 
 // ステータス追加フォーム
 const formData = ref<CreateStatusRequest>({
   name: "",
   order: 0,
-  user_id: user.id,
 });
 
 /** 追加ボタン押下 */

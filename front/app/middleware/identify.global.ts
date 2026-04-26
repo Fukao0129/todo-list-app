@@ -1,4 +1,4 @@
-import type { User } from "@/types/user";
+import type { User } from "@/types/api";
 export default defineNuxtRouteMiddleware(() => {
   const { user, isAuthenticated } = useSanctumAuth();
   const userStore = useUserStore();

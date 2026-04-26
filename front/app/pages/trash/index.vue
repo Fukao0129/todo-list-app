@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Todo, UpdateTodoRequest } from "@/types/todo";
+import type { Todo, UpdateTodoRequest } from "@/types/api";
 
 const PAGE_TITLE = "ゴミ箱";
 useHead({ title: PAGE_TITLE });

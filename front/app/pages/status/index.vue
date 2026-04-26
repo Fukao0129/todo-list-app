@@ -3,7 +3,7 @@ import type {
   Status,
   CreateStatusRequest,
   UpdateStatusRequest,
-} from "@/types/status";
+} from "@/types/api";
 
 const PAGE_TITLE = "ステータス設定";
 useHead({ title: PAGE_TITLE });
@@ -38,8 +38,8 @@ const onAddStatus = async (formData: CreateStatusRequest) => {
 };
 
 /** ステータス更新 */
-const onUpdateStatus = (statusId: number, formData: UpdateStatusRequest) => {
-  callApi(`/statuses/${statusId}`, {
+const onUpdateStatus = (formData: UpdateStatusRequest & { id: number }) => {
+  callApi(`/statuses/${formData.id}`, {
     method: "PUT",
     body: formData,
   })

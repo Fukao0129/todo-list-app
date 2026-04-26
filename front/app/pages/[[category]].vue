@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Todo, CreateTodoRequest, UpdateTodoRequest } from "@/types/todo";
-import type { Status } from "@/types/status";
+import type { Todo, CreateTodoRequest, UpdateTodoRequest } from "@/types/api";
+import type { Status } from "@/types/api";
 
 const route = useRoute();
 const { showSnackbar } = useSnackbar();
@@ -61,7 +61,7 @@ const onAddTodo = async (formData: CreateTodoRequest) => {
 };
 
 /** Todo更新 */
-const onUpdateTodo = (formData: UpdateTodoRequest) => {
+const onUpdateTodo = (formData: UpdateTodoRequest & { id: number }) => {
   callApi(`/todos/${formData.id}`, {
     method: "PUT",
     body: formData,
@@ -76,9 +76,9 @@ const onUpdateTodo = (formData: UpdateTodoRequest) => {
 };
 
 /** Todoをゴミ箱に移す */
-const onTrashTodo = (todo: UpdateTodoRequest) => {
+const onTrashTodo = (todo: UpdateTodoRequest & { id: number }) => {
   const params = { ...todo, is_trashed: BOOLEAN.TRUE };
-  callApi(`/todos/${params.id}`, {
+  callApi(`/todos/${todo.id}`, {
     method: "PUT",
     body: params,
   })
@@ -92,14 +92,17 @@ const onTrashTodo = (todo: UpdateTodoRequest) => {
 };
 
 /** Todoの完了⇄未完了を切り替え */
-const onSwitchTodoComplete = (checked: boolean, todo: UpdateTodoRequest) => {
+const onSwitchTodoComplete = (
+  checked: boolean,
+  todo: UpdateTodoRequest & { id: number },
+) => {
   const params = {
     ...todo,
     status_id: checked
       ? DEFAULT_STATUSES.COMPLETED.value
       : DEFAULT_STATUSES.NOT_STARTED.value,
   };
-  callApi(`/todos/${params.id}`, {
+  callApi(`/todos/${todo.id}`, {
     method: "PUT",
     body: params,
   })
