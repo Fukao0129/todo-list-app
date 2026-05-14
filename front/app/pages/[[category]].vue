@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import type { Todo, CreateTodoRequest, UpdateTodoRequest } from "@/types/api";
-import type { Status } from "@/types/api";
+import type { CreateTodoRequest } from "@/types/api";
 
+/* ────────────────────────────────────
+ * Composables
+ * ──────────────────────────────────── */
 const route = useRoute();
-const { showSnackbar } = useSnackbar();
-const { useCustomFetch, callApi } = useApi();
-const { setErrorMessages } = useValidationErrors();
-
-const category = route.params.category as string | undefined;
-const isAddTodoModalVisible = ref(false); // Todo追加モーダル表示フラグ
+const category = computed(() => route.params.category);
 
 // リクエストパラメータ
 const searchParams = ref({
@@ -16,151 +13,58 @@ const searchParams = ref({
   direction: SORT_DIRECTION.ASC.value,
   q: "",
   is_trashed: BOOLEAN.FALSE,
-  is_today: BOOLEAN.FALSE,
+  is_today: category.value === "today" ? BOOLEAN.TRUE : BOOLEAN.FALSE,
 });
 
-/** Todo一覧取得 */
+/** API */
 const {
-  data: todoListData,
+  todoList: todoListData,
   pending,
-  refresh,
-} = useCustomFetch<Todo[]>(`/todos`, {
-  query: searchParams.value,
-});
-
-/** 完了済を除く */
-const isFilterCompleted = ref(true);
-const filteredTodoList = computed(() => {
-  if (isFilterCompleted.value) {
-    return (
-      todoListData.value?.filter(
-        (todo) => todo.status_id !== DEFAULT_STATUSES.COMPLETED.value,
-      ) || []
-    );
-  }
-  return todoListData.value || [];
-});
-
-/** ステータス一覧取得 */
-const { data: statusData } = useCustomFetch<Status[]>(`/statuses`);
-
-/** Todo追加 */
-const onAddTodo = async (formData: CreateTodoRequest) => {
-  return callApi(`/todos`, {
-    method: "POST",
-    body: formData,
-  })
-    .then(() => {
-      isAddTodoModalVisible.value = false;
-      showSnackbar("Todoを追加しました");
-      refresh();
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "add-todo");
-    });
-};
-
-/** Todo更新 */
-const onUpdateTodo = (formData: UpdateTodoRequest & { id: number }) => {
-  callApi(`/todos/${formData.id}`, {
-    method: "PUT",
-    body: formData,
-  })
-    .then(() => {
-      showSnackbar("Todoを更新しました");
-      refresh();
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "update-todo");
-    });
-};
-
-/** Todoをゴミ箱に移す */
-const onTrashTodo = (todo: UpdateTodoRequest & { id: number }) => {
-  const params = { ...todo, is_trashed: BOOLEAN.TRUE };
-  callApi(`/todos/${todo.id}`, {
-    method: "PUT",
-    body: params,
-  })
-    .then(() => {
-      showSnackbar("ゴミ箱に移動しました");
-      refresh();
-    })
-    .catch((error) => {
-      showSnackbar(error.message, "error");
-    });
-};
-
-/** Todoの完了⇄未完了を切り替え */
-const onSwitchTodoComplete = (
-  checked: boolean,
-  todo: UpdateTodoRequest & { id: number },
-) => {
-  const params = {
-    ...todo,
-    status_id: checked
-      ? DEFAULT_STATUSES.COMPLETED.value
-      : DEFAULT_STATUSES.NOT_STARTED.value,
-  };
-  callApi(`/todos/${todo.id}`, {
-    method: "PUT",
-    body: params,
-  })
-    .then(() => {
-      refresh();
-      showSnackbar(
-        checked
-          ? `Todoを${DEFAULT_STATUSES.COMPLETED.label}にしました`
-          : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`,
-      );
-    })
-    .catch((error) => {
-      showSnackbar(error.message, "error");
-    });
-};
-
-/** 完了をすべてゴミ箱に移動する */
-const onTrashCompletedTodos = async () => {
-  return callApi(`/todos/trash-completed`, {
-    method: "PUT",
-  })
-    .then(() => {
-      showSnackbar(
-        `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`,
-      );
-      refresh();
-    })
-    .catch((error) => {
-      showSnackbar(error.message, "error");
-    });
-};
+  addTodo,
+  updateTodo,
+  trashTodo,
+  switchTodoComplete,
+  trashCompletedTodos,
+} = useTodo(searchParams);
 
 /** ソート条件変更 */
-const selectedSortIndex = ref(0);
-watch(selectedSortIndex, (newValue) => {
-  const option = SORT_OPTIONS[newValue];
-  if (option) {
-    searchParams.value.sort = option.sort;
-    searchParams.value.direction = option.direction;
+const { selectedSortIndex } = useTodoSort(searchParams);
+
+/** 完了済を除く */
+const { isFilterCompleted, filteredTodoList } =
+  useCompletedTodoFilter(todoListData);
+
+/** ステータス一覧取得 */
+const { statusList } = useStatus();
+
+/* ────────────────────────────────────
+ * Todo追加モーダル
+ * ──────────────────────────────────── */
+const isAddTodoModalVisible = ref(false);
+
+/** Todo追加したらモーダルを閉じる */
+const onAddTodo = async (formData: CreateTodoRequest) => {
+  return addTodo(formData).then(() => {
+    isAddTodoModalVisible.value = false;
+  });
+};
+
+/* ────────────────────────────────────
+ * ページ遷移時
+ * ──────────────────────────────────── */
+const pageTitle = ref(
+  category.value === "today" ? "今日のTodo" : "すべてのTodo",
+);
+useHead(computed(() => ({ title: pageTitle.value })));
+watch(category, (newValue) => {
+  if (newValue === "today") {
+    searchParams.value.is_today = BOOLEAN.TRUE;
+    pageTitle.value = "今日のTodo";
+  } else {
+    searchParams.value.is_today = BOOLEAN.FALSE;
+    pageTitle.value = "すべてのTodo";
   }
 });
-
-/** ページ遷移時 */
-const pageTitle = ref("");
-watch(
-  () => category,
-  (newValue) => {
-    if (newValue === "today") {
-      searchParams.value.is_today = BOOLEAN.TRUE;
-      pageTitle.value = "今日のTodo";
-    } else {
-      searchParams.value.is_trashed = BOOLEAN.FALSE;
-      pageTitle.value = "すべてのTodo";
-    }
-    useHead({ title: pageTitle.value });
-  },
-  { immediate: true },
-);
 </script>
 
 <template>
@@ -176,7 +80,7 @@ watch(
           v-if="!isFilterCompleted"
           :text="`${DEFAULT_STATUSES.COMPLETED.label}をすべてゴミ箱に移動`"
           left-icon="trash"
-          :on-click="onTrashCompletedTodos"
+          :on-click="trashCompletedTodos"
         />
       </template>
     </PageHeader>
@@ -194,10 +98,10 @@ watch(
         v-for="todo in filteredTodoList"
         :key="todo.id"
         :todo
-        :statuses="statusData"
-        @on-click-submit="onUpdateTodo"
-        @on-check="onSwitchTodoComplete($event, todo)"
-        @on-trash="onTrashTodo(todo)"
+        :statuses="statusList"
+        @on-click-submit="updateTodo"
+        @on-check="switchTodoComplete($event, todo)"
+        @on-trash="trashTodo(todo)"
       />
     </AsyncDataCard>
   </NuxtLayout>

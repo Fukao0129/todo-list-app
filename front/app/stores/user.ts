@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import type { User } from "@/types/api";
 
 export const useUserStore = defineStore("user", () => {
-  const user = ref({} as User);
+  const user = ref<User | null>(null);
 
   /** ユーザー情報更新 */
   const updateUser = async () => {

@@ -1,3 +1,1 @@
-export type ValidationErrors = {
-  [key: string]: string[];
-};
+export type ValidationErrors = Record<string, string[]>;

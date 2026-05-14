@@ -1,69 +1,25 @@
 <script setup lang="ts">
-import type {
-  Status,
-  CreateStatusRequest,
-  UpdateStatusRequest,
-} from "@/types/api";
+import type { CreateStatusRequest } from "@/types/api";
 
 const PAGE_TITLE = "ステータス設定";
 useHead({ title: PAGE_TITLE });
 
-const { showSnackbar } = useSnackbar();
-const { useCustomFetch, callApi } = useApi();
-const { setErrorMessages } = useValidationErrors();
+/* ────────────────────────────────────
+ * Composables
+ * ──────────────────────────────────── */
+const { statusList, pending, addStatus, updateStatus, deleteStatus } =
+  useStatus();
 
-const isAddStatusModalVisible = ref(false); // ステータス追加モーダル表示フラグ
+/* ────────────────────────────────────
+ * ステータス追加モーダル
+ * ──────────────────────────────────── */
+const isAddStatusModalVisible = ref(false);
 
-/** ステータス一覧取得 */
-const {
-  data: statusData,
-  pending,
-  refresh,
-} = useCustomFetch<Status[]>(`/statuses`);
-
-/** ステータス追加 */
+/** ステータス追加したらモーダルを閉じる */
 const onAddStatus = async (formData: CreateStatusRequest) => {
-  return callApi(`/statuses`, {
-    method: "POST",
-    body: formData,
-  })
-    .then(() => {
-      isAddStatusModalVisible.value = false;
-      showSnackbar("ステータスを追加しました");
-      refresh();
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "add-status");
-    });
-};
-
-/** ステータス更新 */
-const onUpdateStatus = (formData: UpdateStatusRequest & { id: number }) => {
-  callApi(`/statuses/${formData.id}`, {
-    method: "PUT",
-    body: formData,
-  })
-    .then(() => {
-      showSnackbar("ステータスを更新しました");
-      refresh();
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "update-status");
-    });
-};
-
-/** ステータス削除 */
-const onDeleteStatus = (statusId: number) => {
-  callApi(`/statuses/${statusId}`, {
-    method: "DELETE",
-  })
-    .then(() => {
-      showSnackbar("ステータスを削除しました");
-      refresh();
-    })
-    .catch(() => {
-      showSnackbar(ERROR_TEXT, "error");
-    });
+  return addStatus(formData).then(() => {
+    isAddStatusModalVisible.value = false;
+  });
 };
 </script>
 
@@ -85,13 +41,13 @@ const onDeleteStatus = (statusId: number) => {
     </BaseText>
 
     <!--ステータス一覧-->
-    <AsyncDataCard :pending="pending" :data-length="statusData?.length || 0">
+    <AsyncDataCard :pending="pending" :data-length="statusList?.length || 0">
       <StatusCard
-        v-for="status in statusData"
+        v-for="status in statusList"
         :key="status.id"
         :status
-        @onDelete="onDeleteStatus"
-        @onUpdate="onUpdateStatus"
+        @on-delete="deleteStatus($event)"
+        @on-update="updateStatus(status)"
       />
     </AsyncDataCard>
   </NuxtLayout>
