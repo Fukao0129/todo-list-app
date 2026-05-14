@@ -7,7 +7,7 @@ const userMenus = [
     icon: "user-gear",
     label: "設定",
     event: () => {
-      navigateTo("/profile");
+      navigateTo("/settings/user");
     },
   },
   {
