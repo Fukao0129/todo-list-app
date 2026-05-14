@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Status, UpdateStatusRequest } from "@/types/status";
+import type { Status, UpdateStatusRequest } from "@/types/api";
 
 const props = defineProps<{
   status: Status;
@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   onDelete: [number];
-  onUpdate: [number, UpdateStatusRequest];
+  onUpdate: [UpdateStatusRequest & { id: number }];
 }>();
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
@@ -73,7 +73,7 @@ watch(isEditMode, (newVal) => {
         <BaseButton
           :text="UPDATE_BUTTON_TEXT"
           class="flex-shrink-0"
-          @click="emit('onUpdate', status.id, status)"
+          @click="emit('onUpdate', status)"
         />
       </div>
     </div>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Todo, UpdateTodoRequest } from "@/types/todo";
-import type { Status } from "@/types/status";
+import type { Todo, UpdateTodoRequest } from "@/types/api";
+import type { Status } from "@/types/api";
 import type { SelectOption } from "@/types/select-option";
 
 const props = withDefaults(
@@ -11,11 +11,11 @@ const props = withDefaults(
   }>(),
   {
     isTrash: false,
-  }
+  },
 );
 
 const emit = defineEmits<{
-  onClickSubmit: [UpdateTodoRequest]; // 編集
+  onClickSubmit: [UpdateTodoRequest & { id: number }]; // 編集
   onCheck: [boolean]; // 完了/未完了切替
   onTrash: []; // ゴミ箱へ移動
   onRestore: []; // ゴミ箱から戻す
@@ -23,7 +23,19 @@ const emit = defineEmits<{
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
 
-const formData = ref<UpdateTodoRequest>({ ...props.todo }); // フォーム
+const formData = ref<UpdateTodoRequest & { id: number }>({
+  id: props.todo.id,
+  title: props.todo.title ?? "",
+  description: props.todo.description ?? null,
+  priority:
+    (props.todo.priority as UpdateTodoRequest["priority"]) ??
+    PRIORITY.LOW.value,
+  status_id: props.todo.status_id ?? DEFAULT_STATUSES.NOT_STARTED.value,
+  due_date: props.todo.due_date ?? null,
+  reminder_at: props.todo.reminder_at ?? null,
+  is_trashed: props.todo.is_trashed ?? 0,
+}); // フォーム
+
 const isOpen = ref(false); // 詳細表示フラグ
 const isEditMode = ref(false); // 編集モードフラグ
 const isCompleted = props.todo.status_id === DEFAULT_STATUSES.COMPLETED.value; // 完了しているか
@@ -42,7 +54,7 @@ watch(isEditMode, (newVal) => {
 <template>
   <BaseCard class="relative" :variant="isCompleted ? 'disabled' : 'default'">
     <!-- 優先度ラベル -->
-    <TodoCardPriorityLabel :priority="todo.priority" />
+    <TodoCardPriorityLabel :priority="todo.priority ?? PRIORITY.LOW.value" />
 
     <!--上部-->
     <TodoCardHeader
@@ -98,7 +110,7 @@ watch(isEditMode, (newVal) => {
               v-model="formData.status_id"
               :options="statuses as SelectOption[]"
             />
-            <BaseText v-else>{{ todo.status.name }}</BaseText>
+            <BaseText v-else>{{ todo.status?.name }}</BaseText>
           </FormItem>
           <FormItem label="優先度">
             <BaseSelect
@@ -111,8 +123,12 @@ watch(isEditMode, (newVal) => {
                 }))
               "
             />
-            <BaseText v-else :color="formatPriorityColor(todo.priority)" bold>
-              {{ formatPriorityLabel(todo.priority) }}
+            <BaseText
+              v-else
+              :color="formatPriorityColor(todo.priority ?? PRIORITY.LOW.value)"
+              bold
+            >
+              {{ formatPriorityLabel(todo.priority ?? PRIORITY.LOW.value) }}
             </BaseText>
           </FormItem>
           <FormItem label="リマインド">

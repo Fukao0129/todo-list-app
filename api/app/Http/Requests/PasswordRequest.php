@@ -41,6 +41,7 @@ class PasswordRequest extends FormRequest
                 'password_confirmation' => 'required|min:8',
             ];
         }
+        return [];
     }
 
     public function attributes(): array

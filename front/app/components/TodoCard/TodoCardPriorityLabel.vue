@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { PriorityValues } from "@/types/priority";
+import type { CreateTodoRequest } from "@/types/api";
 
 defineProps<{
-  priority: PriorityValues;
+  priority: CreateTodoRequest['priority'] | number;
 }>();
 
 /** 優先度に応じて色を変える */
-const formatPriorityLabelColor = (priority: PriorityValues): string => {
+const formatPriorityLabelColor = (priority: CreateTodoRequest['priority'] | number): string => {
   switch (priority) {
     case PRIORITY.LOW.value:
       return "border-t-info";

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Resourceのレスポンスがdataでラップされるのを無効化
+        JsonResource::withoutWrapping();
+
         // パスワードリセット画面のURLを生成
         $createUrl = function ($notifiable, $token) {
             return config("app.frontend_url") . "/forgot-password/reset?token={$token}&email={$notifiable->getEmailForPasswordReset()}";

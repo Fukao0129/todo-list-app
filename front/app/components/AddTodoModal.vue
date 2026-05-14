@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CreateTodoRequest } from "@/types/todo";
+import type { CreateTodoRequest } from "@/types/api";
 
 const isVisible = defineModel<boolean>();
 
@@ -8,17 +8,16 @@ const props = defineProps<{
 }>();
 
 const { validationErrors, clearErrorMessages } = useValidationErrors();
-const { user } = useUserStore();
 
 // Todo追加フォーム
 const formData = ref<CreateTodoRequest>({
   title: "",
   description: "",
   priority: PRIORITY.LOW.value,
-  user_id: user.id,
   status_id: DEFAULT_STATUSES.NOT_STARTED.value,
   due_date: "",
   reminder_at: "",
+  is_trashed: BOOLEAN.FALSE,
 });
 
 /** 追加ボタン押下 */
@@ -81,12 +80,12 @@ watch(isVisible, (newVal) => {
     </template>
     <template #footer>
       <BaseButton
-        :text="CANCEL_BUTTON_TEXT"
+        text="キャンセル"
         color="secondary"
         @click="isVisible = false"
       />
       <BaseButton
-        :text="ADD_BUTTON_TEXT"
+        text="追加"
         type="submit"
         form="add-todo-form"
         :on-click="onClickSubmit"
