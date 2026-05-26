@@ -4,13 +4,21 @@ definePageMeta({
 });
 useHead({ title: "パスワードリセット" });
 
+/* ────────────────────────────────────
+ * Composables
+ * ──────────────────────────────────── */
 const route = useRoute();
 const { callApi } = useApi();
-const { validationErrors, setErrorMessages, clearErrorMessages } =
-  useValidationErrors();
+const { handleError } = useApiErrorHandler();
+const { validationErrors, clearErrorMessages } = useValidationErrors();
 
-// パスワードリセットフォーム
+/* ────────────────────────────────────
+ * パスワードリセット
+ * ──────────────────────────────────── */
+/** トークンとメールアドレスをパラメータから取得 */
 const { token, email } = route.query;
+
+/** パスワードリセットフォーム */
 const passwordFormData = ref({
   token: token || "",
   email: email || "",
@@ -18,24 +26,23 @@ const passwordFormData = ref({
   password_confirmation: "",
 });
 
-/** パスワードリセット */
-const onResetPassword = () => {
+/** パスワードリセット処理 */
+const resetPassword = async () => {
   clearErrorMessages();
-  callApi(`/password/reset`, {
-    method: "POST",
-    body: passwordFormData.value,
-  })
-    .then(() => {
-      navigateTo("/login");
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "reset-password");
+  try {
+    await callApi(`/password/reset`, {
+      method: "POST",
+      body: passwordFormData.value,
     });
+    navigateTo("/login");
+  } catch (error) {
+    handleError(error, "reset-password");
+  }
 };
 </script>
 <template>
   <NuxtLayout name="login">
-    <form @submit.prevent="onResetPassword()">
+    <form @submit.prevent="resetPassword()">
       <FormItem :has-border="false">
         <BaseInput
           v-model="passwordFormData.password"

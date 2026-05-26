@@ -42,7 +42,9 @@ const { statusList } = useStatus();
  * ──────────────────────────────────── */
 const isAddTodoModalVisible = ref(false);
 
-/** Todo追加したらモーダルを閉じる */
+/** Todo追加したらモーダルを閉じる
+ * @param formData - 追加するTodoのデータ
+ */
 const onAddTodo = async (formData: CreateTodoRequest) => {
   return addTodo(formData).then(() => {
     isAddTodoModalVisible.value = false;
