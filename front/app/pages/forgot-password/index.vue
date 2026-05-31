@@ -4,28 +4,35 @@ definePageMeta({
 });
 useHead({ title: "パスワードリセットメールの送信" });
 
+/* ────────────────────────────────────
+ * Composables
+ * ──────────────────────────────────── */
 const { callApi } = useApi();
 const { showSnackbar } = useSnackbar();
 
-/** パスワードリセットメール送信 */
+/* ────────────────────────────────────
+ * パスワードリセットメール送信
+ * ──────────────────────────────────── */
+/** パスワードリセットメール送信フォーム */
 const email = ref<string>("");
-const onSubmitPasswordReset = () => {
-  callApi(`/forgot-password`, {
-    method: "POST",
-    body: { email: email.value },
-  })
-    .then(async () => {
-      showSnackbar("パスワードリセットメールを送信しました");
-    })
-    .catch(() => {
-      showSnackbar("パスワードリセットメールの送信に失敗しました。", "error");
+
+/** パスワードリセットメール送信処理 */
+const submitPasswordReset = async () => {
+  try {
+    await callApi(`/forgot-password`, {
+      method: "POST",
+      body: { email: email.value },
     });
+    showSnackbar("パスワードリセットメールを送信しました");
+  } catch {
+    showSnackbar("パスワードリセットメールの送信に失敗しました。", "error");
+  }
 };
 </script>
 
 <template>
   <NuxtLayout name="login">
-    <form @submit.prevent="onSubmitPasswordReset()">
+    <form @submit.prevent="submitPasswordReset()">
       <FormItem :has-border="false">
         <BaseInput
           v-model="email"

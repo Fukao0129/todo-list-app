@@ -1,7 +1,7 @@
 import type { Ref } from "vue";
 import type { CreateTodoRequest, UpdateTodoRequest, Todo } from "@/types/api";
 
-export type TodoSearchParams = {
+type TodoSearchParams = {
   sort?: string;
   direction?: string | null;
   q?: string;
@@ -15,9 +15,9 @@ export type TodoSearchParams = {
  * @param searchParams - 検索用パラメータ
  */
 export const useTodo = (searchParams: Ref<TodoSearchParams>) => {
-  const { showSnackbar } = useSnackbar();
   const { useCustomFetch, callApi } = useApi();
-  const { setErrorMessages } = useValidationErrors();
+  const { handleError } = useApiErrorHandler();
+  const { showSnackbar } = useSnackbar();
 
   /** Todo一覧取得 */
   const {
@@ -30,30 +30,27 @@ export const useTodo = (searchParams: Ref<TodoSearchParams>) => {
 
   /** Todo追加 */
   const addTodo = async (formData: CreateTodoRequest): Promise<void> => {
-    return callApi("/todos", { method: "POST", body: formData })
-      .then(() => {
-        showSnackbar("Todoを追加しました");
-        refresh();
-      })
-      .catch((error) => {
-        setErrorMessages(error.data.errorMessage, "add-todo");
-        throw error;
-      });
+    try {
+      await callApi("/todos", { method: "POST", body: formData });
+      showSnackbar("Todoを追加しました");
+      refresh();
+    } catch (error) {
+      handleError(error, "add-todo");
+      throw error; // ← 呼び出し元のthen防止
+    }
   };
 
   /** Todo更新 */
   const updateTodo = async (
     formData: UpdateTodoRequest & { id: number },
   ): Promise<void> => {
-    return callApi(`/todos/${formData.id}`, { method: "PUT", body: formData })
-      .then(() => {
-        showSnackbar("Todoを更新しました");
-        refresh();
-      })
-      .catch((error) => {
-        setErrorMessages(error.data.errorMessage, "update-todo");
-        throw error;
-      });
+    try {
+      await callApi(`/todos/${formData.id}`, { method: "PUT", body: formData });
+      showSnackbar("Todoを更新しました");
+      refresh();
+    } catch (error) {
+      handleError(error, "update-todo");
+    }
   };
 
   /** Todoをゴミ箱に移す */
@@ -61,15 +58,13 @@ export const useTodo = (searchParams: Ref<TodoSearchParams>) => {
     todo: UpdateTodoRequest & { id: number },
   ): Promise<void> => {
     const params = { ...todo, is_trashed: BOOLEAN.TRUE };
-    return callApi(`/todos/${todo.id}`, { method: "PUT", body: params })
-      .then(() => {
-        showSnackbar("ゴミ箱に移動しました");
-        refresh();
-      })
-      .catch((error) => {
-        showSnackbar(error.message, "error");
-        throw error;
-      });
+    try {
+      await callApi(`/todos/${todo.id}`, { method: "PUT", body: params });
+      showSnackbar("ゴミ箱に移動しました");
+      refresh();
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   /** Todoの完了⇄未完了を切り替え */
@@ -83,34 +78,30 @@ export const useTodo = (searchParams: Ref<TodoSearchParams>) => {
         ? DEFAULT_STATUSES.COMPLETED.value
         : DEFAULT_STATUSES.NOT_STARTED.value,
     };
-    return callApi(`/todos/${todo.id}`, { method: "PUT", body: params })
-      .then(() => {
-        refresh();
-        showSnackbar(
-          checked
-            ? `Todoを${DEFAULT_STATUSES.COMPLETED.label}にしました`
-            : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`,
-        );
-      })
-      .catch((error) => {
-        showSnackbar(error.message, "error");
-        throw error;
-      });
+    try {
+      await callApi(`/todos/${todo.id}`, { method: "PUT", body: params });
+      refresh();
+      showSnackbar(
+        checked
+          ? `Todoを${DEFAULT_STATUSES.COMPLETED.label}にしました`
+          : `Todoを${DEFAULT_STATUSES.NOT_STARTED.label}に戻しました`,
+      );
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   /** 完了をすべてゴミ箱に移動する */
   const trashCompletedTodos = async (): Promise<void> => {
-    return callApi("/todos/trash-completed", { method: "PUT" })
-      .then(() => {
-        showSnackbar(
-          `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`,
-        );
-        refresh();
-      })
-      .catch((error) => {
-        showSnackbar(error.message, "error");
-        throw error;
-      });
+    try {
+      await callApi("/todos/trash-completed", { method: "PUT" });
+      showSnackbar(
+        `${DEFAULT_STATUSES.COMPLETED.label}のTodoをすべてゴミ箱に移動しました`,
+      );
+      refresh();
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   /** Todoをゴミ箱から戻す */
@@ -118,29 +109,25 @@ export const useTodo = (searchParams: Ref<TodoSearchParams>) => {
     todo: UpdateTodoRequest & { id: number },
   ): Promise<void> => {
     const params = { ...todo, is_trashed: BOOLEAN.FALSE };
-    return callApi(`/todos/${todo.id}`, { method: "PUT", body: params })
-      .then(() => {
-        showSnackbar("Todoをゴミ箱から戻しました");
-        refresh();
-      })
-      .catch((error) => {
-        showSnackbar(error.message, "error");
-        throw error;
-      });
+    try {
+      await callApi(`/todos/${todo.id}`, { method: "PUT", body: params });
+      showSnackbar("Todoをゴミ箱から戻しました");
+      refresh();
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   /** ゴミ箱を空にする */
   const bulkDelete = async (): Promise<void> => {
     const todo_ids = todoList.value?.map((todo) => todo.id) ?? [];
-    return callApi("/todos", { method: "DELETE", body: { todo_ids } })
-      .then(() => {
-        showSnackbar("ゴミ箱を空にしました");
-        refresh();
-      })
-      .catch((error) => {
-        showSnackbar(error.message, "error");
-        throw error;
-      });
+    try {
+      await callApi("/todos", { method: "DELETE", body: { todo_ids } });
+      showSnackbar("ゴミ箱を空にしました");
+      refresh();
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   return {

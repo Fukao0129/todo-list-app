@@ -4,34 +4,36 @@
  * ──────────────────────────────────── */
 const { showSnackbar } = useSnackbar();
 const { callApi } = useApi();
-const { validationErrors, setErrorMessages, clearErrorMessages } =
-  useValidationErrors();
+const { handleError } = useApiErrorHandler();
+const { validationErrors, clearErrorMessages } = useValidationErrors();
 
 /* ────────────────────────────────────
  * パスワード更新
  * ──────────────────────────────────── */
+/** パスワード更新フォーム */
 const passwordFormData = ref({
   current_password: "",
   new_password: "",
   new_password_confirmation: "",
 });
-const onUpdatePassword = () => {
+
+/** パスワード更新処理 */
+const onUpdatePassword = async () => {
   clearErrorMessages();
-  return callApi(`/password/change`, {
-    method: "POST",
-    body: passwordFormData.value,
-  })
-    .then(() => {
-      showSnackbar("パスワードを更新しました");
-      passwordFormData.value = {
-        current_password: "",
-        new_password: "",
-        new_password_confirmation: "",
-      };
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "update-password");
+  try {
+    await callApi(`/password/change`, {
+      method: "POST",
+      body: passwordFormData.value,
     });
+    showSnackbar("パスワードを更新しました");
+    passwordFormData.value = {
+      current_password: "",
+      new_password: "",
+      new_password_confirmation: "",
+    };
+  } catch (error) {
+    handleError(error, "update-password");
+  }
 };
 
 onUnmounted(() => {

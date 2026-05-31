@@ -6,27 +6,29 @@ import type { User } from "@/types/api";
  * ──────────────────────────────────── */
 const { showSnackbar } = useSnackbar();
 const { callApi } = useApi();
-const { validationErrors, setErrorMessages, clearErrorMessages } =
-  useValidationErrors();
+const { handleError } = useApiErrorHandler();
+const { validationErrors, clearErrorMessages } = useValidationErrors();
 const { user, updateUser } = useUserStore();
 
 /* ────────────────────────────────────
  * ユーザー情報更新
  * ──────────────────────────────────── */
+/** ユーザー情報更新フォーム */
 const userFormData = reactive<User>(structuredClone(toRaw(user)!));
-const onUpdateUser = () => {
+
+/** ユーザー情報更新処理 */
+const onUpdateUser = async () => {
   clearErrorMessages();
-  return callApi(`/users`, {
-    method: "PUT",
-    body: userFormData,
-  })
-    .then(async () => {
-      await updateUser();
-      showSnackbar("ユーザー情報を更新しました");
-    })
-    .catch((error) => {
-      setErrorMessages(error.data.errorMessage, "update-user");
+  try {
+    await callApi(`/users`, {
+      method: "PUT",
+      body: userFormData,
     });
+    await updateUser();
+    showSnackbar("ユーザー情報を更新しました");
+  } catch (error) {
+    handleError(error, "update-user");
+  }
 };
 
 onUnmounted(() => {

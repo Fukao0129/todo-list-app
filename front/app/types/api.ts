@@ -1,4 +1,9 @@
 import type { components } from "./schema";
+import type { FetchError } from "ofetch";
+import type { ValidationErrors } from "./validation-errors";
+
+// APIバリデーションエラー型
+export type ApiValidationError = FetchError<{ errorMessage: ValidationErrors }>;
 
 // Scrambleが生成する再利用可能な型 // https://scramble.dedoc.co/packages/laravel-data
 type Schemas = components["schemas"];

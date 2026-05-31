@@ -1,26 +1,34 @@
 <script setup lang="ts">
 useHead({ title: "ログイン" });
 
+/* ────────────────────────────────────
+ * Composables
+ * ──────────────────────────────────── */
 const { login } = useSanctumAuth();
 const { showSnackbar } = useSnackbar();
 
-// ログインフォーム
+/* ────────────────────────────────────
+ * ログイン
+ * ──────────────────────────────────── */
+/** ログインフォーム */
 const loginForm = ref({
   email: "test@example.com",
   password: "password",
 });
 
-/** ログイン */
+/** ログイン処理 */
 const onLogin = async () => {
-  return login({
-    email: loginForm.value.email,
-    password: loginForm.value.password,
-  }).catch(() => {
+  try {
+    await login({
+      email: loginForm.value.email,
+      password: loginForm.value.password,
+    });
+  } catch {
     showSnackbar(
       "ログインに失敗しました。メールアドレスとパスワードを確認してください。",
       "error",
     );
-  });
+  }
 };
 </script>
 
