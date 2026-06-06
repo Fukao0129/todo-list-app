@@ -2,6 +2,7 @@
 const props = defineProps<{
   breadcrumb: { label: string; link?: string }[];
 }>();
+
 const breadcrumbList = [{ label: "ホーム", link: "/" }, ...props.breadcrumb];
 </script>
 
