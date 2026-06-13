@@ -83,7 +83,6 @@ watch(isEditMode, (newVal) => {
           v-if="status.is_updatable"
           icon="ellipsis"
           is-clickable
-          @click="isDropdownMenuVisible = !isDropdownMenuVisible"
         />
       </template>
 
