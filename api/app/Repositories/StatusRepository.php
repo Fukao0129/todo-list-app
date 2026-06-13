@@ -51,7 +51,7 @@ class StatusRepository
      */
     public function update($status_id, array $data)
     {
-        $status = Status::find($status_id);
+        $status = Status::where("user_id", Auth::id())->find($status_id);
         $status->update($data);
         return $status;
     }
@@ -64,7 +64,7 @@ class StatusRepository
      */
     public function delete($status_id)
     {
-        $status = Status::find($status_id);
+        $status = Status::where("user_id", Auth::id())->find($status_id);
         $status->delete();
         return $status;
     }

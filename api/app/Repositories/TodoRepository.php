@@ -79,12 +79,13 @@ class TodoRepository
             "priority",
             "completed_at",
             "reminder_at",
-        ])->with('status', function ($query) {
-            $query->select([
-                'id',
-                'name'
-            ]);
-        })->find($todo_id);
+        ])->where("user_id", Auth::id())
+            ->with('status', function ($query) {
+                $query->select([
+                    'id',
+                    'name'
+                ]);
+            })->find($todo_id);
         return [$result, Response::HTTP_OK];
     }
 
@@ -97,7 +98,7 @@ class TodoRepository
      */
     public function update($todo_id, array $data)
     {
-        $todo = Todo::find($todo_id);
+        $todo = Todo::where("user_id", Auth::id())->find($todo_id);
         $todo->fill($data);
         $todo->save();
         return $todo->load('status:id,name');
@@ -112,13 +113,8 @@ class TodoRepository
     public function store(array $data)
     {
         $data['user_id'] = Auth::id();
-        Todo::create($data);
-        return Todo::latest()->with('status', function ($query) {
-            $query->select([
-                'id',
-                'name'
-            ]);
-        })->first();
+        $todo = Todo::create($data);
+        return $todo->load('status:id,name');
     }
 
     /**
@@ -129,7 +125,7 @@ class TodoRepository
      */
     public function delete($todo_id)
     {
-        $todo = Todo::find($todo_id);
+        $todo = Todo::where("user_id", Auth::id())->find($todo_id);
         return $todo->delete();
     }
 
