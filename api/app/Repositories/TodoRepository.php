@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\Todo;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +11,7 @@ class TodoRepository
      * 全件取得
      *
      * @param mixed $request
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index($request)
     {
@@ -58,14 +57,14 @@ class TodoRepository
                 ]);
             })
             ->get();
-        return [$result, Response::HTTP_OK];
+        return $result;
     }
 
     /**
      * 詳細取得
      *
      * @param int $todo_id
-     * @return array
+     * @return \App\Models\Todo|null
      */
     public function show($todo_id)
     {
@@ -86,7 +85,7 @@ class TodoRepository
                     'name'
                 ]);
             })->find($todo_id);
-        return [$result, Response::HTTP_OK];
+        return $result;
     }
 
     /**

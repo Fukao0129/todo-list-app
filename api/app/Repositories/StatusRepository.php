@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +10,7 @@ class StatusRepository
     /**
      * 全件取得
      *
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
@@ -27,7 +26,7 @@ class StatusRepository
                     ->orWhere("is_updatable", 0);
             })
             ->get();
-        return [$result, Response::HTTP_OK];
+        return $result;
     }
 
     /**

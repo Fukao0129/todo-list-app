@@ -22,7 +22,7 @@ class StatusService
      */
     public function index()
     {
-        return $this->statusRepository->index();
+        return [$this->statusRepository->index(), Response::HTTP_OK];
     }
 
     /**
@@ -82,7 +82,7 @@ class StatusService
 
             // 削除対象のステータスIDを持つTodoのステータスを未着手に変更
             $untaggedTodos = $this->todoRepository->index(['status_id' => $status_id]);
-            foreach ($untaggedTodos[0] as $todo) {
+            foreach ($untaggedTodos as $todo) {
                 $this->todoRepository->update($todo->id, ['status_id' => 1]);
             }
             $status = Response::HTTP_OK;

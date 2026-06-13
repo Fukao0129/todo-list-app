@@ -22,7 +22,7 @@ class TodoService
      */
     public function index($request)
     {
-        return $this->todoRepository->index($request);
+        return [$this->todoRepository->index($request), Response::HTTP_OK];
     }
 
     /**
@@ -33,7 +33,7 @@ class TodoService
      */
     public function show($todo_id)
     {
-        return $this->todoRepository->show($todo_id);
+        return [$this->todoRepository->show($todo_id), Response::HTTP_OK];
     }
 
     /**
