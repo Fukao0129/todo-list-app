@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\StatusRepository;
 use App\Repositories\TodoRepository;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -18,24 +19,26 @@ class StatusService
     /**
      * 全件取得
      *
+     * @param \App\Models\User $user
      * @return array
      */
-    public function index()
+    public function index(User $user)
     {
-        return $this->statusRepository->index();
+        return [$this->statusRepository->index($user), Response::HTTP_OK];
     }
 
     /**
      * 追加
      *
+     * @param \App\Models\User $user
      * @param array $data
      * @return array
      */
-    public function store(array $data)
+    public function store(User $user, array $data)
     {
         DB::beginTransaction();
         try {
-            $res = $this->statusRepository->store($data);
+            $res = $this->statusRepository->store($user, $data);
             $status = Response::HTTP_OK;
             DB::commit();
         } catch (\Exception $e) {
@@ -49,15 +52,16 @@ class StatusService
     /**
      * 更新
      *
+     * @param \App\Models\User $user
      * @param int $status_id
      * @param array $data
      * @return array
      */
-    public function update($status_id, array $data)
+    public function update(User $user, $status_id, array $data)
     {
         DB::beginTransaction();
         try {
-            $res = $this->statusRepository->update($status_id, $data);
+            $res = $this->statusRepository->update($user, $status_id, $data);
             $status = Response::HTTP_OK;
             DB::commit();
         } catch (\Exception $e) {
@@ -71,19 +75,20 @@ class StatusService
     /**
      * 削除
      *
+     * @param \App\Models\User $user
      * @param int $status_id
      * @return array
      */
-    public function delete($status_id)
+    public function delete(User $user, $status_id)
     {
         DB::beginTransaction();
         try {
-            $res = $this->statusRepository->delete($status_id);
+            $res = $this->statusRepository->delete($user, $status_id);
 
             // 削除対象のステータスIDを持つTodoのステータスを未着手に変更
-            $untaggedTodos = $this->todoRepository->index(['status_id' => $status_id]);
-            foreach ($untaggedTodos[0] as $todo) {
-                $this->todoRepository->update($todo->id, ['status_id' => 1]);
+            $untaggedTodos = $this->todoRepository->index($user, ['status_id' => $status_id]);
+            foreach ($untaggedTodos as $todo) {
+                $this->todoRepository->update($user, $todo->id, ['status_id' => 1]);
             }
             $status = Response::HTTP_OK;
             DB::commit();

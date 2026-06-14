@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TodoRequest;
 use App\Services\TodoService;
 use App\Http\Resources\TodoResource;
-use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -23,7 +22,7 @@ class TodoController extends Controller
      */
     function index(Request $request)
     {
-        list($result, $status) = $this->todoService->index($request);
+        list($result, $status) = $this->todoService->index($request->user(), $request);
         return response()->json(TodoResource::collection($result), $status);
     }
 
@@ -32,13 +31,14 @@ class TodoController extends Controller
      *
      * @apiResource App\Http\Resources\TodoResource
      * @apiResourceModel App\Models\Todo
+     * @param Request $request
      * @param int $todo_id
      * @authenticated
      * @return \Illuminate\Http\JsonResponse
      */
-    function show($todo_id)
+    function show(Request $request, $todo_id)
     {
-        list($result, $status) = $this->todoService->show($todo_id);
+        list($result, $status) = $this->todoService->show($request->user(), $todo_id);
         return response()->json(new TodoResource($result), $status);
     }
 
@@ -53,9 +53,7 @@ class TodoController extends Controller
      */
     function update(TodoRequest $request, $todo_id)
     {
-        $validated = $request->validated();
-        $validated['user_id'] = Auth::id();
-        list($result, $status) = $this->todoService->update($todo_id, $validated);
+        list($result, $status) = $this->todoService->update($request->user(), $todo_id, $request->validated());
         return response()->json(new TodoResource($result), $status);
     }
 
@@ -69,21 +67,20 @@ class TodoController extends Controller
      */
     function store(TodoRequest $request)
     {
-        $validated = $request->validated();
-        $validated['user_id'] = Auth::id();
-        list($result, $status) = $this->todoService->store($validated);
+        list($result, $status) = $this->todoService->store($request->user(), $request->validated());
         return response()->json(new TodoResource($result), $status);
     }
 
     /**
      * 削除
+     * @param Request $request
      * @param int $todo_id
      * @authenticated
      * @return \Illuminate\Http\JsonResponse
      */
-    function delete($todo_id)
+    function delete(Request $request, $todo_id)
     {
-        list($result, $status) = $this->todoService->delete($todo_id);
+        list($result, $status) = $this->todoService->delete($request->user(), $todo_id);
         return response()->json($result, $status);
     }
 
@@ -96,17 +93,18 @@ class TodoController extends Controller
     function bulkDelete(Request $request)
     {
         $todo_ids = $request->input('todo_ids');
-        list($result, $status) = $this->todoService->bulkDelete($todo_ids);
+        list($result, $status) = $this->todoService->bulkDelete($request->user(), $todo_ids);
         return response()->json($result, $status);
     }
 
     /**
      * 完了済のTODOをすべてゴミ箱に移す
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    function trashAllCompleted()
+    function trashAllCompleted(Request $request)
     {
-        list($result, $status) = $this->todoService->trashAllCompleted();
+        list($result, $status) = $this->todoService->trashAllCompleted($request->user());
         return response()->json($result, $status);
     }
 }

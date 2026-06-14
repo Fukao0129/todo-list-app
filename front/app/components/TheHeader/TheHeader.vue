@@ -29,7 +29,6 @@ const isDropdownMenuVisible = ref(false); // ドロップダウンメニュー�
           color="white"
           is-clickable
           class="text-2xl"
-          @click="isDropdownMenuVisible = !isDropdownMenuVisible"
         />
       </template>
 

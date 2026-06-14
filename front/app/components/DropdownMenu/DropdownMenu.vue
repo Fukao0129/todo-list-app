@@ -11,7 +11,12 @@ useEventListener("click", onClickOutside);
 
 <template>
   <div class="relative" ref="wrapper">
-    <slot name="trigger" />
+    <div
+      @click="isVisible = !isVisible"
+      @keydown.enter="isVisible = !isVisible"
+    >
+      <slot name="trigger" />
+    </div>
     <BaseCard
       v-if="isVisible"
       class="absolute right-[calc(100%_+_0.1rem)] w-max"

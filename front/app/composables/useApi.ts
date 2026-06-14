@@ -32,7 +32,13 @@ export const useApi = () => {
   const useCustomFetch = <T>(uri: string, option?: UseFetchOptions<T>) => {
     const commonOptions = createCommonOptions();
     const params = defu(option, commonOptions);
-    return useFetch(uri, params);
+    // CSRとSSRでキーが一致するように、baseURLを含めないで生成する
+    const key = JSON.stringify([
+      uri,
+      toValue(option?.query),
+      option?.method ?? null,
+    ]);
+    return useFetch(uri, { ...params, key });
   };
 
   /** $fetchのラッパー */
