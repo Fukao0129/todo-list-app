@@ -3,17 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\Todo;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class TodoRepository
 {
     /**
      * 全件取得
      *
+     * @param \App\Models\User $user
      * @param mixed $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index($request)
+    public function index(User $user, $request)
     {
         $result = Todo::select([
             "id",
@@ -49,7 +50,7 @@ class TodoRepository
                 return $query->where('is_trashed', $request['is_trashed']);
             })
             // ユーザ絞り込み処理
-            ->where("user_id", Auth::id())
+            ->where("user_id", $user->id)
             ->with('status', function ($query) {
                 $query->select([
                     'id',
@@ -63,10 +64,11 @@ class TodoRepository
     /**
      * 詳細取得
      *
+     * @param \App\Models\User $user
      * @param int $todo_id
      * @return \App\Models\Todo|null
      */
-    public function show($todo_id)
+    public function show(User $user, $todo_id)
     {
         $result = Todo::select([
             "id",
@@ -78,7 +80,7 @@ class TodoRepository
             "priority",
             "completed_at",
             "reminder_at",
-        ])->where("user_id", Auth::id())
+        ])->where("user_id", $user->id)
             ->with('status', function ($query) {
                 $query->select([
                     'id',
@@ -91,13 +93,14 @@ class TodoRepository
     /**
      * 更新
      *
+     * @param \App\Models\User $user
      * @param int $todo_id
      * @param array $data
      * @return \App\Models\Todo
      */
-    public function update($todo_id, array $data)
+    public function update(User $user, $todo_id, array $data)
     {
-        $todo = Todo::where("user_id", Auth::id())->find($todo_id);
+        $todo = Todo::where("user_id", $user->id)->find($todo_id);
         $todo->fill($data);
         $todo->save();
         return $todo->load('status:id,name');
@@ -106,36 +109,38 @@ class TodoRepository
     /**
      * 追加
      *
+     * @param \App\Models\User $user
      * @param array $data
      * @return \App\Models\Todo
      */
-    public function store(array $data)
+    public function store(User $user, array $data)
     {
-        $data['user_id'] = Auth::id();
-        $todo = Todo::create($data);
+        $todo = $user->todos()->create($data);
         return $todo->load('status:id,name');
     }
 
     /**
      * 削除
      *
+     * @param \App\Models\User $user
      * @param int $todo_id
      * @return bool|null
      */
-    public function delete($todo_id)
+    public function delete(User $user, $todo_id)
     {
-        $todo = Todo::where("user_id", Auth::id())->find($todo_id);
+        $todo = Todo::where("user_id", $user->id)->find($todo_id);
         return $todo->delete();
     }
 
     /**
      * 完了済のTODOをすべてゴミ箱に移す
      *
+     * @param \App\Models\User $user
      * @return int
      */
-    public function trashAllCompleted()
+    public function trashAllCompleted(User $user)
     {
-        return Todo::where('user_id', Auth::id())
+        return Todo::where('user_id', $user->id)
             ->where('status_id', Todo::STATUS_COMPLETED)
             ->update(['is_trashed' => 1]);
     }
