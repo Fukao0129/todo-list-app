@@ -5,7 +5,7 @@ import { defu } from "defu";
 export const useApi = () => {
   const runtimeConfig = useRuntimeConfig();
   const xsrfToken = useCookie("XSRF-TOKEN");
-  const reqHeaders = useRequestHeaders(); // SSR用ヘッダー
+  const reqHeaders = useRequestHeaders(["cookie", "referer"]); // SSR用ヘッダー
 
   /** 共通ヘッダー作成 (毎回最新のCSRFトークンを取得する) */
   const createCommonOptions = () => ({
