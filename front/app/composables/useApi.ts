@@ -5,7 +5,8 @@ import { defu } from "defu";
 export const useApi = () => {
   const runtimeConfig = useRuntimeConfig();
   const xsrfToken = useCookie("XSRF-TOKEN");
-  const reqHeaders = useRequestHeaders(["cookie", "referer"]); // SSR用ヘッダー
+  const reqHeaders = useRequestHeaders(["cookie"]); // SSR用Cookieヘッダー
+  const requestUrl = useRequestURL(); // SSR実行中のフロントオリジン取得用
 
   /** 共通ヘッダー作成 (毎回最新のCSRFトークンを取得する) */
   const createCommonOptions = () => ({
@@ -15,7 +16,11 @@ export const useApi = () => {
         : runtimeConfig.public.apiUrl,
     credentials: "include" as const,
     headers: {
-      ...(import.meta.server ? reqHeaders : {}),
+      // SSRはAPIへ直接アクセスするため、Cookieに加えてSanctumのステートフル判定用に
+      // Refererを自分のオリジンで明示する（再読み込み時はブラウザのRefererが無いため）
+      ...(import.meta.server
+        ? { ...reqHeaders, referer: requestUrl.origin }
+        : {}),
       "X-XSRF-TOKEN": xsrfToken.value
         ? decodeURIComponent(xsrfToken.value)
         : "",
