@@ -38,5 +38,5 @@ CMD sh -c "\
     a2enmod mpm_prefork && \
     sed -i \"s/^Listen .*/Listen ${PORT:-8080}/\" /etc/apache2/ports.conf && \
     sed -i \"s/<VirtualHost \*:.*>/<VirtualHost *:${PORT:-8080}>/\" /etc/apache2/sites-available/000-default.conf && \
-    php artisan migrate --force && \
+    php artisan migrate --force && php artisan db:seed --force && \
     apache2-foreground"
